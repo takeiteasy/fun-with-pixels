@@ -1,0 +1,3 @@
+[submodule "lib/bitmap"]
+	path = lib/bitmap
+	url = https://github.com/takeiteasy/bitmap

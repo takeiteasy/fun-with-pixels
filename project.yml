@@ -1,0 +1,24 @@
+name: pp
+
+options:
+  bundleIdPrefix: io.github.takeiteasy
+  createIntermediateGroups: true
+  deploymentTarget:
+    macOS: "12.0"
+
+settings:
+  GCC_C_LANGUAGE_STANDARD: c11
+
+targets:
+  pp:
+    type: application
+    platform: macOS
+    info:
+      path: Info.plist
+    sources:
+        - tests/main.c
+        - src/ppMac.c
+    dependencies:
+        - sdk: Cocoa.framework
+    settings:
+        HEADER_SEARCH_PATHS: [$(PROJECT_DIR)/src, $(PROJECT_DIR)/, $(PROJECT_DIR)/lib/bitmap]

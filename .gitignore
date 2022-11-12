@@ -1,0 +1,5 @@
+build/
+*.xcodeproj
+.vscode
+.DS_Store
+*.plist
