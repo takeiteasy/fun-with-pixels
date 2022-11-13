@@ -35,14 +35,14 @@ typedef enum {
     ppModDummy = 0
 } ppKeyMod;
 
-#define PP_CALLBACKS \
-  X(Keyboard, (void*, ppKey, ppKeyMod, bool)) \
-  X(MouseButton, (void*, int, ppKeyMod, bool)) \
-  X(MouseMove, (void*, int, int, int, int)) \
-  X(MouseScroll, (void*, ppKeyMod, float, float)) \
-  X(Focus, (void*, bool)) \
-  X(Resized, (void*, int, int)) \
-  X(Closed, (void*))
+#define PP_CALLBACKS                                \
+    X(Keyboard, (void*, ppKey, ppKeyMod, bool))     \
+    X(MouseButton, (void*, int, ppKeyMod, bool))    \
+    X(MouseMove, (void*, int, int, int, int))       \
+    X(MouseScroll, (void*, ppKeyMod, float, float)) \
+    X(Focus, (void*, bool))                         \
+    X(Resized, (void*, int, int))                   \
+    X(Closed, (void*))
 
 bool ppWindow(int w, int h, const char *title, ppWindowFlags flags);
 bool ppPollEvents(void);

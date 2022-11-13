@@ -14,6 +14,8 @@ static struct {
     void *userdata;
     bool initialized;
     bool running;
+    short keycodes[512];
+    Bitmap *pbo;
 } ppInternal = {0};
 
 #define X(NAME, ARGS) \
@@ -22,7 +24,7 @@ void ppWindowCallbacks(PP_CALLBACKS void* userdata) {
 #undef X
 #define X(NAME, ARGS) \
     ppInternal.NAME##Callback = NAME##Callback;
-  PP_CALLBACKS
+    PP_CALLBACKS
 #undef X
     ppInternal.userdata = userdata;
 }

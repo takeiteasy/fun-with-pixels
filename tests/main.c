@@ -8,6 +8,9 @@ int main(int argc, const char *argv[]) {
     
     Bitmap pbo;
     InitBitmap(&pbo, WIDTH, HEIGHT);
+    FillBitmap(&pbo, Red);
+    
+    DrawRect(&pbo, 10, 10, 50, 50, Blue, true);
     
     while (ppPollEvents()) {
         ppFlush(&pbo);

@@ -25,6 +25,7 @@
 // this is how they are defined originally
 #include <CoreGraphics/CGBase.h>
 #include <CoreGraphics/CGGeometry.h>
+#include <CoreGraphics/CGContext.h>
 typedef CGPoint NSPoint;
 typedef CGSize NSSize;
 typedef CGRect NSRect;
@@ -33,6 +34,46 @@ extern id NSApp;
 extern id const NSDefaultRunLoopMode;
 
 #define NSApplicationActivationPolicyRegular 0
+
+typedef enum {
+    NSWindowStyleMaskBorderless = 0,
+    NSWindowStyleMaskTitled = 1 << 0,
+    NSWindowStyleMaskClosable = 1 << 1,
+    NSWindowStyleMaskMiniaturizable = 1 << 2,
+    NSWindowStyleMaskResizable    = 1 << 3,
+    NSWindowStyleMaskFullScreen API_AVAILABLE(macos(10.7)) = 1 << 14,
+    NSWindowStyleMaskFullSizeContentView API_AVAILABLE(macos(10.10)) = 1 << 15,
+} NSWindowStyleMask;
+
+typedef enum {
+    NSWindowCloseButton,
+    NSWindowMiniaturizeButton,
+    NSWindowZoomButton
+} NSWindowButton;
+
+typedef enum {
+    NSEventTypeLeftMouseDown        = 1,
+    NSEventTypeLeftMouseUp          = 2,
+    NSEventTypeRightMouseDown       = 3,
+    NSEventTypeRightMouseUp         = 4,
+    NSEventTypeMouseMoved           = 5,
+    NSEventTypeLeftMouseDragged     = 6,
+    NSEventTypeRightMouseDragged    = 7,
+    NSEventTypeMouseEntered         = 8,
+    NSEventTypeMouseExited          = 9,
+    NSEventTypeKeyDown              = 10,
+    NSEventTypeKeyUp                = 11,
+    NSEventTypeFlagsChanged         = 12,
+    NSEventTypeCursorUpdate         = 17,
+    NSEventTypeScrollWheel          = 22,
+    NSEventTypeOtherMouseDown       = 25,
+    NSEventTypeOtherMouseUp         = 26,
+    NSEventTypeOtherMouseDraggedd   = 27
+} NSEventType;
+
+#define NSBackingStoreBuffered 2
+#define NSFloatingWindowLevel 5
+#define NSWindowCollectionBehaviorFullScreenPrimary 1 << 7
 #endif
 
 // ABI is a bit different between platforms
@@ -75,13 +116,13 @@ extern id const NSDefaultRunLoopMode;
 #define $Protocol(CLASS, PROTOCOL)                                  \
     if (!class_addProtocol(CLASS, protocol(__STRINGIFY(PROTOCOL)))) \
         assert(false);
+#define $SubClass(NAME) objc_registerClassPair(NAME)
 
 #if defined(__OBJC__) && __has_feature(objc_arc) && !defined(OBJC_NO_ARC)
 #define OBJC_ARC_AVAILABLE
 #endif
 
 #if defined(OBJC_ARC_AVAILABLE)
-#define $Alloc(CLASS) class(CLASS)
 #define $Autorelease(CLASS)
 #define AutoreleasePool(...) \
     do                       \
@@ -92,60 +133,22 @@ extern id const NSDefaultRunLoopMode;
         }                    \
     } while (0)
 #else
-#define $Alloc(CLASS) $(id)(class(CLASS), sel(alloc))
 #define $Autorelease(CLASS) $(void)(class(CLASS), sel(autorelease))
-#define AutoreleasePool(...)                       \
-    do                                             \
-    {                                              \
-        id __OBJC_POOL = $Init(NSAutoreleasePool); \
-        __VA_ARGS__                                \
-        $(void)(__OBJC_POOL, sel(drain));          \
+#define AutoreleasePool(...)                            \
+    do                                                  \
+    {                                                   \
+        id __OBJC_POOL = $Initalize(NSAutoreleasePool); \
+        __VA_ARGS__                                     \
+        $(void)(__OBJC_POOL, sel(drain));               \
     } while (0)
 #endif
-#define $Init(CLASS) $(id)($Alloc(CLASS), sel(init))
-
-typedef enum {
-    NSWindowStyleMaskBorderless = 0,
-    NSWindowStyleMaskTitled = 1 << 0,
-    NSWindowStyleMaskClosable = 1 << 1,
-    NSWindowStyleMaskMiniaturizable = 1 << 2,
-    NSWindowStyleMaskResizable    = 1 << 3,
-    NSWindowStyleMaskFullScreen API_AVAILABLE(macos(10.7)) = 1 << 14,
-    NSWindowStyleMaskFullSizeContentView API_AVAILABLE(macos(10.10)) = 1 << 15,
-} NSWindowStyleMask;
-
-typedef enum {
-    NSWindowCloseButton,
-    NSWindowMiniaturizeButton,
-    NSWindowZoomButton
-} NSWindowButton;
-
-typedef enum {
-    NSEventTypeLeftMouseDown             = 1,
-    NSEventTypeLeftMouseUp               = 2,
-    NSEventTypeRightMouseDown            = 3,
-    NSEventTypeRightMouseUp              = 4,
-    NSEventTypeMouseMoved                = 5,
-    NSEventTypeLeftMouseDragged          = 6,
-    NSEventTypeRightMouseDragged         = 7,
-    NSEventTypeMouseEntered              = 8,
-    NSEventTypeMouseExited               = 9,
-    NSEventTypeKeyDown                   = 10,
-    NSEventTypeKeyUp                     = 11,
-    NSEventTypeFlagsChanged              = 12,
-    NSEventTypeCursorUpdate              = 17,
-    NSEventTypeScrollWheel               = 22,
-    NSEventTypeOtherMouseDown            = 25,
-    NSEventTypeOtherMouseUp              = 26,
-    NSEventTypeOtherMouseDragged         = 27
-} NSEventType;
-
-#define NSBackingStoreBuffered 2
-#define NSFloatingWindowLevel 5
-#define NSWindowCollectionBehaviorFullScreenPrimary 1 << 7
+#define $Alloc(CLASS) $(id)(class(CLASS), sel(alloc))
+#define $Init(CLASS) $(id)(CLASS, sel(init))
+#define $Initalize(CLASS) $(id)($Alloc(CLASS), sel(init))
+#define $Release(CLASS) $(void)(CLASS, sel(release))
 
 static struct {
-    id window, view;
+    id window;
 } ppMacInternal;
 
 NSUInteger applicationShouldTerminate(id self, SEL _sel, id sender) {
@@ -155,6 +158,21 @@ NSUInteger applicationShouldTerminate(id self, SEL _sel, id sender) {
 
 void windowWillClose(id self, SEL _sel, id notification) {
     ppInternal.running = false;
+}
+
+void drawRect(id self, SEL _self, CGRect rect) {
+    if (!ppInternal.pbo)
+        return;
+    
+    CGContextRef ctx = (CGContextRef)$(id)($(id)(class(NSGraphicsContext), sel(currentContext)), sel(CGContext));
+    CGColorSpaceRef s = CGColorSpaceCreateDeviceRGB();
+    CGDataProviderRef p = CGDataProviderCreateWithData(NULL, ppInternal.pbo->buf, ppInternal.pbo->w * ppInternal.pbo->h * 4, NULL);
+    CGImageRef img = CGImageCreate(ppInternal.pbo->w, ppInternal.pbo->h, 8, 32, ppInternal.pbo->w * 4, s, kCGImageAlphaNoneSkipFirst | kCGBitmapByteOrder32Little, p, NULL, 0, kCGRenderingIntentDefault);
+    CGRect wh = $struct(CGRect)(self, sel(frame));
+    CGContextDrawImage(ctx, CGRectMake(0, 0, wh.size.width, wh.size.height), img);
+    CGColorSpaceRelease(s);
+    CGDataProviderRelease(p);
+    CGImageRelease(img);
 }
 
 bool ppWindow(int w, int h, const char *title, ppWindowFlags flags) {
@@ -173,77 +191,89 @@ bool ppWindow(int w, int h, const char *title, ppWindowFlags flags) {
         $(void, id)(NSApp, sel(setDelegate:), appDelegate);
         $(void)(NSApp, sel(finishLaunching));
         
-        id menuBar = $Init(NSMenu);
-        id menuItem = $Init(NSMenuItem);
+        id menuBar = $Initalize(NSMenu);
+        $Autorelease(menuBar);
+        id menuItem = $Initalize(NSMenuItem);
+        $Autorelease(menuItem);
         $(void, id)(menuBar, sel(addItem:), menuItem);
         $(id, id)(NSApp, sel(setMainMenu:), menuBar);
         id procInfo = $(id)(class(NSProcessInfo), sel(processInfo));
         id appName = $(id)(procInfo, sel(processName));
         
         id appMenu = $(id, id)($Alloc(NSMenu), sel(initWithTitle:), appName);
+        $Autorelease(appMenu);
         id quitTitleStr = $(id, const char*)(class(NSString), sel(stringWithUTF8String:), "Quit ");
         id quitTitle = $(id, id)(quitTitleStr, sel(stringByAppendingString:), appName);
         id quitItemKey = $(id, const char*)(class(NSString), sel(stringWithUTF8String:), "q");
         id quitItem = $(id, id, SEL, id)($Alloc(NSMenuItem), sel(initWithTitle:action:keyEquivalent:), quitTitle, sel(terminate:), quitItemKey);
+        $Autorelease(quitItem);
         
         $(void, id)(appMenu, sel(addItem:), quitItem);
         $(void, id)(menuItem, sel(setSubmenu:), appMenu);
-    });
     
-    NSWindowStyleMask styleMask = NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskMiniaturizable;
-    flags |= (flags & ppFullscreen ? (ppBorderless | ppResizable | ppFullscreenDesktop) : 0);
-    styleMask |= (flags & ppResizable ? NSWindowStyleMaskResizable : 0);
-    styleMask |= (flags & ppBorderless ? NSWindowStyleMaskFullSizeContentView : 0);
-    if (flags & ppFullscreenDesktop) {
-        NSRect f = $struct(NSRect)($(id)(class(NSScreen), sel(mainScreen)), sel(frame));
-        w = f.size.width;
-        h = f.size.height;
-        styleMask |= NSWindowStyleMaskFullSizeContentView;
-    }
-    NSRect windowFrame = {{0, 0}, {w, h}};
-    
-    ppMacInternal.window = $(id, NSRect, NSUInteger, NSUInteger, BOOL)($Alloc(NSWindow), sel(initWithContentRect:styleMask:backing:defer:), windowFrame, styleMask, NSBackingStoreBuffered, NO);
-    $(void, BOOL)(ppMacInternal.window, sel(setReleasedWhenClosed:), NO);
-    
-    if (flags & ppAlwaysOnTop)
-        $(void, NSInteger)(ppMacInternal.window, sel(setLevel:), NSFloatingWindowLevel);
-    
+        NSWindowStyleMask styleMask = NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskMiniaturizable;
+        flags |= (flags & ppFullscreen ? (ppBorderless | ppResizable | ppFullscreenDesktop) : 0);
+        styleMask |= (flags & ppResizable ? NSWindowStyleMaskResizable : 0);
+        styleMask |= (flags & ppBorderless ? NSWindowStyleMaskFullSizeContentView : 0);
+        if (flags & ppFullscreenDesktop) {
+            NSRect f = $struct(NSRect)($(id)(class(NSScreen), sel(mainScreen)), sel(frame));
+            w = f.size.width;
+            h = f.size.height;
+            styleMask |= NSWindowStyleMaskFullSizeContentView;
+        }
+        NSRect windowFrame = {{0, 0}, {w, h}};
+        
+        ppMacInternal.window = $(id, NSRect, NSUInteger, NSUInteger, BOOL)($Alloc(NSWindow), sel(initWithContentRect:styleMask:backing:defer:), windowFrame, styleMask, NSBackingStoreBuffered, NO);
+        $(void, BOOL)(ppMacInternal.window, sel(setReleasedWhenClosed:), NO);
+        
+        if (flags & ppAlwaysOnTop)
+            $(void, NSInteger)(ppMacInternal.window, sel(setLevel:), NSFloatingWindowLevel);
+        
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_7
-    if (flags & ppFullscreen) {
-        $(void, NSUInteger)(ppMacInternal.window, sel(setCollectionBehavior:), NSWindowCollectionBehaviorFullScreenPrimary);
-        $(void, SEL, id, BOOL)(ppMacInternal.window, sel(performSelectorOnMainThread:withObject:waitUntilDone:), sel(toggleFullScreen:), ppMacInternal.window, NO);
-    }
+        if (flags & ppFullscreen) {
+            $(void, NSUInteger)(ppMacInternal.window, sel(setCollectionBehavior:), NSWindowCollectionBehaviorFullScreenPrimary);
+            $(void, SEL, id, BOOL)(ppMacInternal.window, sel(performSelectorOnMainThread:withObject:waitUntilDone:), sel(toggleFullScreen:), ppMacInternal.window, NO);
+        }
 #else
 #pragma message WARN("Fullscreen is unsupported on OSX versions < 10.7")
 #endif
-    
-    $(void, BOOL)(ppMacInternal.window, sel(setAcceptsMouseMovedEvents:), YES);
-    $(void, BOOL)(ppMacInternal.window, sel(setRestorable:), NO);
-    $(void, BOOL)(ppMacInternal.window, sel(setReleasedWhenClosed:), NO);
-    
-    id windowTitle = nil;
-    if (flags & ppBorderless && flags & ~ppFullscreen) {
-        windowTitle = $(id)(class(NSString), sel(string));
-        $(void, BOOL)(ppMacInternal.window, sel(setTitlebarAppearsTransparent:), YES);
-        $(void, BOOL)($(id, NSUInteger)(ppMacInternal.window, sel(standardWindowButton:), NSWindowZoomButton), sel(setHidden:), YES);
-        $(void, BOOL)($(id, NSUInteger)(ppMacInternal.window, sel(standardWindowButton:), NSWindowCloseButton), sel(setHidden:), YES);
-        $(void, BOOL)($(id, NSUInteger)(ppMacInternal.window, sel(standardWindowButton:), NSWindowMiniaturizeButton), sel(setHidden:), YES);
-    } else {
-        windowTitle = $(id, const char*)(class(NSString), sel(stringWithUTF8String:), title);
-    }
-    $(void, id)(ppMacInternal.window, sel(setTitle:), windowTitle);
-    $(void)(ppMacInternal.window, sel(center));
-    
-    Class WindowDelegate = $Class(WindowDelegate, NSObject);
-    $Protocol(WindowDelegate, NSWindowDelegate);
-    $Method(WindowDelegate, windowWillClose:, windowWillClose, "v@:@");
-    id windowDelegate = $(id)($(id)((id)WindowDelegate, sel(alloc)), sel(init));
-    $Autorelease(windowDelegate);
-    $(void, id)(ppMacInternal.window, sel(setDelegate:), windowDelegate);
-    
-    $(void, SEL, id, BOOL)(ppMacInternal.window, sel(performSelectorOnMainThread:withObject:waitUntilDone:), sel(makeKeyAndOrderFront:), nil, YES);
-    
-    $(void, BOOL)(NSApp, sel(activateIgnoringOtherApps:), YES);
+        
+        $(void, BOOL)(ppMacInternal.window, sel(setAcceptsMouseMovedEvents:), YES);
+        $(void, BOOL)(ppMacInternal.window, sel(setRestorable:), NO);
+        $(void, BOOL)(ppMacInternal.window, sel(setReleasedWhenClosed:), NO);
+        
+        id windowTitle = nil;
+        if (flags & ppBorderless && flags & ~ppFullscreen) {
+            windowTitle = $(id)(class(NSString), sel(string));
+            $(void, BOOL)(ppMacInternal.window, sel(setTitlebarAppearsTransparent:), YES);
+            $(void, BOOL)($(id, NSUInteger)(ppMacInternal.window, sel(standardWindowButton:), NSWindowZoomButton), sel(setHidden:), YES);
+            $(void, BOOL)($(id, NSUInteger)(ppMacInternal.window, sel(standardWindowButton:), NSWindowCloseButton), sel(setHidden:), YES);
+            $(void, BOOL)($(id, NSUInteger)(ppMacInternal.window, sel(standardWindowButton:), NSWindowMiniaturizeButton), sel(setHidden:), YES);
+        } else {
+            windowTitle = $(id, const char*)(class(NSString), sel(stringWithUTF8String:), title);
+        }
+        $(void, id)(ppMacInternal.window, sel(setTitle:), windowTitle);
+        $(void)(ppMacInternal.window, sel(center));
+        
+        Class WindowDelegate = $Class(WindowDelegate, NSObject);
+        $Protocol(WindowDelegate, NSWindowDelegate);
+        $Method(WindowDelegate, windowWillClose:, windowWillClose, "v@:@");
+        id windowDelegate = $(id)($(id)((id)WindowDelegate, sel(alloc)), sel(init));
+        $Autorelease(windowDelegate);
+        $(void, id)(ppMacInternal.window, sel(setDelegate:), windowDelegate);
+        
+        Class View = $Class(View, NSView);
+        $Method(View, drawRect:, drawRect, "v@:");
+        $SubClass(View);
+        
+        id view = $(id, NSRect)($Alloc(View), sel(initWithFrame:), windowFrame);
+        $Autorelease(view);
+        $(void, id)(ppMacInternal.window, sel(setContentView:), view);
+        
+        $(void, SEL, id, BOOL)(ppMacInternal.window, sel(performSelectorOnMainThread:withObject:waitUntilDone:), sel(makeKeyAndOrderFront:), nil, YES);
+        
+        $(void, BOOL)(NSApp, sel(activateIgnoringOtherApps:), YES);
+    });
     
     ppInternal.initialized = ppInternal.running = true;
     return true;
@@ -270,9 +300,17 @@ bool ppPollEvents(void) {
 }
 
 void ppFlush(Bitmap *bitmap) {
-    
+    if (!bitmap || !bitmap->buf || !bitmap->w || !bitmap->h)
+        return;
+    ppInternal.pbo = bitmap;
+    $(void, BOOL)($(id)(ppMacInternal.window, sel(contentView)), sel(setNeedsDisplay:), YES);
 }
 
 void ppRelease(void) {
-    
+    if (!ppInternal.initialized)
+        return;
+    if (ppInternal.running)
+        $(void)(ppMacInternal.window, sel(close));
+    $Release(ppMacInternal.window);
+    $(void, id)(NSApp, sel(terminate:), nil);
 }
