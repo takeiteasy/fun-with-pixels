@@ -14,13 +14,12 @@ static struct {
     void *userdata;
     bool initialized;
     bool running;
-    short keycodes[512];
     Bitmap *pbo;
 } ppInternal = {0};
 
 #define X(NAME, ARGS) \
     void(*NAME##Callback)ARGS,
-void ppWindowCallbacks(PP_CALLBACKS void* userdata) {
+void ppCallbacks(PP_CALLBACKS void* userdata) {
 #undef X
 #define X(NAME, ARGS) \
     ppInternal.NAME##Callback = NAME##Callback;
@@ -30,16 +29,20 @@ void ppWindowCallbacks(PP_CALLBACKS void* userdata) {
 }
 
 #define X(NAME, ARGS) \
-    void ppWindow##NAME##Callback(void(*NAME##Callback)ARGS) { \
+    void pp##NAME##Callback(void(*NAME##Callback)ARGS) { \
         ppInternal.NAME##Callback = NAME##Callback; \
     }
 PP_CALLBACKS
 #undef X
 
-void ppWindowUserdata(void *userdata) {
+#define ppCallCallback(CB, ...)  \
+    if (ppInternal.CB##Callback) \
+        ppInternal.CB##Callback(ppInternal.userdata, __VA_ARGS__)
+
+void ppUserdata(void *userdata) {
     ppInternal.userdata = userdata;
 }
 
-bool ppWindowRunning() {
+bool ppRunning() {
     return ppInternal.running;
 }
