@@ -16,9 +16,9 @@ targets:
     info:
       path: Info.plist
     sources:
-        - tests/main.c
-        - src/ppMac.c
+        - tests/
+        - pp.c
     dependencies:
         - sdk: Cocoa.framework
     settings:
-        HEADER_SEARCH_PATHS: [$(PROJECT_DIR)/src, $(PROJECT_DIR)/, $(PROJECT_DIR)/lib/bitmap]
+        HEADER_SEARCH_PATHS: [$(PROJECT_DIR)/src, $(PROJECT_DIR)/ext, $(PROJECT_DIR)/, $(PROJECT_DIR)/lib/bitmap]
