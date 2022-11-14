@@ -1,8 +1,8 @@
+// basic.c - A simple example of how to use pp
+// For infomation on bitmaps, see: https://github.com/takeiteasy/bitmap
 #include "pp.h"
 
-#define WIDTH  640
-#define HEIGHT 480
-
+// Window event callbacks, I think the names are self-explanatory
 void onKeyboard(void *userdata, ppKey key, ppMod modifier, bool isDown) {
     printf("Keyboard Event: Key %d is now %s\n", (int)key, isDown ? "down" : "up");
 }
@@ -31,30 +31,46 @@ void onClosed(void *userdata) {
     printf("Close Event: Window is now closing\n");
 }
 
+#define WIDTH  640
+#define HEIGHT 480
+
 int main(int argc, const char *argv[]) {
+    // Create new resizable window
     ppBegin(WIDTH, HEIGHT, "pp", ppResizable);
-    ppCallbacks(
+    // Assign all event callbacks (see above)
+    // Callbacks can be assigned individually or all at once
+    // The NULL value is optional userdata that will be passed to the event callbacks
 #define X(NAME, ARGS) on##NAME,
-                      PP_CALLBACKS
+    ppCallbacks(PP_CALLBACKS NULL);
 #undef X
-                      NULL);
     
+    // Create empty bitmap to act as framebuffer
+    // The "framebuffer" can be any size and will resize to fit the window
     Bitmap pbo;
     InitBitmap(&pbo, WIDTH, HEIGHT);
     
+    // ppTime returns elapsed time of program (high-res timer)
     double lastTime = ppTime();
+    // ppPoll collects all window events and will return true while window is open
     while (ppPoll()) {
+        // Measure delta time between frames
         double now = ppTime();
         double delta = now - lastTime;
         lastTime = now;
         
+        // Fill framebuffer bitmap solid red
         FillBitmap(&pbo, Red);
+        // Draw a string to framebuffer using in-built debug font
         DrawStringFormat(&pbo, 0, 0, White, "Frame Delta: %f", delta);
+        // Draw a blue rectangle to framebuffer
         DrawRect(&pbo, 50, 50, 50, 50, Blue, true);
+        // Draw framebuffer to screen
         ppFlush(&pbo);
     }
     
+    // Free bitmap
     DestroyBitmap(&pbo);
+    // Free window
     ppEnd();
     return 0;
 }

@@ -26,6 +26,10 @@
 
 #ifndef pp_h
 #define pp_h
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
 #define BITMAP_ENABLE_IO
 #define BITMAP_ENABLE_DEBUG_FONT
 #define BITMAP_ENABLE_BDF_FONT
@@ -46,11 +50,11 @@ typedef enum bool { false = 0, true = !false } bool;
 #endif
 
 typedef enum {
-    ppResizable             = 1 << 0,
-    ppFullscreen            = 1 << 1,
-    ppFullscreenDesktop     = 1 << 2,
-    ppBorderless            = 1 << 3,
-    ppAlwaysOnTop           = 1 << 4
+    ppResizable         = 1 << 0,
+    ppFullscreen        = 1 << 1,
+    ppFullscreenDesktop = 1 << 2,
+    ppBorderless        = 1 << 3,
+    ppAlwaysOnTop       = 1 << 4
 } ppFlags;
 
 typedef enum {
@@ -100,4 +104,7 @@ bool ppRunning(void);
 
 double ppTime(void);
 
+#if defined(__cplusplus)
+}
+#endif
 #endif // pp_h

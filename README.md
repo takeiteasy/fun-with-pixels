@@ -8,6 +8,7 @@ Nothing to see yet
 
 ## TODO
 
+- [ ] Documentation
 - [X] Mac context
 - [ ] Windows context
 - [ ] Linux (X11) context
