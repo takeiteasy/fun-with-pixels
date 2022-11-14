@@ -1,6 +1,6 @@
 # pp
 
-_pp_ **[piːpiː]** or "_Pixel Playground_" is a small enviroment for quick experimentation with software rendering. **WIP**.
+_pp_ **[ˈpiːpiː]** or "_Pixel Playground_" is a small enviroment for quick experimentation with software rendering. **WIP**.
 
 ## Gallery
 
@@ -8,7 +8,7 @@ Nothing to see yet
 
 ## TODO
 
-- [X] Mac contenxt
+- [X] Mac context
 - [ ] Windows context
 - [ ] Linux (X11) context
 - [ ] WebAssembly (Emscripten) context
