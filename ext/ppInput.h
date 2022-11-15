@@ -1,5 +1,7 @@
 /* ppInput.h -- https://github.com/takeiteasy/pp
  
+ Simple input manager to automatically handle event callbacks
+ 
  The MIT License (MIT)
 
  Copyright (c) 2022 George Watson

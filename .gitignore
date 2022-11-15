@@ -3,3 +3,5 @@ build/
 .vscode
 .DS_Store
 *.plist
+live/*.dylib
+live/pp

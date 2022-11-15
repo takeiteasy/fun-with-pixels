@@ -77,9 +77,9 @@ bool ppRunning() {
 
 #if defined(PP_SIXEL)
 #error Sixel is not yet implemented!
-#elif defined(__EMSCRIPTEN__) || defined(EMSCRIPTEN)
+#elif defined(PP_EMSCRIPTEN)
 #error Emscripten is not yet implemented!
-#elif defined(macintosh) || defined(Macintosh) || (defined(__APPLE__) && defined(__MACH__))
+#elif defined(PP_MAC)
 #include <stdio.h>
 #include <limits.h>
 #include <assert.h>
@@ -386,11 +386,9 @@ bool ppBegin(int w, int h, const char *title, ppFlags flags) {
         $Autorelease(windowDelegate);
         $(void, id)(ppMacInternal.window, sel(setDelegate:), windowDelegate);
 
-
         Class View = $Class(View, NSView);
         $Method(View, drawRect:, drawRect, "v@:");
         $SubClass(View);
-
         int trackingFlags = NSTrackingMouseEnteredAndExited | NSTrackingActiveInKeyWindow | NSTrackingInVisibleRect;
         id trackingArea = $(id, NSRect, int, id, id)($Alloc(NSTrackingArea), sel(initWithRect:options:owner:userInfo:), windowFrame, trackingFlags, windowDelegate, nil);
         id view = $(id, NSRect)($Alloc(View), sel(initWithFrame:), windowFrame);
@@ -816,8 +814,10 @@ void ppEnd(void) {
 double ppTime(void) {
     return (mach_absolute_time() * ppMacInternal.info.numer) / (ppMacInternal.info.denom  * 1000000000.0);
 }
-#elif defined(_WIN32) || defined(_WIN64) || defined(__WIN32__) || defined(__WINDOWS__)
+#elif defined(PP_WINDOWS)
 #error Windows is not yet implemented!
-#elif defined(__gnu_linux__) || defined(__linux__) || defined(__unix__)
+#elif defined(PP_LINUX)
 #error Linux is not yet implemented!
+#else
+#error This operating system is unsupported by pp! Sorry!
 #endif

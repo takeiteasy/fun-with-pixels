@@ -16,7 +16,7 @@ targets:
     info:
       path: Info.plist
     sources:
-        - tests/
+        - examples/basic.c
         - pp.c
     dependencies:
         - sdk: Cocoa.framework

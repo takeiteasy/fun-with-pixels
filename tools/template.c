@@ -31,12 +31,14 @@
 
 #if defined(PP_SIXEL)
 {{src/ppSixel.c}}
-#elif defined(__EMSCRIPTEN__) || defined(EMSCRIPTEN)
+#elif defined(PP_EMSCRIPTEN)
 {{src/ppEmscripten.c}}
-#elif defined(macintosh) || defined(Macintosh) || (defined(__APPLE__) && defined(__MACH__))
+#elif defined(PP_MAC)
 {{src/ppMac.c}}
-#elif defined(_WIN32) || defined(_WIN64) || defined(__WIN32__) || defined(__WINDOWS__)
+#elif defined(PP_WINDOWS)
 {{src/ppWindows.c}}
-#elif defined(__gnu_linux__) || defined(__linux__) || defined(__unix__)
+#elif defined(PP_LINUX)
 {{src/ppLinux.c}}
+#else
+#error This operating system is unsupported by pp! Sorry!
 #endif

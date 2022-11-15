@@ -331,11 +331,9 @@ bool ppBegin(int w, int h, const char *title, ppFlags flags) {
         $Autorelease(windowDelegate);
         $(void, id)(ppMacInternal.window, sel(setDelegate:), windowDelegate);
         
-        
         Class View = $Class(View, NSView);
         $Method(View, drawRect:, drawRect, "v@:");
         $SubClass(View);
-        
         int trackingFlags = NSTrackingMouseEnteredAndExited | NSTrackingActiveInKeyWindow | NSTrackingInVisibleRect;
         id trackingArea = $(id, NSRect, int, id, id)($Alloc(NSTrackingArea), sel(initWithRect:options:owner:userInfo:), windowFrame, trackingFlags, windowDelegate, nil);
         id view = $(id, NSRect)($Alloc(View), sel(initWithFrame:), windowFrame);

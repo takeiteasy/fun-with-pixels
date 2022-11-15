@@ -1,5 +1,4 @@
 #define PP_APP_IMPLEMENTATION
-#define PP_INPUT_IMPLEMENTATION
 #include "ppApp.h"
 
 // Called after window is created before loop starts

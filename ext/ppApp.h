@@ -1,5 +1,7 @@
 /* ppApp.h -- https://github.com/takeiteasy/pp
  
+ Simple application wrapper, inspired by sokol_app.h (https://github.com/floooh/sokol/blob/master/sokol_app.h)
+ 
  The MIT License (MIT)
 
  Copyright (c) 2022 George Watson
@@ -31,6 +33,7 @@ extern "C" {
 #endif
 
 #include "pp.h"
+#define PP_INPUT_IMPLEMENTATION
 #include "ppInput.h"
 
 typedef struct {

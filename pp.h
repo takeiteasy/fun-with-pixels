@@ -49,6 +49,17 @@ typedef enum bool { false = 0, true = !false } bool;
 #endif
 #endif
 
+#if defined(__EMSCRIPTEN__) || defined(EMSCRIPTEN)
+#define PP_EMSCRIPTEN
+#endif
+#if defined(macintosh) || defined(Macintosh) || (defined(__APPLE__) && defined(__MACH__))
+#define PP_MAC
+#elif defined(_WIN32) || defined(_WIN64) || defined(__WIN32__) || defined(__WINDOWS__)
+#define PP_WINDOWS
+#elif defined(__gnu_linux__) || defined(__linux__) || defined(__unix__)
+#define PP_LINUX
+#endif
+
 typedef enum {
     ppResizable         = 1 << 0,
     ppFullscreen        = 1 << 1,

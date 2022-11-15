@@ -19,6 +19,7 @@ SOURCES=$(wildcard src/*.c)
 SOURCE=pp.c
 CC=clang
 
+all: library
 default: library
 
 $(SOURCE): $(SOURCES)
@@ -27,4 +28,4 @@ $(SOURCE): $(SOURCES)
 library: $(SOURCE)
 	$(CC) -shared -fpic $(LIBS) -Ilib/bitmap $^ -o build/libpp.$(LIBEXT)
 
-.PHONY: default library
+.PHONY: default library all
