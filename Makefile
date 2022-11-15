@@ -23,9 +23,10 @@ all: library
 default: library
 
 $(SOURCE): $(SOURCES)
+	mkdir build/ || true
 	ruby tools/generate.rb
 
 library: $(SOURCE)
-	$(CC) -shared -fpic $(LIBS) -Ilib/bitmap $^ -o build/libpp.$(LIBEXT)
+	$(CC) -shared -fpic $(LIBS) -Isrc/bitmap $^ -o build/libpp.$(LIBEXT)
 
 .PHONY: default library all

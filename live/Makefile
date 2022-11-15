@@ -15,7 +15,7 @@ else
 		$(error OS not supported by this Makefile)
 	endif
 endif
-CFLAGS=-I../ -I../lib/bitmap/ ../pp.c $(LIBS)
+CFLAGS=-I../ -I../src/bitmap/ ../pp.c $(LIBS)
 APP=app.c
 PROGRAM=pp$(PROGEXT)
 LIBRARY=libapp.$(LIBEXT)
@@ -26,13 +26,9 @@ program: ppLive.c
 library: program
 	$(CC) $(CFLAGS) $(APP) -shared -fpic -o $(LIBRARY)
 
-run: program library
-	./$(PROGRAM) -p $(LIBRARY) -ar
-
 clean:
 	rm $(PROGRAM) $(LIBRARY) || true
 
-default: library
-all: run
+all: library
 
 .PHONY: program library run all default

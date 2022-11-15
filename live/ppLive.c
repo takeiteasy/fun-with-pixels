@@ -32,7 +32,7 @@
 #include "pp.h"
 #define PP_INPUT_IMPLEMENTATION
 #include "ppInput.h"
-#include "app.h"
+#include "ppLive.h"
 
 static State *state = NULL;
 static App *app = NULL;
