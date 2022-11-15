@@ -7,7 +7,7 @@ else
 	PROGEXT=
 	ifeq ($(UNAME),Darwin)
 		LIBEXT=dylib
-		LIBS=-framework Cocoa
+		LIBS=-framework Cocoa -pthread
 	else ifeq ($(UNAME),Linux)
 		LIBEXT=so
 		LIBS=-lX11
@@ -27,7 +27,7 @@ library: program
 	$(CC) $(CFLAGS) $(APP) -shared -fpic -o $(LIBRARY)
 
 run: program library
-	./$(PROGRAM) -p $(LIBRARY)
+	./$(PROGRAM) -p $(LIBRARY) -ar
 
 clean:
 	rm $(PROGRAM) $(LIBRARY) || true
