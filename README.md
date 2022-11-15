@@ -2,7 +2,7 @@
 
 _pp_ **[ˈpiːpiː]** or "_Pixel Playground_" is a small enviroment for quick experimentation with software rendering. Very simple API, build on top of my own [bitmap](https://github.com/takeiteasy/bitmap) library.
 
-Includes a live coding solution, located in ```live``` directory (see [building](https://github.com/takeiteasy/pp#building) section for more info). Additionally, a [sokol_app](https://github.com/floooh/sokol/blob/master/sokol_app.h)-like application wrapper and more can be found in the ```ext``` directory.
+Includes a live coding solution, located in ```live``` directory (see [building](https://github.com/takeiteasy/pp#building) section for more info). Additionally, a [sokol_app](https://github.com/floooh/sokol/blob/master/sokol_app.h)-like application wrapper and more can be found in the ```extra``` directory.
 
 **WIP** -- See [TODO](https://github.com/takeiteasy/pp#todo) section for current progress.
 

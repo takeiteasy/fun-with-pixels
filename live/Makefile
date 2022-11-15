@@ -21,7 +21,7 @@ PROGRAM=pp$(PROGEXT)
 LIBRARY=libapp.$(LIBEXT)
 
 program: ppLive.c
-	$(CC) $(CFLAGS) -I../ext $^ -o $(PROGRAM)
+	$(CC) $(CFLAGS) -I../extra $^ -o $(PROGRAM)
 
 library: program
 	$(CC) $(CFLAGS) $(APP) -shared -fpic -o $(LIBRARY)
