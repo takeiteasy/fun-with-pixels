@@ -19,7 +19,7 @@ SOURCES=$(wildcard src/*.c)
 SOURCE=pp.c
 CC=clang
 
-all: library
+all: library docs
 default: library
 
 $(SOURCE): $(SOURCES)
@@ -29,4 +29,15 @@ $(SOURCE): $(SOURCES)
 library: $(SOURCE)
 	$(CC) -shared -fpic $(LIBS) -Isrc/bitmap $^ -o build/libpp.$(LIBEXT)
 
-.PHONY: default library all
+DOCS=./docs
+
+$(DOCS):
+	mkdir $(DOCS)
+
+docs: $(DOCS)
+	rm -rf $(DOCS)
+	headerdoc2html -udpb pp.h -o $(DOCS)
+	gatherheaderdoc $(DOCS)
+	mv $(DOCS)/masterTOC.html $(DOCS)/index.html
+
+.PHONY: default library all docs
