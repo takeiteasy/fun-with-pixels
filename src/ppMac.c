@@ -741,8 +741,10 @@ bool ppPoll(void) {
 }
 
 void ppFlush(Bitmap *bitmap) {
-    if (!bitmap || !bitmap->buf || !bitmap->w || !bitmap->h)
+    if (!bitmap || !bitmap->buf || !bitmap->w || !bitmap->h) {
+        ppInternal.pbo = NULL;
         return;
+    }
     ppInternal.pbo = bitmap;
     $(void, BOOL)($(id)(ppMacInternal.window, sel(contentView)), sel(setNeedsDisplay:), YES);
 }

@@ -60,6 +60,12 @@ typedef enum bool { false = 0, true = !false } bool;
 #define PP_LINUX
 #endif
 
+#if defined(PP_WINDOWS)
+#define EXPORT __declspec(dllexport)
+#else
+#define EXPORT
+#endif
+
 typedef enum {
     ppResizable         = 1 << 0,
     ppFullscreen        = 1 << 1,
@@ -97,23 +103,23 @@ typedef enum {
     X(Focus,        (void*, bool))                   \
     X(Closed,       (void*))
 
-bool ppBegin(int w, int h, const char *title, ppFlags flags);
-bool ppPoll(void);
-void ppFlush(Bitmap *bitmap);
-void ppEnd(void);
+EXPORT bool ppBegin(int w, int h, const char *title, ppFlags flags);
+EXPORT bool ppPoll(void);
+EXPORT void ppFlush(Bitmap *bitmap);
+EXPORT void ppEnd(void);
 
 #define X(NAME, ARGS) \
     void(*NAME##Callback)ARGS,
-void ppCallbacks(PP_CALLBACKS void *userdata);
+EXPORT void ppCallbacks(PP_CALLBACKS void *userdata);
 #undef X
 #define X(NAME, ARGS) \
-    void pp##NAME##Callback(void(*NAME##Callback)ARGS);
+    EXPORT void pp##NAME##Callback(void(*NAME##Callback)ARGS);
 PP_CALLBACKS
 #undef X
-void ppUserdata(void *userdata);
-bool ppRunning(void);
+EXPORT void ppUserdata(void *userdata);
+EXPORT bool ppRunning(void);
 
-double ppTime(void);
+EXPORT double ppTime(void);
 
 #if defined(__cplusplus)
 }
