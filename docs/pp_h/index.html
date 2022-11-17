@@ -264,9 +264,16 @@ function disclosure_triangle(elt) {
 <tr>
 <td scope="row"><b>Includes:</b></td>
 <td><div style="margin-bottom:1px"><div class="content_text">
-<!-- a logicalPath="//apple_ref/doc/header/bitmap.h" machineGenerated="true" -->"bitmap.h"<!-- /a --><br>
 <!-- a logicalPath="//apple_ref/doc/header/windef.h" machineGenerated="true" -->&lt;windef.h&gt;<!-- /a --><br>
-<!-- a logicalPath="//apple_ref/doc/header/stdbool.h" machineGenerated="true" -->&lt;stdbool.h&gt;<!-- /a -->
+<!-- a logicalPath="//apple_ref/doc/header/stdbool.h" machineGenerated="true" -->&lt;stdbool.h&gt;<!-- /a --><br>
+<!-- a logicalPath="//apple_ref/doc/header/stdio.h" machineGenerated="true" -->&lt;stdio.h&gt;<!-- /a --><br>
+<!-- a logicalPath="//apple_ref/doc/header/stdarg.h" machineGenerated="true" -->&lt;stdarg.h&gt;<!-- /a --><br>
+<!-- a logicalPath="//apple_ref/doc/header/stdlib.h" machineGenerated="true" -->&lt;stdlib.h&gt;<!-- /a --><br>
+<!-- a logicalPath="//apple_ref/doc/header/stdarg.h" machineGenerated="true" -->&lt;stdarg.h&gt;<!-- /a --><br>
+<!-- a logicalPath="//apple_ref/doc/header/string.h" machineGenerated="true" -->&lt;string.h&gt;<!-- /a --><br>
+<!-- a logicalPath="//apple_ref/doc/header/math.h" machineGenerated="true" -->&lt;math.h&gt;<!-- /a --><br>
+<!-- a logicalPath="//apple_ref/doc/header/setjmp.h" machineGenerated="true" -->&lt;setjmp.h&gt;<!-- /a --><br>
+<!-- a logicalPath="//apple_ref/doc/header/errno.h" machineGenerated="true" -->&lt;errno.h&gt;<!-- /a -->
 </div></div></td>
 </tr>
 </table></div>
@@ -277,6 +284,69 @@ function disclosure_triangle(elt) {
 <br><a name="HeaderDoc_functions"></a>
 <h2 class="h2tight">Functions</h2>
 <dl>
+<dt><tt><a href="index.html#//apple_ref/c/func/BSet" target="_top">BSet</a></tt></dt>
+<dd><p>Set and blend colors
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/ClearBitmap" target="_top">ClearBitmap</a></tt></dt>
+<dd><p>Clear a bitmap
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/CopyBitmap" target="_top">CopyBitmap</a></tt></dt>
+<dd><p>Create a copy of a bitmap
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/DestroyBitmap" target="_top">DestroyBitmap</a></tt></dt>
+<dd><p>Free allocated image data
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/DrawCharacter" target="_top">DrawCharacter</a></tt></dt>
+<dd><p>Render a character to a bitmap
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/DrawCircle" target="_top">DrawCircle</a></tt></dt>
+<dd><p>Draw a circle
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/doc/title:func/DrawCricle" target="_top">DrawCricle</a></tt></dt>
+<dd><p>Draw a circle
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/DrawLine" target="_top">DrawLine</a></tt></dt>
+<dd><p>Simple Bresenham line
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/DrawRect" target="_top">DrawRect</a></tt></dt>
+<dd><p>Draw a rectangle
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/DrawString" target="_top">DrawString</a></tt></dt>
+<dd><p>Render a string to a bitmap
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/DrawStringFormat" target="_top">DrawStringFormat</a></tt></dt>
+<dd><p>Render a formatted string to a bitmap
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/DrawTri" target="_top">DrawTri</a></tt></dt>
+<dd><p>Draw a triangle
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/FillBitmap" target="_top">FillBitmap</a></tt></dt>
+<dd><p>Fill a bitmap with a given color
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/FloodBitmap" target="_top">FloodBitmap</a></tt></dt>
+<dd><p>Flood fill on bitmap object
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/InitBitmap" target="_top">InitBitmap</a></tt></dt>
+<dd><p>Create a new bitmap object
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/LoadBitmap" target="_top">LoadBitmap</a></tt></dt>
+<dd><p>Load a .png file to bitmap object
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/LoadBitmapMemory" target="_top">LoadBitmapMemory</a></tt></dt>
+<dd><p>Load a .png from memory to bitmap object
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/PassthruBitmap" target="_top">PassthruBitmap</a></tt></dt>
+<dd><p>Loop through each pixel of bitmap and run position and color through a callback.
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/PasteBitmap" target="_top">PasteBitmap</a></tt></dt>
+<dd><p>Blit one bitmap onto another at point
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/PasteBitmapClip" target="_top">PasteBitmapClip</a></tt></dt>
+<dd><p>Blit one bitmap onto another at point with clipping rect
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/PGet" target="_top">PGet</a></tt></dt>
+<dd><p>Get bitmap pixel color at position
+</p></dd>
 <dt><tt><a href="index.html#//apple_ref/c/func/ppBegin" target="_top">ppBegin</a></tt></dt>
 <dd><p>pp initialization function
 </p></dd>
@@ -301,7 +371,1060 @@ function disclosure_triangle(elt) {
 <dt><tt><a href="index.html#//apple_ref/c/func/ppUserdata" target="_top">ppUserdata</a></tt></dt>
 <dd><p>Set custom userdata to be passed to callback functions
 </p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/PSet" target="_top">PSet</a></tt></dt>
+<dd><p>Set bitmap pixel color (without blending)
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/RGB" target="_top">RGB</a></tt></dt>
+<dd><p>Convert RGB to packed integer
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/RGB1" target="_top">RGB1</a></tt></dt>
+<dd><p>Create a packed RGBA integer from one channel
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/RGBA" target="_top">RGBA</a></tt></dt>
+<dd><p>Create a packed RGBA integer
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/Rgba" target="_top">Rgba</a></tt></dt>
+<dd><p>Retrieve R channel from packed RGBA integer
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/rGba" target="_top">rGba</a></tt></dt>
+<dd><p>Retrieve G channel from packed RGBA integer
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/rgBa" target="_top">rgBa</a></tt></dt>
+<dd><p>Retrieve B channel from packed RGBA integer
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/rgbA" target="_top">rgbA</a></tt></dt>
+<dd><p>Retrieve A channel from packed RGBA integer
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/rGBA" target="_top">rGBA</a></tt></dt>
+<dd><p>Modify R channel of packed RGBA integer
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/RgBA" target="_top">RgBA</a></tt></dt>
+<dd><p>Modify G channel of packed RGBA integer
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/RGbA" target="_top">RGbA</a></tt></dt>
+<dd><p>Modify B channel of packed RGBA integer
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/RGBa" target="_top">RGBa</a></tt></dt>
+<dd><p>Modify A channel of packed RGBA integer
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/RGBA1" target="_top">RGBA1</a></tt></dt>
+<dd><p>Create a packed RGBA integer from one channel
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/RotateBitmap" target="_top">RotateBitmap</a></tt></dt>
+<dd><p>Rotate a bitmap by a given degree
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/SaveBitmap" target="_top">SaveBitmap</a></tt></dt>
+<dd><p>Save bitmap to .png file
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/ScaleBitmap" target="_top">ScaleBitmap</a></tt></dt>
+<dd><p>Scale bitmap to given size
+</p></dd>
 </dl>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/BSet;   name=BSet -->
+<a name="//apple_ref/c/func/BSet"></a>
+<h3><a name="BSet">BSet</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/BSet;name=start --><!-- begin abstract --></p>
+<p>Set and blend colors
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/BSet;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/BSet;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/void //apple_ref/c/tdef/void //apple_ref/c/tag/void //apple_ref/c/struct/void //apple_ref/c/intf/void //apple_ref/doc/anysymbol/void" machineGenerated="true" --><span class="type">void</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/BSet" logicalPath="//apple_ref/c/instm/BSet //apple_ref/c/clm/BSet //apple_ref/c/intfcm/BSet //apple_ref/c/intfm/BSet //apple_ref/c/func/BSet" target="_top"><span class="function">BSet</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">x</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">y</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">col</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/BSet;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/BSet/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/BSet/b"></a>
+<code>b</code>
+</dt>
+<dd><p>Bitmap object</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/BSet/x;   name=x -->
+<a name="//apple_ref/doc/functionparam/BSet/x"></a>
+<code>x</code>
+</dt>
+<dd><p>X position</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/BSet/y;   name=y -->
+<a name="//apple_ref/doc/functionparam/BSet/y"></a>
+<code>y</code>
+</dt>
+<dd><p>Y position</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/BSet/col;   name=col -->
+<a name="//apple_ref/doc/functionparam/BSet/col"></a>
+<code>col</code>
+</dt>
+<dd><p>Color to set</p></dd>
+</dl>
+</div>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/ClearBitmap;   name=ClearBitmap -->
+<a name="//apple_ref/c/func/ClearBitmap"></a>
+<h3><a name="ClearBitmap">ClearBitmap</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/ClearBitmap;name=start --><!-- begin abstract --></p>
+<p>Clear a bitmap
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ClearBitmap;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ClearBitmap;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/void //apple_ref/c/tdef/void //apple_ref/c/tag/void //apple_ref/c/struct/void //apple_ref/c/intf/void //apple_ref/doc/anysymbol/void" machineGenerated="true" --><span class="type">void</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ClearBitmap" logicalPath="//apple_ref/c/instm/ClearBitmap //apple_ref/c/clm/ClearBitmap //apple_ref/c/intfcm/ClearBitmap //apple_ref/c/intfm/ClearBitmap //apple_ref/c/func/ClearBitmap" target="_top"><span class="function">ClearBitmap</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ClearBitmap;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ClearBitmap/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/ClearBitmap/b"></a>
+<code>b</code>
+</dt>
+<dd><p>Bitmap object</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/ClearBitmap;name=start --><p>Basically the same as calling FillBitmap(&amp;bitmap, Black)
+<!-- headerDoc=discussion;uid=//apple_ref/c/func/ClearBitmap;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/CopyBitmap;   name=CopyBitmap -->
+<a name="//apple_ref/c/func/CopyBitmap"></a>
+<h3><a name="CopyBitmap">CopyBitmap</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/CopyBitmap;name=start --><!-- begin abstract --></p>
+<p>Create a copy of a bitmap
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/CopyBitmap;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/CopyBitmap;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/CopyBitmap" logicalPath="//apple_ref/c/instm/CopyBitmap //apple_ref/c/clm/CopyBitmap //apple_ref/c/intfcm/CopyBitmap //apple_ref/c/intfm/CopyBitmap //apple_ref/c/func/CopyBitmap" target="_top"><span class="function">CopyBitmap</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">a</span>,
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/CopyBitmap;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/CopyBitmap/a;   name=a -->
+<a name="//apple_ref/doc/functionparam/CopyBitmap/a"></a>
+<code>a</code>
+</dt>
+<dd><p>Original bitmap object</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/CopyBitmap/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/CopyBitmap/b"></a>
+<code>b</code>
+</dt>
+<dd><p>New bitmap object to be allocated</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Boolean of success/failure
+
+<!-- end return value --></p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/DestroyBitmap;   name=DestroyBitmap -->
+<a name="//apple_ref/c/func/DestroyBitmap"></a>
+<h3><a name="DestroyBitmap">DestroyBitmap</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/DestroyBitmap;name=start --><!-- begin abstract --></p>
+<p>Free allocated image data
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/DestroyBitmap;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/DestroyBitmap;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/void //apple_ref/c/tdef/void //apple_ref/c/tag/void //apple_ref/c/struct/void //apple_ref/c/intf/void //apple_ref/doc/anysymbol/void" machineGenerated="true" --><span class="type">void</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/DestroyBitmap" logicalPath="//apple_ref/c/instm/DestroyBitmap //apple_ref/c/clm/DestroyBitmap //apple_ref/c/intfcm/DestroyBitmap //apple_ref/c/intfm/DestroyBitmap //apple_ref/c/func/DestroyBitmap" target="_top"><span class="function">DestroyBitmap</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/DestroyBitmap;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DestroyBitmap/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/DestroyBitmap/b"></a>
+<code>b</code>
+</dt>
+<dd><p>Reference to bitmap object</p></dd>
+</dl>
+</div>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/DrawCharacter;   name=DrawCharacter -->
+<a name="//apple_ref/c/func/DrawCharacter"></a>
+<h3><a name="DrawCharacter">DrawCharacter</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/DrawCharacter;name=start --><!-- begin abstract --></p>
+<p>Render a character to a bitmap
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/DrawCharacter;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/DrawCharacter;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/void //apple_ref/c/tdef/void //apple_ref/c/tag/void //apple_ref/c/struct/void //apple_ref/c/intf/void //apple_ref/doc/anysymbol/void" machineGenerated="true" --><span class="type">void</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/DrawCharacter" logicalPath="//apple_ref/c/instm/DrawCharacter //apple_ref/c/clm/DrawCharacter //apple_ref/c/intfcm/DrawCharacter //apple_ref/c/intfm/DrawCharacter //apple_ref/c/func/DrawCharacter" target="_top"><span class="function">DrawCharacter</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/char //apple_ref/c/tdef/char //apple_ref/c/tag/char //apple_ref/c/struct/char //apple_ref/c/intf/char //apple_ref/doc/anysymbol/char" machineGenerated="true" --><span class="type">char</span><!-- /a --> <span class="param">c</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">x</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">y</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">col</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/DrawCharacter;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawCharacter/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/DrawCharacter/b"></a>
+<code>b</code>
+</dt>
+<dd><p>Bitmap destination</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawCharacter/c;   name=c -->
+<a name="//apple_ref/doc/functionparam/DrawCharacter/c"></a>
+<code>c</code>
+</dt>
+<dd><p>Character to render</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawCharacter/x;   name=x -->
+<a name="//apple_ref/doc/functionparam/DrawCharacter/x"></a>
+<code>x</code>
+</dt>
+<dd><p>X offset</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawCharacter/y;   name=y -->
+<a name="//apple_ref/doc/functionparam/DrawCharacter/y"></a>
+<code>y</code>
+</dt>
+<dd><p>Y offset</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawCharacter/col;   name=col -->
+<a name="//apple_ref/doc/functionparam/DrawCharacter/col"></a>
+<code>col</code>
+</dt>
+<dd><p>Color of character</p></dd>
+</dl>
+</div>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/DrawCircle;   name=DrawCircle -->
+<a name="//apple_ref/c/func/DrawCircle"></a>
+<h3><a name="DrawCircle">DrawCircle</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/DrawCircle;name=start --><!-- begin abstract --></p>
+<p>Draw a circle
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/DrawCircle;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/DrawCircle;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/void //apple_ref/c/tdef/void //apple_ref/c/tag/void //apple_ref/c/struct/void //apple_ref/c/intf/void //apple_ref/doc/anysymbol/void" machineGenerated="true" --><span class="type">void</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/DrawCircle" logicalPath="//apple_ref/c/instm/DrawCircle //apple_ref/c/clm/DrawCircle //apple_ref/c/intfcm/DrawCircle //apple_ref/c/intfm/DrawCircle //apple_ref/c/func/DrawCircle" target="_top"><span class="function">DrawCircle</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">xc</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">yc</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">r</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">col</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <span class="param">fill</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/DrawCircle;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawCircle/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/DrawCircle/b"></a>
+<code>b</code>
+</dt>
+<dd><p>Bitmap object</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawCircle/xc;   name=xc -->
+<a name="//apple_ref/doc/functionparam/DrawCircle/xc"></a>
+<code>xc</code>
+</dt>
+<dd><p>Centre X position</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawCircle/yc;   name=yc -->
+<a name="//apple_ref/doc/functionparam/DrawCircle/yc"></a>
+<code>yc</code>
+</dt>
+<dd><p>Centre Y position</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawCircle/r;   name=r -->
+<a name="//apple_ref/doc/functionparam/DrawCircle/r"></a>
+<code>r</code>
+</dt>
+<dd><p>Circle radius</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawCircle/col;   name=col -->
+<a name="//apple_ref/doc/functionparam/DrawCircle/col"></a>
+<code>col</code>
+</dt>
+<dd><p>Color of cricle</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawCircle/fill;   name=fill -->
+<a name="//apple_ref/doc/functionparam/DrawCircle/fill"></a>
+<code>fill</code>
+</dt>
+<dd><p>Fill circle boolean</p></dd>
+</dl>
+</div>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=title:func;  uid=//apple_ref/doc/title:func/DrawCricle;   name=DrawCricle -->
+<a name="//apple_ref/doc/title:func/DrawCricle"></a>
+<h3><a name="DrawCricle">DrawCricle</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/doc/title:func/DrawCricle;name=start --><!-- begin abstract --></p>
+<p>Draw a circle
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/doc/title:func/DrawCricle;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/doc/title:func/DrawCricle;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/void //apple_ref/c/tdef/void //apple_ref/c/tag/void //apple_ref/c/struct/void //apple_ref/c/intf/void //apple_ref/doc/anysymbol/void" machineGenerated="true" --><span class="type">void</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/DrawCircle" logicalPath="//apple_ref/c/instm/DrawCircle //apple_ref/c/clm/DrawCircle //apple_ref/c/intfcm/DrawCircle //apple_ref/c/intfm/DrawCircle //apple_ref/c/func/DrawCircle" target="_top"><span class="function">DrawCircle</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">xc</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">yc</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">r</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">col</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <span class="param">fill</span>);  <!-- headerDoc=declaration;uid=//apple_ref/doc/title:func/DrawCricle;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawCricle/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/DrawCricle/b"></a>
+<code>b</code>
+</dt>
+<dd><p>Bitmap object</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawCricle/xc;   name=xc -->
+<a name="//apple_ref/doc/functionparam/DrawCricle/xc"></a>
+<code>xc</code>
+</dt>
+<dd><p>Centre X position</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawCricle/yc;   name=yc -->
+<a name="//apple_ref/doc/functionparam/DrawCricle/yc"></a>
+<code>yc</code>
+</dt>
+<dd><p>Centre Y position</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawCricle/r;   name=r -->
+<a name="//apple_ref/doc/functionparam/DrawCricle/r"></a>
+<code>r</code>
+</dt>
+<dd><p>Circle radius</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawCricle/col;   name=col -->
+<a name="//apple_ref/doc/functionparam/DrawCricle/col"></a>
+<code>col</code>
+</dt>
+<dd><p>Color of cricle</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawCricle/fill;   name=fill -->
+<a name="//apple_ref/doc/functionparam/DrawCricle/fill"></a>
+<code>fill</code>
+</dt>
+<dd><p>Fill circle boolean</p></dd>
+</dl>
+</div>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/DrawLine;   name=DrawLine -->
+<a name="//apple_ref/c/func/DrawLine"></a>
+<h3><a name="DrawLine">DrawLine</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/DrawLine;name=start --><!-- begin abstract --></p>
+<p>Simple Bresenham line
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/DrawLine;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/DrawLine;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/void //apple_ref/c/tdef/void //apple_ref/c/tag/void //apple_ref/c/struct/void //apple_ref/c/intf/void //apple_ref/doc/anysymbol/void" machineGenerated="true" --><span class="type">void</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/DrawLine" logicalPath="//apple_ref/c/instm/DrawLine //apple_ref/c/clm/DrawLine //apple_ref/c/intfcm/DrawLine //apple_ref/c/intfm/DrawLine //apple_ref/c/func/DrawLine" target="_top"><span class="function">DrawLine</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">x0</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">y0</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">x1</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">y1</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">col</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/DrawLine;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawLine/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/DrawLine/b"></a>
+<code>b</code>
+</dt>
+<dd><p>Bitmap object</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawLine/x0;   name=x0 -->
+<a name="//apple_ref/doc/functionparam/DrawLine/x0"></a>
+<code>x0</code>
+</dt>
+<dd><p>Vector A X position</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawLine/y0;   name=y0 -->
+<a name="//apple_ref/doc/functionparam/DrawLine/y0"></a>
+<code>y0</code>
+</dt>
+<dd><p>Vector A Y position</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawLine/x1;   name=x1 -->
+<a name="//apple_ref/doc/functionparam/DrawLine/x1"></a>
+<code>x1</code>
+</dt>
+<dd><p>Vector B X position</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawLine/y1;   name=y1 -->
+<a name="//apple_ref/doc/functionparam/DrawLine/y1"></a>
+<code>y1</code>
+</dt>
+<dd><p>Vector B Y position</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawLine/col;   name=col -->
+<a name="//apple_ref/doc/functionparam/DrawLine/col"></a>
+<code>col</code>
+</dt>
+<dd><p>Color of line</p></dd>
+</dl>
+</div>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/DrawRect;   name=DrawRect -->
+<a name="//apple_ref/c/func/DrawRect"></a>
+<h3><a name="DrawRect">DrawRect</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/DrawRect;name=start --><!-- begin abstract --></p>
+<p>Draw a rectangle
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/DrawRect;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/DrawRect;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/void //apple_ref/c/tdef/void //apple_ref/c/tag/void //apple_ref/c/struct/void //apple_ref/c/intf/void //apple_ref/doc/anysymbol/void" machineGenerated="true" --><span class="type">void</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/DrawRect" logicalPath="//apple_ref/c/instm/DrawRect //apple_ref/c/clm/DrawRect //apple_ref/c/intfcm/DrawRect //apple_ref/c/intfm/DrawRect //apple_ref/c/func/DrawRect" target="_top"><span class="function">DrawRect</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">x</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">y</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">w</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">h</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">col</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <span class="param">fill</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/DrawRect;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawRect/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/DrawRect/b"></a>
+<code>b</code>
+</dt>
+<dd><p>Bitmap object</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawRect/x;   name=x -->
+<a name="//apple_ref/doc/functionparam/DrawRect/x"></a>
+<code>x</code>
+</dt>
+<dd><p>X position</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawRect/y;   name=y -->
+<a name="//apple_ref/doc/functionparam/DrawRect/y"></a>
+<code>y</code>
+</dt>
+<dd><p>Y position</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawRect/w;   name=w -->
+<a name="//apple_ref/doc/functionparam/DrawRect/w"></a>
+<code>w</code>
+</dt>
+<dd><p>Rectangle width</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawRect/h;   name=h -->
+<a name="//apple_ref/doc/functionparam/DrawRect/h"></a>
+<code>h</code>
+</dt>
+<dd><p>Rectangle height</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawRect/col;   name=col -->
+<a name="//apple_ref/doc/functionparam/DrawRect/col"></a>
+<code>col</code>
+</dt>
+<dd><p>Color of rectangle</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawRect/fill;   name=fill -->
+<a name="//apple_ref/doc/functionparam/DrawRect/fill"></a>
+<code>fill</code>
+</dt>
+<dd><p>Fill rectangle boolean</p></dd>
+</dl>
+</div>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/DrawString;   name=DrawString -->
+<a name="//apple_ref/c/func/DrawString"></a>
+<h3><a name="DrawString">DrawString</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/DrawString;name=start --><!-- begin abstract --></p>
+<p>Render a string to a bitmap
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/DrawString;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/DrawString;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/void //apple_ref/c/tdef/void //apple_ref/c/tag/void //apple_ref/c/struct/void //apple_ref/c/intf/void //apple_ref/doc/anysymbol/void" machineGenerated="true" --><span class="type">void</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/DrawString" logicalPath="//apple_ref/c/instm/DrawString //apple_ref/c/clm/DrawString //apple_ref/c/intfcm/DrawString //apple_ref/c/intfm/DrawString //apple_ref/c/func/DrawString" target="_top"><span class="function">DrawString</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>,
+    <span class="keyword">const</span> <!-- a logicalPath="//apple_ref/c/cl/char //apple_ref/c/tdef/char //apple_ref/c/tag/char //apple_ref/c/struct/char //apple_ref/c/intf/char //apple_ref/doc/anysymbol/char" machineGenerated="true" --><span class="type">char</span><!-- /a --> <span class="type">*</span><span class="param">str</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">x</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">y</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">col</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/DrawString;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawString/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/DrawString/b"></a>
+<code>b</code>
+</dt>
+<dd><p>Bitmap destination</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawString/str;   name=str -->
+<a name="//apple_ref/doc/functionparam/DrawString/str"></a>
+<code>str</code>
+</dt>
+<dd><p>String to render</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawString/x;   name=x -->
+<a name="//apple_ref/doc/functionparam/DrawString/x"></a>
+<code>x</code>
+</dt>
+<dd><p>X offset</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawString/y;   name=y -->
+<a name="//apple_ref/doc/functionparam/DrawString/y"></a>
+<code>y</code>
+</dt>
+<dd><p>Y offset</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawString/col;   name=col -->
+<a name="//apple_ref/doc/functionparam/DrawString/col"></a>
+<code>col</code>
+</dt>
+<dd><p>Color of character</p></dd>
+</dl>
+</div>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/DrawStringFormat;   name=DrawStringFormat -->
+<a name="//apple_ref/c/func/DrawStringFormat"></a>
+<h3><a name="DrawStringFormat">DrawStringFormat</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/DrawStringFormat;name=start --><!-- begin abstract --></p>
+<p>Render a formatted string to a bitmap
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/DrawStringFormat;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/DrawStringFormat;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/void //apple_ref/c/tdef/void //apple_ref/c/tag/void //apple_ref/c/struct/void //apple_ref/c/intf/void //apple_ref/doc/anysymbol/void" machineGenerated="true" --><span class="type">void</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/DrawStringFormat" logicalPath="//apple_ref/c/instm/DrawStringFormat //apple_ref/c/clm/DrawStringFormat //apple_ref/c/intfcm/DrawStringFormat //apple_ref/c/intfm/DrawStringFormat //apple_ref/c/func/DrawStringFormat" target="_top"><span class="function">DrawStringFormat</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">x</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">y</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">col</span>,
+    <span class="keyword">const</span> <!-- a logicalPath="//apple_ref/c/cl/char //apple_ref/c/tdef/char //apple_ref/c/tag/char //apple_ref/c/struct/char //apple_ref/c/intf/char //apple_ref/doc/anysymbol/char" machineGenerated="true" --><span class="type">char</span><!-- /a --> <span class="type">*</span><span class="param">fmt</span>,
+    ...);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/DrawStringFormat;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawStringFormat/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/DrawStringFormat/b"></a>
+<code>b</code>
+</dt>
+<dd><p>Bitmap destination</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawStringFormat/x;   name=x -->
+<a name="//apple_ref/doc/functionparam/DrawStringFormat/x"></a>
+<code>x</code>
+</dt>
+<dd><p>X offset</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawStringFormat/y;   name=y -->
+<a name="//apple_ref/doc/functionparam/DrawStringFormat/y"></a>
+<code>y</code>
+</dt>
+<dd><p>Y offset</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawStringFormat/col;   name=col -->
+<a name="//apple_ref/doc/functionparam/DrawStringFormat/col"></a>
+<code>col</code>
+</dt>
+<dd><p>Color of character</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawStringFormat/fmt;   name=fmt -->
+<a name="//apple_ref/doc/functionparam/DrawStringFormat/fmt"></a>
+<code>fmt</code>
+</dt>
+<dd><p>Formatting string</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawStringFormat/...;   name=... -->
+<a name="//apple_ref/doc/functionparam/DrawStringFormat/..."></a>
+<code>...</code>
+</dt>
+<dd><p>Formatting paramters</p></dd>
+</dl>
+</div>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/DrawTri;   name=DrawTri -->
+<a name="//apple_ref/c/func/DrawTri"></a>
+<h3><a name="DrawTri">DrawTri</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/DrawTri;name=start --><!-- begin abstract --></p>
+<p>Draw a triangle
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/DrawTri;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/DrawTri;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/void //apple_ref/c/tdef/void //apple_ref/c/tag/void //apple_ref/c/struct/void //apple_ref/c/intf/void //apple_ref/doc/anysymbol/void" machineGenerated="true" --><span class="type">void</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/DrawTri" logicalPath="//apple_ref/c/instm/DrawTri //apple_ref/c/clm/DrawTri //apple_ref/c/intfcm/DrawTri //apple_ref/c/intfm/DrawTri //apple_ref/c/func/DrawTri" target="_top"><span class="function">DrawTri</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">x0</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">y0</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">x1</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">y1</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">x2</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">y2</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">col</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <span class="param">fill</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/DrawTri;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawTri/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/DrawTri/b"></a>
+<code>b</code>
+</dt>
+<dd><p>Bitmap object</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawTri/x0;   name=x0 -->
+<a name="//apple_ref/doc/functionparam/DrawTri/x0"></a>
+<code>x0</code>
+</dt>
+<dd><p>Vector A X position</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawTri/y0;   name=y0 -->
+<a name="//apple_ref/doc/functionparam/DrawTri/y0"></a>
+<code>y0</code>
+</dt>
+<dd><p>Vector A Y position</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawTri/x1;   name=x1 -->
+<a name="//apple_ref/doc/functionparam/DrawTri/x1"></a>
+<code>x1</code>
+</dt>
+<dd><p>Vector B X position</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawTri/y1;   name=y1 -->
+<a name="//apple_ref/doc/functionparam/DrawTri/y1"></a>
+<code>y1</code>
+</dt>
+<dd><p>Vector B Y position</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawTri/x2;   name=x2 -->
+<a name="//apple_ref/doc/functionparam/DrawTri/x2"></a>
+<code>x2</code>
+</dt>
+<dd><p>Vector C X position</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawTri/y2;   name=y2 -->
+<a name="//apple_ref/doc/functionparam/DrawTri/y2"></a>
+<code>y2</code>
+</dt>
+<dd><p>Vector C Y position</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawTri/col;   name=col -->
+<a name="//apple_ref/doc/functionparam/DrawTri/col"></a>
+<code>col</code>
+</dt>
+<dd><p>Color of line</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/DrawTri/fill;   name=fill -->
+<a name="//apple_ref/doc/functionparam/DrawTri/fill"></a>
+<code>fill</code>
+</dt>
+<dd><p>Fill triangle boolean</p></dd>
+</dl>
+</div>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/FillBitmap;   name=FillBitmap -->
+<a name="//apple_ref/c/func/FillBitmap"></a>
+<h3><a name="FillBitmap">FillBitmap</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/FillBitmap;name=start --><!-- begin abstract --></p>
+<p>Fill a bitmap with a given color
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/FillBitmap;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/FillBitmap;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/void //apple_ref/c/tdef/void //apple_ref/c/tag/void //apple_ref/c/struct/void //apple_ref/c/intf/void //apple_ref/doc/anysymbol/void" machineGenerated="true" --><span class="type">void</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/FillBitmap" logicalPath="//apple_ref/c/instm/FillBitmap //apple_ref/c/clm/FillBitmap //apple_ref/c/intfcm/FillBitmap //apple_ref/c/intfm/FillBitmap //apple_ref/c/func/FillBitmap" target="_top"><span class="function">FillBitmap</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">col</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/FillBitmap;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/FillBitmap/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/FillBitmap/b"></a>
+<code>b</code>
+</dt>
+<dd><p>Bitmap object</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/FillBitmap/col;   name=col -->
+<a name="//apple_ref/doc/functionparam/FillBitmap/col"></a>
+<code>col</code>
+</dt>
+<dd><p>Color</p></dd>
+</dl>
+</div>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/FloodBitmap;   name=FloodBitmap -->
+<a name="//apple_ref/c/func/FloodBitmap"></a>
+<h3><a name="FloodBitmap">FloodBitmap</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/FloodBitmap;name=start --><!-- begin abstract --></p>
+<p>Flood fill on bitmap object
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/FloodBitmap;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/FloodBitmap;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/void //apple_ref/c/tdef/void //apple_ref/c/tag/void //apple_ref/c/struct/void //apple_ref/c/intf/void //apple_ref/doc/anysymbol/void" machineGenerated="true" --><span class="type">void</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/FloodBitmap" logicalPath="//apple_ref/c/instm/FloodBitmap //apple_ref/c/clm/FloodBitmap //apple_ref/c/intfcm/FloodBitmap //apple_ref/c/intfm/FloodBitmap //apple_ref/c/func/FloodBitmap" target="_top"><span class="function">FloodBitmap</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">x</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">y</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">col</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/FloodBitmap;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/FloodBitmap/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/FloodBitmap/b"></a>
+<code>b</code>
+</dt>
+<dd><p>Bitmap object</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/FloodBitmap/x;   name=x -->
+<a name="//apple_ref/doc/functionparam/FloodBitmap/x"></a>
+<code>x</code>
+</dt>
+<dd><p>X start position</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/FloodBitmap/y;   name=y -->
+<a name="//apple_ref/doc/functionparam/FloodBitmap/y"></a>
+<code>y</code>
+</dt>
+<dd><p>Y start position</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/FloodBitmap/col;   name=col -->
+<a name="//apple_ref/doc/functionparam/FloodBitmap/col"></a>
+<code>col</code>
+</dt>
+<dd><p>Color</p></dd>
+</dl>
+</div>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/InitBitmap;   name=InitBitmap -->
+<a name="//apple_ref/c/func/InitBitmap"></a>
+<h3><a name="InitBitmap">InitBitmap</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/InitBitmap;name=start --><!-- begin abstract --></p>
+<p>Create a new bitmap object
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/InitBitmap;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/InitBitmap;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/InitBitmap" logicalPath="//apple_ref/c/instm/InitBitmap //apple_ref/c/clm/InitBitmap //apple_ref/c/intfcm/InitBitmap //apple_ref/c/intfm/InitBitmap //apple_ref/c/func/InitBitmap" target="_top"><span class="function">InitBitmap</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>,
+    <span class="keyword">unsigned</span> <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">w</span>,
+    <span class="keyword">unsigned</span> <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">h</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/InitBitmap;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/InitBitmap/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/InitBitmap/b"></a>
+<code>b</code>
+</dt>
+<dd><p>Pointer to bitmap object to create</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/InitBitmap/w;   name=w -->
+<a name="//apple_ref/doc/functionparam/InitBitmap/w"></a>
+<code>w</code>
+</dt>
+<dd><p>Width of new bitmap</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/InitBitmap/h;   name=h -->
+<a name="//apple_ref/doc/functionparam/InitBitmap/h"></a>
+<code>h</code>
+</dt>
+<dd><p>Height of new bitmap</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Boolean for success/failure
+
+<!-- end return value --></p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/LoadBitmap;   name=LoadBitmap -->
+<a name="//apple_ref/c/func/LoadBitmap"></a>
+<h3><a name="LoadBitmap">LoadBitmap</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/LoadBitmap;name=start --><!-- begin abstract --></p>
+<p>Load a .png file to bitmap object
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/LoadBitmap;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/LoadBitmap;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/LoadBitmap" logicalPath="//apple_ref/c/instm/LoadBitmap //apple_ref/c/clm/LoadBitmap //apple_ref/c/intfcm/LoadBitmap //apple_ref/c/intfm/LoadBitmap //apple_ref/c/func/LoadBitmap" target="_top"><span class="function">LoadBitmap</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">out</span>,
+    <span class="keyword">const</span> <!-- a logicalPath="//apple_ref/c/cl/char //apple_ref/c/tdef/char //apple_ref/c/tag/char //apple_ref/c/struct/char //apple_ref/c/intf/char //apple_ref/doc/anysymbol/char" machineGenerated="true" --><span class="type">char</span><!-- /a --> <span class="type">*</span><span class="param">path</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/LoadBitmap;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/LoadBitmap/out;   name=out -->
+<a name="//apple_ref/doc/functionparam/LoadBitmap/out"></a>
+<code>out</code>
+</dt>
+<dd><p>Bitmap object to load data to</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/LoadBitmap/path;   name=path -->
+<a name="//apple_ref/doc/functionparam/LoadBitmap/path"></a>
+<code>path</code>
+</dt>
+<dd><p>Path to .png file</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Boolean of success/failure
+
+<!-- end return value --></p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/LoadBitmapMemory;   name=LoadBitmapMemory -->
+<a name="//apple_ref/c/func/LoadBitmapMemory"></a>
+<h3><a name="LoadBitmapMemory">LoadBitmapMemory</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/LoadBitmapMemory;name=start --><!-- begin abstract --></p>
+<p>Load a .png from memory to bitmap object
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/LoadBitmapMemory;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/LoadBitmapMemory;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/LoadBitmapMemory" logicalPath="//apple_ref/c/instm/LoadBitmapMemory //apple_ref/c/clm/LoadBitmapMemory //apple_ref/c/intfcm/LoadBitmapMemory //apple_ref/c/intfm/LoadBitmapMemory //apple_ref/c/func/LoadBitmapMemory" target="_top"><span class="function">LoadBitmapMemory</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">out</span>,
+    <span class="keyword">const</span> <!-- a logicalPath="//apple_ref/c/cl/void //apple_ref/c/tdef/void //apple_ref/c/tag/void //apple_ref/c/struct/void //apple_ref/c/intf/void //apple_ref/doc/anysymbol/void" machineGenerated="true" --><span class="type">void</span><!-- /a --> <span class="type">*</span><span class="param">data</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/size_t //apple_ref/c/tdef/size_t //apple_ref/c/tag/size_t //apple_ref/c/struct/size_t //apple_ref/c/intf/size_t //apple_ref/doc/anysymbol/size_t" machineGenerated="true" --><span class="type">size_t</span><!-- /a --> <span class="param">length</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/LoadBitmapMemory;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/LoadBitmapMemory/out;   name=out -->
+<a name="//apple_ref/doc/functionparam/LoadBitmapMemory/out"></a>
+<code>out</code>
+</dt>
+<dd><p>Bitmap object to load data to</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/LoadBitmapMemory/data;   name=data -->
+<a name="//apple_ref/doc/functionparam/LoadBitmapMemory/data"></a>
+<code>data</code>
+</dt>
+<dd><p>.png data</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/LoadBitmapMemory/length;   name=length -->
+<a name="//apple_ref/doc/functionparam/LoadBitmapMemory/length"></a>
+<code>length</code>
+</dt>
+<dd><p>Length of data</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Boolean of success/failure
+
+<!-- end return value --></p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/PassthruBitmap;   name=PassthruBitmap -->
+<a name="//apple_ref/c/func/PassthruBitmap"></a>
+<h3><a name="PassthruBitmap">PassthruBitmap</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/PassthruBitmap;name=start --><!-- begin abstract --></p>
+<p>Loop through each pixel of bitmap and run position and color through a callback.
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/PassthruBitmap;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/PassthruBitmap;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/void //apple_ref/c/tdef/void //apple_ref/c/tag/void //apple_ref/c/struct/void //apple_ref/c/intf/void //apple_ref/doc/anysymbol/void" machineGenerated="true" --><span class="type">void</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/PassthruBitmap" logicalPath="//apple_ref/c/instm/PassthruBitmap //apple_ref/c/clm/PassthruBitmap //apple_ref/c/intfcm/PassthruBitmap //apple_ref/c/intfm/PassthruBitmap //apple_ref/c/func/PassthruBitmap" target="_top"><span class="function">PassthruBitmap</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a -->(<span class="type">*</span><span class="param">fn</span>)(
+        <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">x</span>,
+        <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">y</span>,
+        <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">col</span>));  <!-- headerDoc=declaration;uid=//apple_ref/c/func/PassthruBitmap;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/PassthruBitmap/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/PassthruBitmap/b"></a>
+<code>b</code>
+</dt>
+<dd><p>Bitmap object</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/PassthruBitmap/fn;   name=fn -->
+<a name="//apple_ref/doc/functionparam/PassthruBitmap/fn"></a>
+<code>fn</code>
+</dt>
+<dd><p>Callback function</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/PassthruBitmap;name=start --><p>Return value of the callback is the new color at the position
+<!-- headerDoc=discussion;uid=//apple_ref/c/func/PassthruBitmap;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/PasteBitmap;   name=PasteBitmap -->
+<a name="//apple_ref/c/func/PasteBitmap"></a>
+<h3><a name="PasteBitmap">PasteBitmap</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/PasteBitmap;name=start --><!-- begin abstract --></p>
+<p>Blit one bitmap onto another at point
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/PasteBitmap;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/PasteBitmap;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/PasteBitmap" logicalPath="//apple_ref/c/instm/PasteBitmap //apple_ref/c/clm/PasteBitmap //apple_ref/c/intfcm/PasteBitmap //apple_ref/c/intfm/PasteBitmap //apple_ref/c/func/PasteBitmap" target="_top"><span class="function">PasteBitmap</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">dst</span>,
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">src</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">x</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">y</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/PasteBitmap;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/PasteBitmap/dst;   name=dst -->
+<a name="//apple_ref/doc/functionparam/PasteBitmap/dst"></a>
+<code>dst</code>
+</dt>
+<dd><p>Bitmap to blit to</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/PasteBitmap/src;   name=src -->
+<a name="//apple_ref/doc/functionparam/PasteBitmap/src"></a>
+<code>src</code>
+</dt>
+<dd><p>Bitmap to blit</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/PasteBitmap/x;   name=x -->
+<a name="//apple_ref/doc/functionparam/PasteBitmap/x"></a>
+<code>x</code>
+</dt>
+<dd><p>X position</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/PasteBitmap/y;   name=y -->
+<a name="//apple_ref/doc/functionparam/PasteBitmap/y"></a>
+<code>y</code>
+</dt>
+<dd><p>Y position</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Boolean of success/failure
+
+<!-- end return value --></p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/PasteBitmapClip;   name=PasteBitmapClip -->
+<a name="//apple_ref/c/func/PasteBitmapClip"></a>
+<h3><a name="PasteBitmapClip">PasteBitmapClip</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/PasteBitmapClip;name=start --><!-- begin abstract --></p>
+<p>Blit one bitmap onto another at point with clipping rect
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/PasteBitmapClip;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/PasteBitmapClip;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/PasteBitmapClip" logicalPath="//apple_ref/c/instm/PasteBitmapClip //apple_ref/c/clm/PasteBitmapClip //apple_ref/c/intfcm/PasteBitmapClip //apple_ref/c/intfm/PasteBitmapClip //apple_ref/c/func/PasteBitmapClip" target="_top"><span class="function">PasteBitmapClip</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">dst</span>,
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">src</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">x</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">y</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">rx</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">ry</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">rw</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">rh</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/PasteBitmapClip;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/PasteBitmapClip/dst;   name=dst -->
+<a name="//apple_ref/doc/functionparam/PasteBitmapClip/dst"></a>
+<code>dst</code>
+</dt>
+<dd><p>Bitmap to blit to</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/PasteBitmapClip/src;   name=src -->
+<a name="//apple_ref/doc/functionparam/PasteBitmapClip/src"></a>
+<code>src</code>
+</dt>
+<dd><p>Bitmap to blit</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/PasteBitmapClip/x;   name=x -->
+<a name="//apple_ref/doc/functionparam/PasteBitmapClip/x"></a>
+<code>x</code>
+</dt>
+<dd><p>X position</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/PasteBitmapClip/y;   name=y -->
+<a name="//apple_ref/doc/functionparam/PasteBitmapClip/y"></a>
+<code>y</code>
+</dt>
+<dd><p>Y position</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/PasteBitmapClip/rx;   name=rx -->
+<a name="//apple_ref/doc/functionparam/PasteBitmapClip/rx"></a>
+<code>rx</code>
+</dt>
+<dd><p>Clip rect X</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/PasteBitmapClip/ry;   name=ry -->
+<a name="//apple_ref/doc/functionparam/PasteBitmapClip/ry"></a>
+<code>ry</code>
+</dt>
+<dd><p>Clip rect Y</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/PasteBitmapClip/rw;   name=rw -->
+<a name="//apple_ref/doc/functionparam/PasteBitmapClip/rw"></a>
+<code>rw</code>
+</dt>
+<dd><p>Clip rect width</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/PasteBitmapClip/rh;   name=rh -->
+<a name="//apple_ref/doc/functionparam/PasteBitmapClip/rh"></a>
+<code>rh</code>
+</dt>
+<dd><p>Clip rect height</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Boolean of success/failure
+
+<!-- end return value --></p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/PGet;   name=PGet -->
+<a name="//apple_ref/c/func/PGet"></a>
+<h3><a name="PGet">PGet</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/PGet;name=start --><!-- begin abstract --></p>
+<p>Get bitmap pixel color at position
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/PGet;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/PGet;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/PGet" logicalPath="//apple_ref/c/instm/PGet //apple_ref/c/clm/PGet //apple_ref/c/intfcm/PGet //apple_ref/c/intfm/PGet //apple_ref/c/func/PGet" target="_top"><span class="function">PGet</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">x</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">y</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/PGet;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/PGet/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/PGet/b"></a>
+<code>b</code>
+</dt>
+<dd><p>Bitmap object</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/PGet/x;   name=x -->
+<a name="//apple_ref/doc/functionparam/PGet/x"></a>
+<code>x</code>
+</dt>
+<dd><p>X position</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/PGet/y;   name=y -->
+<a name="//apple_ref/doc/functionparam/PGet/y"></a>
+<code>y</code>
+</dt>
+<dd><p>Y position</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Pixel color
+
+<!-- end return value --></p>
 <hr class="betweenAPIEntries">
 <!-- headerDoc=func;  uid=//apple_ref/c/func/ppBegin;   name=ppBegin -->
 <a name="//apple_ref/c/func/ppBegin"></a>
@@ -450,7 +1573,7 @@ function disclosure_triangle(elt) {
 <!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppFlush;name=end --></p>
 <div class="declaration_indent">
 <pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ppFlush;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/void //apple_ref/c/tdef/void //apple_ref/c/tag/void //apple_ref/c/struct/void //apple_ref/c/intf/void //apple_ref/doc/anysymbol/void" machineGenerated="true" --><span class="type">void</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ppFlush" logicalPath="//apple_ref/c/instm/ppFlush //apple_ref/c/clm/ppFlush //apple_ref/c/intfcm/ppFlush //apple_ref/c/intfm/ppFlush //apple_ref/c/func/ppFlush" target="_top"><span class="function">ppFlush</span></a>(
-    <!-- a logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap //apple_ref/c/tag/Bitmap //apple_ref/c/struct/Bitmap //apple_ref/c/intf/Bitmap //apple_ref/doc/anysymbol/Bitmap" machineGenerated="true" --><span class="type">Bitmap</span><!-- /a --> <span class="type">*</span><span class="param">bitmap</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ppFlush;name=end --></pre>
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">bitmap</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ppFlush;name=end --></pre>
 </div>
 <h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
 <div class="param_indent">
@@ -545,10 +1668,604 @@ function disclosure_triangle(elt) {
 <dd><p>stored by pp, passed to callback functions</p></dd>
 </dl>
 </div>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/PSet;   name=PSet -->
+<a name="//apple_ref/c/func/PSet"></a>
+<h3><a name="PSet">PSet</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/PSet;name=start --><!-- begin abstract --></p>
+<p>Set bitmap pixel color (without blending)
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/PSet;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/PSet;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/void //apple_ref/c/tdef/void //apple_ref/c/tag/void //apple_ref/c/struct/void //apple_ref/c/intf/void //apple_ref/doc/anysymbol/void" machineGenerated="true" --><span class="type">void</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/PSet" logicalPath="//apple_ref/c/instm/PSet //apple_ref/c/clm/PSet //apple_ref/c/intfcm/PSet //apple_ref/c/intfm/PSet //apple_ref/c/func/PSet" target="_top"><span class="function">PSet</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">x</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">y</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">col</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/PSet;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/PSet/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/PSet/b"></a>
+<code>b</code>
+</dt>
+<dd><p>Bitmap object</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/PSet/x;   name=x -->
+<a name="//apple_ref/doc/functionparam/PSet/x"></a>
+<code>x</code>
+</dt>
+<dd><p>X position</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/PSet/y;   name=y -->
+<a name="//apple_ref/doc/functionparam/PSet/y"></a>
+<code>y</code>
+</dt>
+<dd><p>Y position</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/PSet/col;   name=col -->
+<a name="//apple_ref/doc/functionparam/PSet/col"></a>
+<code>col</code>
+</dt>
+<dd><p>Color to set</p></dd>
+</dl>
+</div>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/RGB;   name=RGB -->
+<a name="//apple_ref/c/func/RGB"></a>
+<h3><a name="RGB">RGB</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/RGB;name=start --><!-- begin abstract --></p>
+<p>Convert RGB to packed integer
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/RGB;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/RGB;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/RGB" logicalPath="//apple_ref/c/instm/RGB //apple_ref/c/clm/RGB //apple_ref/c/intfcm/RGB //apple_ref/c/intfm/RGB //apple_ref/c/func/RGB" target="_top"><span class="function">RGB</span></a>(
+    <span class="keyword">unsigned</span> <!-- a logicalPath="//apple_ref/c/cl/char //apple_ref/c/tdef/char //apple_ref/c/tag/char //apple_ref/c/struct/char //apple_ref/c/intf/char //apple_ref/doc/anysymbol/char" machineGenerated="true" --><span class="type">char</span><!-- /a --> <span class="param">r</span>,
+    <span class="keyword">unsigned</span> <!-- a logicalPath="//apple_ref/c/cl/char //apple_ref/c/tdef/char //apple_ref/c/tag/char //apple_ref/c/struct/char //apple_ref/c/intf/char //apple_ref/doc/anysymbol/char" machineGenerated="true" --><span class="type">char</span><!-- /a --> <span class="param">g</span>,
+    <span class="keyword">unsigned</span> <!-- a logicalPath="//apple_ref/c/cl/char //apple_ref/c/tdef/char //apple_ref/c/tag/char //apple_ref/c/struct/char //apple_ref/c/intf/char //apple_ref/doc/anysymbol/char" machineGenerated="true" --><span class="type">char</span><!-- /a --> <span class="param">b</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/RGB;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/RGB/r;   name=r -->
+<a name="//apple_ref/doc/functionparam/RGB/r"></a>
+<code>r</code>
+</dt>
+<dd><p>R channel</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/RGB/g;   name=g -->
+<a name="//apple_ref/doc/functionparam/RGB/g"></a>
+<code>g</code>
+</dt>
+<dd><p>G channel</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/RGB/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/RGB/b"></a>
+<code>b</code>
+</dt>
+<dd><p>B channel</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Packed RGB integer
+
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/RGB;name=start --><p>Alpha is 255 by default
+<!-- headerDoc=discussion;uid=//apple_ref/c/func/RGB;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/RGB1;   name=RGB1 -->
+<a name="//apple_ref/c/func/RGB1"></a>
+<h3><a name="RGB1">RGB1</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/RGB1;name=start --><!-- begin abstract --></p>
+<p>Create a packed RGBA integer from one channel
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/RGB1;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/RGB1;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/RGB1" logicalPath="//apple_ref/c/instm/RGB1 //apple_ref/c/clm/RGB1 //apple_ref/c/intfcm/RGB1 //apple_ref/c/intfm/RGB1 //apple_ref/c/func/RGB1" target="_top"><span class="function">RGB1</span></a>(
+    <span class="keyword">unsigned</span> <!-- a logicalPath="//apple_ref/c/cl/char //apple_ref/c/tdef/char //apple_ref/c/tag/char //apple_ref/c/struct/char //apple_ref/c/intf/char //apple_ref/doc/anysymbol/char" machineGenerated="true" --><span class="type">char</span><!-- /a --> <span class="param">c</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/RGB1;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/RGB1/c;   name=c -->
+<a name="//apple_ref/doc/functionparam/RGB1/c"></a>
+<code>c</code>
+</dt>
+<dd><p>R, G + B channels</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Packed RGBA integer
+
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/RGB1;name=start --><p>This is a convenience wrapper for RGB, e.g. RGB(100, 100, 100) == RGB1(100)
+<!-- headerDoc=discussion;uid=//apple_ref/c/func/RGB1;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/RGBA;   name=RGBA -->
+<a name="//apple_ref/c/func/RGBA"></a>
+<h3><a name="RGBA">RGBA</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/RGBA;name=start --><!-- begin abstract --></p>
+<p>Create a packed RGBA integer
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/RGBA;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/RGBA;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/RGBA" logicalPath="//apple_ref/c/instm/RGBA //apple_ref/c/clm/RGBA //apple_ref/c/intfcm/RGBA //apple_ref/c/intfm/RGBA //apple_ref/c/func/RGBA" target="_top"><span class="function">RGBA</span></a>(
+    <span class="keyword">unsigned</span> <!-- a logicalPath="//apple_ref/c/cl/char //apple_ref/c/tdef/char //apple_ref/c/tag/char //apple_ref/c/struct/char //apple_ref/c/intf/char //apple_ref/doc/anysymbol/char" machineGenerated="true" --><span class="type">char</span><!-- /a --> <span class="param">r</span>,
+    <span class="keyword">unsigned</span> <!-- a logicalPath="//apple_ref/c/cl/char //apple_ref/c/tdef/char //apple_ref/c/tag/char //apple_ref/c/struct/char //apple_ref/c/intf/char //apple_ref/doc/anysymbol/char" machineGenerated="true" --><span class="type">char</span><!-- /a --> <span class="param">g</span>,
+    <span class="keyword">unsigned</span> <!-- a logicalPath="//apple_ref/c/cl/char //apple_ref/c/tdef/char //apple_ref/c/tag/char //apple_ref/c/struct/char //apple_ref/c/intf/char //apple_ref/doc/anysymbol/char" machineGenerated="true" --><span class="type">char</span><!-- /a --> <span class="param">b</span>,
+    <span class="keyword">unsigned</span> <!-- a logicalPath="//apple_ref/c/cl/char //apple_ref/c/tdef/char //apple_ref/c/tag/char //apple_ref/c/struct/char //apple_ref/c/intf/char //apple_ref/doc/anysymbol/char" machineGenerated="true" --><span class="type">char</span><!-- /a --> <span class="param">a</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/RGBA;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/RGBA/r;   name=r -->
+<a name="//apple_ref/doc/functionparam/RGBA/r"></a>
+<code>r</code>
+</dt>
+<dd><p>R channel</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/RGBA/g;   name=g -->
+<a name="//apple_ref/doc/functionparam/RGBA/g"></a>
+<code>g</code>
+</dt>
+<dd><p>G channel</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/RGBA/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/RGBA/b"></a>
+<code>b</code>
+</dt>
+<dd><p>B channel</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/RGBA/a;   name=a -->
+<a name="//apple_ref/doc/functionparam/RGBA/a"></a>
+<code>a</code>
+</dt>
+<dd><p>A channel</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Packed RGBA integer
+
+<!-- end return value --></p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/Rgba;   name=Rgba -->
+<a name="//apple_ref/c/func/Rgba"></a>
+<h3><a name="Rgba">Rgba</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/Rgba;name=start --><!-- begin abstract --></p>
+<p>Retrieve R channel from packed RGBA integer
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/Rgba;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/Rgba;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <span class="keyword">unsigned</span> <!-- a logicalPath="//apple_ref/c/cl/char //apple_ref/c/tdef/char //apple_ref/c/tag/char //apple_ref/c/struct/char //apple_ref/c/intf/char //apple_ref/doc/anysymbol/char" machineGenerated="true" --><span class="type">char</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/Rgba" logicalPath="//apple_ref/c/instm/Rgba //apple_ref/c/clm/Rgba //apple_ref/c/intfcm/Rgba //apple_ref/c/intfm/Rgba //apple_ref/c/func/Rgba" target="_top"><span class="function">Rgba</span></a>(
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">c</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/Rgba;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/Rgba/c;   name=c -->
+<a name="//apple_ref/doc/functionparam/Rgba/c"></a>
+<code>c</code>
+</dt>
+<dd><p>Packed RGBA integer</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>R channel value
+
+<!-- end return value --></p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/rGba;   name=rGba -->
+<a name="//apple_ref/c/func/rGba"></a>
+<h3><a name="rGba">rGba</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/rGba;name=start --><!-- begin abstract --></p>
+<p>Retrieve G channel from packed RGBA integer
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/rGba;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/rGba;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <span class="keyword">unsigned</span> <!-- a logicalPath="//apple_ref/c/cl/char //apple_ref/c/tdef/char //apple_ref/c/tag/char //apple_ref/c/struct/char //apple_ref/c/intf/char //apple_ref/doc/anysymbol/char" machineGenerated="true" --><span class="type">char</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/rGba" logicalPath="//apple_ref/c/instm/rGba //apple_ref/c/clm/rGba //apple_ref/c/intfcm/rGba //apple_ref/c/intfm/rGba //apple_ref/c/func/rGba" target="_top"><span class="function">rGba</span></a>(
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">c</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/rGba;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/rGba/c;   name=c -->
+<a name="//apple_ref/doc/functionparam/rGba/c"></a>
+<code>c</code>
+</dt>
+<dd><p>Packed RGBA integer</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>G channel value
+
+<!-- end return value --></p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/rgBa;   name=rgBa -->
+<a name="//apple_ref/c/func/rgBa"></a>
+<h3><a name="rgBa">rgBa</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/rgBa;name=start --><!-- begin abstract --></p>
+<p>Retrieve B channel from packed RGBA integer
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/rgBa;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/rgBa;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <span class="keyword">unsigned</span> <!-- a logicalPath="//apple_ref/c/cl/char //apple_ref/c/tdef/char //apple_ref/c/tag/char //apple_ref/c/struct/char //apple_ref/c/intf/char //apple_ref/doc/anysymbol/char" machineGenerated="true" --><span class="type">char</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/rgBa" logicalPath="//apple_ref/c/instm/rgBa //apple_ref/c/clm/rgBa //apple_ref/c/intfcm/rgBa //apple_ref/c/intfm/rgBa //apple_ref/c/func/rgBa" target="_top"><span class="function">rgBa</span></a>(
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">c</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/rgBa;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/rgBa/c;   name=c -->
+<a name="//apple_ref/doc/functionparam/rgBa/c"></a>
+<code>c</code>
+</dt>
+<dd><p>Packed RGBA integer</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>B channel value
+
+<!-- end return value --></p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/rgbA;   name=rgbA -->
+<a name="//apple_ref/c/func/rgbA"></a>
+<h3><a name="rgbA">rgbA</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/rgbA;name=start --><!-- begin abstract --></p>
+<p>Retrieve A channel from packed RGBA integer
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/rgbA;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/rgbA;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <span class="keyword">unsigned</span> <!-- a logicalPath="//apple_ref/c/cl/char //apple_ref/c/tdef/char //apple_ref/c/tag/char //apple_ref/c/struct/char //apple_ref/c/intf/char //apple_ref/doc/anysymbol/char" machineGenerated="true" --><span class="type">char</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/rgbA" logicalPath="//apple_ref/c/instm/rgbA //apple_ref/c/clm/rgbA //apple_ref/c/intfcm/rgbA //apple_ref/c/intfm/rgbA //apple_ref/c/func/rgbA" target="_top"><span class="function">rgbA</span></a>(
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">c</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/rgbA;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/rgbA/c;   name=c -->
+<a name="//apple_ref/doc/functionparam/rgbA/c"></a>
+<code>c</code>
+</dt>
+<dd><p>Packed RGBA integer</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>A channel value
+
+<!-- end return value --></p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/rGBA;   name=rGBA -->
+<a name="//apple_ref/c/func/rGBA"></a>
+<h3><a name="rGBA">rGBA</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/rGBA;name=start --><!-- begin abstract --></p>
+<p>Modify R channel of packed RGBA integer
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/rGBA;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/rGBA;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/rGBA" logicalPath="//apple_ref/c/instm/rGBA //apple_ref/c/clm/rGBA //apple_ref/c/intfcm/rGBA //apple_ref/c/intfm/rGBA //apple_ref/c/func/rGBA" target="_top"><span class="function">rGBA</span></a>(
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">c</span>,
+    <span class="keyword">unsigned</span> <!-- a logicalPath="//apple_ref/c/cl/char //apple_ref/c/tdef/char //apple_ref/c/tag/char //apple_ref/c/struct/char //apple_ref/c/intf/char //apple_ref/doc/anysymbol/char" machineGenerated="true" --><span class="type">char</span><!-- /a --> <span class="param">r</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/rGBA;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/rGBA/c;   name=c -->
+<a name="//apple_ref/doc/functionparam/rGBA/c"></a>
+<code>c</code>
+</dt>
+<dd><p>Packed RGBA integer</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/rGBA/r;   name=r -->
+<a name="//apple_ref/doc/functionparam/rGBA/r"></a>
+<code>r</code>
+</dt>
+<dd><p>New R channel value</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Modified packed RGBA integer
+
+<!-- end return value --></p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/RgBA;   name=RgBA -->
+<a name="//apple_ref/c/func/RgBA"></a>
+<h3><a name="RgBA">RgBA</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/RgBA;name=start --><!-- begin abstract --></p>
+<p>Modify G channel of packed RGBA integer
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/RgBA;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/RgBA;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/RgBA" logicalPath="//apple_ref/c/instm/RgBA //apple_ref/c/clm/RgBA //apple_ref/c/intfcm/RgBA //apple_ref/c/intfm/RgBA //apple_ref/c/func/RgBA" target="_top"><span class="function">RgBA</span></a>(
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">c</span>,
+    <span class="keyword">unsigned</span> <!-- a logicalPath="//apple_ref/c/cl/char //apple_ref/c/tdef/char //apple_ref/c/tag/char //apple_ref/c/struct/char //apple_ref/c/intf/char //apple_ref/doc/anysymbol/char" machineGenerated="true" --><span class="type">char</span><!-- /a --> <span class="param">g</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/RgBA;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/RgBA/c;   name=c -->
+<a name="//apple_ref/doc/functionparam/RgBA/c"></a>
+<code>c</code>
+</dt>
+<dd><p>Packed RGBA integer</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/RgBA/g;   name=g -->
+<a name="//apple_ref/doc/functionparam/RgBA/g"></a>
+<code>g</code>
+</dt>
+<dd><p>New G channel</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Modified packed RGBA integer
+
+<!-- end return value --></p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/RGbA;   name=RGbA -->
+<a name="//apple_ref/c/func/RGbA"></a>
+<h3><a name="RGbA">RGbA</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/RGbA;name=start --><!-- begin abstract --></p>
+<p>Modify B channel of packed RGBA integer
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/RGbA;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/RGbA;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/RGbA" logicalPath="//apple_ref/c/instm/RGbA //apple_ref/c/clm/RGbA //apple_ref/c/intfcm/RGbA //apple_ref/c/intfm/RGbA //apple_ref/c/func/RGbA" target="_top"><span class="function">RGbA</span></a>(
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">c</span>,
+    <span class="keyword">unsigned</span> <!-- a logicalPath="//apple_ref/c/cl/char //apple_ref/c/tdef/char //apple_ref/c/tag/char //apple_ref/c/struct/char //apple_ref/c/intf/char //apple_ref/doc/anysymbol/char" machineGenerated="true" --><span class="type">char</span><!-- /a --> <span class="param">b</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/RGbA;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/RGbA/c;   name=c -->
+<a name="//apple_ref/doc/functionparam/RGbA/c"></a>
+<code>c</code>
+</dt>
+<dd><p>Packed RGBA integer</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/RGbA/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/RGbA/b"></a>
+<code>b</code>
+</dt>
+<dd><p>New B channel</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Modified packed RGBA integer
+
+<!-- end return value --></p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/RGBa;   name=RGBa -->
+<a name="//apple_ref/c/func/RGBa"></a>
+<h3><a name="RGBa">RGBa</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/RGBa;name=start --><!-- begin abstract --></p>
+<p>Modify A channel of packed RGBA integer
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/RGBa;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/RGBa;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/RGBa" logicalPath="//apple_ref/c/instm/RGBa //apple_ref/c/clm/RGBa //apple_ref/c/intfcm/RGBa //apple_ref/c/intfm/RGBa //apple_ref/c/func/RGBa" target="_top"><span class="function">RGBa</span></a>(
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">c</span>,
+    <span class="keyword">unsigned</span> <!-- a logicalPath="//apple_ref/c/cl/char //apple_ref/c/tdef/char //apple_ref/c/tag/char //apple_ref/c/struct/char //apple_ref/c/intf/char //apple_ref/doc/anysymbol/char" machineGenerated="true" --><span class="type">char</span><!-- /a --> <span class="param">a</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/RGBa;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/RGBa/c;   name=c -->
+<a name="//apple_ref/doc/functionparam/RGBa/c"></a>
+<code>c</code>
+</dt>
+<dd><p>Packed RGBA integer</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/RGBa/a;   name=a -->
+<a name="//apple_ref/doc/functionparam/RGBa/a"></a>
+<code>a</code>
+</dt>
+<dd><p>New A channel</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Modified packed RGBA integer
+
+<!-- end return value --></p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/RGBA1;   name=RGBA1 -->
+<a name="//apple_ref/c/func/RGBA1"></a>
+<h3><a name="RGBA1">RGBA1</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/RGBA1;name=start --><!-- begin abstract --></p>
+<p>Create a packed RGBA integer from one channel
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/RGBA1;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/RGBA1;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/RGBA1" logicalPath="//apple_ref/c/instm/RGBA1 //apple_ref/c/clm/RGBA1 //apple_ref/c/intfcm/RGBA1 //apple_ref/c/intfm/RGBA1 //apple_ref/c/func/RGBA1" target="_top"><span class="function">RGBA1</span></a>(
+    <span class="keyword">unsigned</span> <!-- a logicalPath="//apple_ref/c/cl/char //apple_ref/c/tdef/char //apple_ref/c/tag/char //apple_ref/c/struct/char //apple_ref/c/intf/char //apple_ref/doc/anysymbol/char" machineGenerated="true" --><span class="type">char</span><!-- /a --> <span class="param">c</span>,
+    <span class="keyword">unsigned</span> <!-- a logicalPath="//apple_ref/c/cl/char //apple_ref/c/tdef/char //apple_ref/c/tag/char //apple_ref/c/struct/char //apple_ref/c/intf/char //apple_ref/doc/anysymbol/char" machineGenerated="true" --><span class="type">char</span><!-- /a --> <span class="param">a</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/RGBA1;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/RGBA1/c;   name=c -->
+<a name="//apple_ref/doc/functionparam/RGBA1/c"></a>
+<code>c</code>
+</dt>
+<dd><p>R,G + B channels</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/RGBA1/a;   name=a -->
+<a name="//apple_ref/doc/functionparam/RGBA1/a"></a>
+<code>a</code>
+</dt>
+<dd><p>A channel</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Packed RGBA integer
+
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/RGBA1;name=start --><p>This is a convenience wrapper for RGBA, e.g. RGBA(100, 100, 100, 255) == RGBA1(100, 255)
+<!-- headerDoc=discussion;uid=//apple_ref/c/func/RGBA1;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/RotateBitmap;   name=RotateBitmap -->
+<a name="//apple_ref/c/func/RotateBitmap"></a>
+<h3><a name="RotateBitmap">RotateBitmap</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/RotateBitmap;name=start --><!-- begin abstract --></p>
+<p>Rotate a bitmap by a given degree
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/RotateBitmap;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/RotateBitmap;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/RotateBitmap" logicalPath="//apple_ref/c/instm/RotateBitmap //apple_ref/c/clm/RotateBitmap //apple_ref/c/intfcm/RotateBitmap //apple_ref/c/intfm/RotateBitmap //apple_ref/c/func/RotateBitmap" target="_top"><span class="function">RotateBitmap</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">a</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/float //apple_ref/c/tdef/float //apple_ref/c/tag/float //apple_ref/c/struct/float //apple_ref/c/intf/float //apple_ref/doc/anysymbol/float" machineGenerated="true" --><span class="type">float</span><!-- /a --> <span class="param">angle</span>,
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/RotateBitmap;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/RotateBitmap/a;   name=a -->
+<a name="//apple_ref/doc/functionparam/RotateBitmap/a"></a>
+<code>a</code>
+</dt>
+<dd><p>Original bitmap object</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/RotateBitmap/angle;   name=angle -->
+<a name="//apple_ref/doc/functionparam/RotateBitmap/angle"></a>
+<code>angle</code>
+</dt>
+<dd><p>Angle to rotate by</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/RotateBitmap/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/RotateBitmap/b"></a>
+<code>b</code>
+</dt>
+<dd><p>New bitmap object to be allocated</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Boolean of success/failure
+
+<!-- end return value --></p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/SaveBitmap;   name=SaveBitmap -->
+<a name="//apple_ref/c/func/SaveBitmap"></a>
+<h3><a name="SaveBitmap">SaveBitmap</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/SaveBitmap;name=start --><!-- begin abstract --></p>
+<p>Save bitmap to .png file
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/SaveBitmap;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/SaveBitmap;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/SaveBitmap" logicalPath="//apple_ref/c/instm/SaveBitmap //apple_ref/c/clm/SaveBitmap //apple_ref/c/intfcm/SaveBitmap //apple_ref/c/intfm/SaveBitmap //apple_ref/c/func/SaveBitmap" target="_top"><span class="function">SaveBitmap</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>,
+    <span class="keyword">const</span> <!-- a logicalPath="//apple_ref/c/cl/char //apple_ref/c/tdef/char //apple_ref/c/tag/char //apple_ref/c/struct/char //apple_ref/c/intf/char //apple_ref/doc/anysymbol/char" machineGenerated="true" --><span class="type">char</span><!-- /a --> <span class="type">*</span><span class="param">path</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/SaveBitmap;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/SaveBitmap/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/SaveBitmap/b"></a>
+<code>b</code>
+</dt>
+<dd><p>Bitmap object to write to disk</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/SaveBitmap/path;   name=path -->
+<a name="//apple_ref/doc/functionparam/SaveBitmap/path"></a>
+<code>path</code>
+</dt>
+<dd><p>Path to save bitmap</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Boolean of success/failure
+
+<!-- end return value --></p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/ScaleBitmap;   name=ScaleBitmap -->
+<a name="//apple_ref/c/func/ScaleBitmap"></a>
+<h3><a name="ScaleBitmap">ScaleBitmap</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/ScaleBitmap;name=start --><!-- begin abstract --></p>
+<p>Scale bitmap to given size
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ScaleBitmap;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ScaleBitmap;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ScaleBitmap" logicalPath="//apple_ref/c/instm/ScaleBitmap //apple_ref/c/clm/ScaleBitmap //apple_ref/c/intfcm/ScaleBitmap //apple_ref/c/intfm/ScaleBitmap //apple_ref/c/func/ScaleBitmap" target="_top"><span class="function">ScaleBitmap</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">a</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">nw</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">nh</span>,
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ScaleBitmap;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ScaleBitmap/a;   name=a -->
+<a name="//apple_ref/doc/functionparam/ScaleBitmap/a"></a>
+<code>a</code>
+</dt>
+<dd><p>Original bitmap object</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ScaleBitmap/nw;   name=nw -->
+<a name="//apple_ref/doc/functionparam/ScaleBitmap/nw"></a>
+<code>nw</code>
+</dt>
+<dd><p>New width</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ScaleBitmap/nh;   name=nh -->
+<a name="//apple_ref/doc/functionparam/ScaleBitmap/nh"></a>
+<code>nh</code>
+</dt>
+<dd><p>New height</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ScaleBitmap/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/ScaleBitmap/b"></a>
+<code>b</code>
+</dt>
+<dd><p>New bitmap object to be allocated</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Boolean of success/failure
+
+<!-- end return value --></p>
 <hr class="betweenSections">
 <a name="HeaderDoc_datatypes"></a>
 <h2 class="h2tight">Typedefs</h2>
 <dl>
+<dt><tt><a href="index.html#//apple_ref/c/tdef/Bitmap" target="_top">Bitmap</a></tt></dt>
+<dd><p>Bitmap object to hold image data
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/tdef/Color" target="_top">Color</a></tt></dt>
+<dd><p>A list of colors with names
+</p></dd>
 <dt><tt><a href="index.html#//apple_ref/c/tdef/ppFlags" target="_top">ppFlags</a></tt></dt>
 <dd><p>Window config flags
 </p></dd>
@@ -559,6 +2276,195 @@ function disclosure_triangle(elt) {
 <dd><p>Keyboard modifier flags
 </p></dd>
 </dl>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=tdef;  uid=//apple_ref/c/tdef/Bitmap;   name=Bitmap -->
+<a name="//apple_ref/c/tdef/Bitmap"></a>
+<h3><a name="Bitmap">Bitmap</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/tdef/Bitmap;name=start --><!-- begin abstract --></p>
+<p>Bitmap object to hold image data
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/tdef/Bitmap;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/tdef/Bitmap;name=start --><span class="keyword">typedef</span> <span class="keyword">struct</span> { 
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="type">*</span><!-- a logicalPath="//apple_ref/c/econst/buf //apple_ref/c/data/buf //apple_ref/c/clconst/buf " machineGenerated="true" --><span class="var">buf</span><!-- /a -->, <!-- a logicalPath="//apple_ref/c/econst/w //apple_ref/c/data/w //apple_ref/c/clconst/w " machineGenerated="true" --><span class="var">w</span><!-- /a -->, <!-- a logicalPath="//apple_ref/c/econst/h //apple_ref/c/data/h //apple_ref/c/clconst/h " machineGenerated="true" --><span class="var">h</span><!-- /a -->; 
+} <!-- a logicalPath="//apple_ref/c/econst/Bitmap //apple_ref/c/data/Bitmap //apple_ref/c/clconst/Bitmap " machineGenerated="true" --><span class="var">Bitmap</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/c/tdef/Bitmap;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Fields</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=structfield;  uid=//apple_ref/doc/structfield/Bitmap/buf;   name=buf -->
+<a name="//apple_ref/doc/structfield/Bitmap/buf"></a>
+<code>buf</code>
+</dt>
+<dd><p>Pixel data</p></dd>
+<dt>
+<!-- headerDoc=structfield;  uid=//apple_ref/doc/structfield/Bitmap/w;   name=w -->
+<a name="//apple_ref/doc/structfield/Bitmap/w"></a>
+<code>w</code>
+</dt>
+<dd><p>Width of image</p></dd>
+<dt>
+<!-- headerDoc=structfield;  uid=//apple_ref/doc/structfield/Bitmap/h;   name=h -->
+<a name="//apple_ref/doc/structfield/Bitmap/h"></a>
+<code>h</code>
+</dt>
+<dd><p>Height of image</p></dd>
+</dl>
+</div>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=tdef;  uid=//apple_ref/c/tdef/Color;   name=Color -->
+<a name="//apple_ref/c/tdef/Color"></a>
+<h3><a name="Color">Color</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/tdef/Color;name=start --><!-- begin abstract --></p>
+<p>A list of colors with names
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/tdef/Color;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/tdef/Color;name=start --><span class="keyword">typedef</span> <span class="keyword">enum</span> { 
+    <!-- a logicalPath="//apple_ref/c/econst/IndianRed //apple_ref/c/data/IndianRed //apple_ref/c/clconst/IndianRed " machineGenerated="true" --><span class="var">IndianRed</span><!-- /a --> = -<span class="number">3318692</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/LightCoral //apple_ref/c/data/LightCoral //apple_ref/c/clconst/LightCoral " machineGenerated="true" --><span class="var">LightCoral</span><!-- /a --> = -<span class="number">1015680</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Salmon //apple_ref/c/data/Salmon //apple_ref/c/clconst/Salmon " machineGenerated="true" --><span class="var">Salmon</span><!-- /a --> = -<span class="number">360334</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/DarkSalmon //apple_ref/c/data/DarkSalmon //apple_ref/c/clconst/DarkSalmon " machineGenerated="true" --><span class="var">DarkSalmon</span><!-- /a --> = -<span class="number">1468806</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/LightSalmon //apple_ref/c/data/LightSalmon //apple_ref/c/clconst/LightSalmon " machineGenerated="true" --><span class="var">LightSalmon</span><!-- /a --> = -<span class="number">24454</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Crimson //apple_ref/c/data/Crimson //apple_ref/c/clconst/Crimson " machineGenerated="true" --><span class="var">Crimson</span><!-- /a --> = -<span class="number">2354116</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Red //apple_ref/c/data/Red //apple_ref/c/clconst/Red " machineGenerated="true" --><span class="var">Red</span><!-- /a --> = -<span class="number">65536</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/FireBrick //apple_ref/c/data/FireBrick //apple_ref/c/clconst/FireBrick " machineGenerated="true" --><span class="var">FireBrick</span><!-- /a --> = -<span class="number">5103070</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/DarkRed //apple_ref/c/data/DarkRed //apple_ref/c/clconst/DarkRed " machineGenerated="true" --><span class="var">DarkRed</span><!-- /a --> = -<span class="number">7667712</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Pink //apple_ref/c/data/Pink //apple_ref/c/clconst/Pink " machineGenerated="true" --><span class="var">Pink</span><!-- /a --> = -<span class="number">16181</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/LightPink //apple_ref/c/data/LightPink //apple_ref/c/clconst/LightPink " machineGenerated="true" --><span class="var">LightPink</span><!-- /a --> = -<span class="number">18751</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/HotPink //apple_ref/c/data/HotPink //apple_ref/c/clconst/HotPink " machineGenerated="true" --><span class="var">HotPink</span><!-- /a --> = -<span class="number">38476</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/DeepPink //apple_ref/c/data/DeepPink //apple_ref/c/clconst/DeepPink " machineGenerated="true" --><span class="var">DeepPink</span><!-- /a --> = -<span class="number">60269</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/MediumVioletRed //apple_ref/c/data/MediumVioletRed //apple_ref/c/clconst/MediumVioletRed " machineGenerated="true" --><span class="var">MediumVioletRed</span><!-- /a --> = -<span class="number">3730043</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/PaleVioletRed //apple_ref/c/data/PaleVioletRed //apple_ref/c/clconst/PaleVioletRed " machineGenerated="true" --><span class="var">PaleVioletRed</span><!-- /a --> = -<span class="number">2396013</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Coral //apple_ref/c/data/Coral //apple_ref/c/clconst/Coral " machineGenerated="true" --><span class="var">Coral</span><!-- /a --> = -<span class="number">32944</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Tomato //apple_ref/c/data/Tomato //apple_ref/c/clconst/Tomato " machineGenerated="true" --><span class="var">Tomato</span><!-- /a --> = -<span class="number">40121</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/OrangeRed //apple_ref/c/data/OrangeRed //apple_ref/c/clconst/OrangeRed " machineGenerated="true" --><span class="var">OrangeRed</span><!-- /a --> = -<span class="number">47872</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/DarkOrange //apple_ref/c/data/DarkOrange //apple_ref/c/clconst/DarkOrange " machineGenerated="true" --><span class="var">DarkOrange</span><!-- /a --> = -<span class="number">29696</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Orange //apple_ref/c/data/Orange //apple_ref/c/clconst/Orange " machineGenerated="true" --><span class="var">Orange</span><!-- /a --> = -<span class="number">23296</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Gold //apple_ref/c/data/Gold //apple_ref/c/clconst/Gold " machineGenerated="true" --><span class="var">Gold</span><!-- /a --> = -<span class="number">10496</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Yellow //apple_ref/c/data/Yellow //apple_ref/c/clconst/Yellow " machineGenerated="true" --><span class="var">Yellow</span><!-- /a --> = -<span class="number">256</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/LightYellow //apple_ref/c/data/LightYellow //apple_ref/c/clconst/LightYellow " machineGenerated="true" --><span class="var">LightYellow</span><!-- /a --> = -<span class="number">32</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/LemonChiffon //apple_ref/c/data/LemonChiffon //apple_ref/c/clconst/LemonChiffon " machineGenerated="true" --><span class="var">LemonChiffon</span><!-- /a --> = -<span class="number">1331</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/LightGoldenrodYellow //apple_ref/c/data/LightGoldenrodYellow //apple_ref/c/clconst/LightGoldenrodYellow " machineGenerated="true" --><span class="var">LightGoldenrodYellow</span><!-- /a --> = -<span class="number">329006</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/PapayaWhip //apple_ref/c/data/PapayaWhip //apple_ref/c/clconst/PapayaWhip " machineGenerated="true" --><span class="var">PapayaWhip</span><!-- /a --> = -<span class="number">4139</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Moccasin //apple_ref/c/data/Moccasin //apple_ref/c/clconst/Moccasin " machineGenerated="true" --><span class="var">Moccasin</span><!-- /a --> = -<span class="number">6987</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/PeachPuff //apple_ref/c/data/PeachPuff //apple_ref/c/clconst/PeachPuff " machineGenerated="true" --><span class="var">PeachPuff</span><!-- /a --> = -<span class="number">9543</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/PaleGoldenrod //apple_ref/c/data/PaleGoldenrod //apple_ref/c/clconst/PaleGoldenrod " machineGenerated="true" --><span class="var">PaleGoldenrod</span><!-- /a --> = -<span class="number">1120086</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Khaki //apple_ref/c/data/Khaki //apple_ref/c/clconst/Khaki " machineGenerated="true" --><span class="var">Khaki</span><!-- /a --> = -<span class="number">989556</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/DarkKhaki //apple_ref/c/data/DarkKhaki //apple_ref/c/clconst/DarkKhaki " machineGenerated="true" --><span class="var">DarkKhaki</span><!-- /a --> = -<span class="number">4343957</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Lavender //apple_ref/c/data/Lavender //apple_ref/c/clconst/Lavender " machineGenerated="true" --><span class="var">Lavender</span><!-- /a --> = -<span class="number">1644806</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Thistle //apple_ref/c/data/Thistle //apple_ref/c/clconst/Thistle " machineGenerated="true" --><span class="var">Thistle</span><!-- /a --> = -<span class="number">2572328</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Plum //apple_ref/c/data/Plum //apple_ref/c/clconst/Plum " machineGenerated="true" --><span class="var">Plum</span><!-- /a --> = -<span class="number">2252579</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Violet //apple_ref/c/data/Violet //apple_ref/c/clconst/Violet " machineGenerated="true" --><span class="var">Violet</span><!-- /a --> = -<span class="number">1146130</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Orchid //apple_ref/c/data/Orchid //apple_ref/c/clconst/Orchid " machineGenerated="true" --><span class="var">Orchid</span><!-- /a --> = -<span class="number">2461482</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Fuchsia //apple_ref/c/data/Fuchsia //apple_ref/c/clconst/Fuchsia " machineGenerated="true" --><span class="var">Fuchsia</span><!-- /a --> = -<span class="number">65281</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Magenta //apple_ref/c/data/Magenta //apple_ref/c/clconst/Magenta " machineGenerated="true" --><span class="var">Magenta</span><!-- /a --> = -<span class="number">65281</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/MediumOrchid //apple_ref/c/data/MediumOrchid //apple_ref/c/clconst/MediumOrchid " machineGenerated="true" --><span class="var">MediumOrchid</span><!-- /a --> = -<span class="number">4565549</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/MediumPurple //apple_ref/c/data/MediumPurple //apple_ref/c/clconst/MediumPurple " machineGenerated="true" --><span class="var">MediumPurple</span><!-- /a --> = -<span class="number">7114533</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/RebeccaPurple //apple_ref/c/data/RebeccaPurple //apple_ref/c/clconst/RebeccaPurple " machineGenerated="true" --><span class="var">RebeccaPurple</span><!-- /a --> = -<span class="number">10079335</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/BlueViolet //apple_ref/c/data/BlueViolet //apple_ref/c/clconst/BlueViolet " machineGenerated="true" --><span class="var">BlueViolet</span><!-- /a --> = -<span class="number">7722014</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/DarkViolet //apple_ref/c/data/DarkViolet //apple_ref/c/clconst/DarkViolet " machineGenerated="true" --><span class="var">DarkViolet</span><!-- /a --> = -<span class="number">7077677</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/DarkOrchid //apple_ref/c/data/DarkOrchid //apple_ref/c/clconst/DarkOrchid " machineGenerated="true" --><span class="var">DarkOrchid</span><!-- /a --> = -<span class="number">6737204</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/DarkMagenta //apple_ref/c/data/DarkMagenta //apple_ref/c/clconst/DarkMagenta " machineGenerated="true" --><span class="var">DarkMagenta</span><!-- /a --> = -<span class="number">7667573</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Purple //apple_ref/c/data/Purple //apple_ref/c/clconst/Purple " machineGenerated="true" --><span class="var">Purple</span><!-- /a --> = -<span class="number">8388480</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Indigo //apple_ref/c/data/Indigo //apple_ref/c/clconst/Indigo " machineGenerated="true" --><span class="var">Indigo</span><!-- /a --> = -<span class="number">11861886</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/SlateBlue //apple_ref/c/data/SlateBlue //apple_ref/c/clconst/SlateBlue " machineGenerated="true" --><span class="var">SlateBlue</span><!-- /a --> = -<span class="number">9807155</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/DarkSlateBlue //apple_ref/c/data/DarkSlateBlue //apple_ref/c/clconst/DarkSlateBlue " machineGenerated="true" --><span class="var">DarkSlateBlue</span><!-- /a --> = -<span class="number">12042869</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/MediumSlateBlue //apple_ref/c/data/MediumSlateBlue //apple_ref/c/clconst/MediumSlateBlue " machineGenerated="true" --><span class="var">MediumSlateBlue</span><!-- /a --> = -<span class="number">8689426</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/GreenYellow //apple_ref/c/data/GreenYellow //apple_ref/c/clconst/GreenYellow " machineGenerated="true" --><span class="var">GreenYellow</span><!-- /a --> = -<span class="number">5374161</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Chartreuse //apple_ref/c/data/Chartreuse //apple_ref/c/clconst/Chartreuse " machineGenerated="true" --><span class="var">Chartreuse</span><!-- /a --> = -<span class="number">8388864</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/LawnGreen //apple_ref/c/data/LawnGreen //apple_ref/c/clconst/LawnGreen " machineGenerated="true" --><span class="var">LawnGreen</span><!-- /a --> = -<span class="number">8586240</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Lime //apple_ref/c/data/Lime //apple_ref/c/clconst/Lime " machineGenerated="true" --><span class="var">Lime</span><!-- /a --> = -<span class="number">16711936</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/LimeGreen //apple_ref/c/data/LimeGreen //apple_ref/c/clconst/LimeGreen " machineGenerated="true" --><span class="var">LimeGreen</span><!-- /a --> = -<span class="number">13447886</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/PaleGreen //apple_ref/c/data/PaleGreen //apple_ref/c/clconst/PaleGreen " machineGenerated="true" --><span class="var">PaleGreen</span><!-- /a --> = -<span class="number">6751336</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/LightGreen //apple_ref/c/data/LightGreen //apple_ref/c/clconst/LightGreen " machineGenerated="true" --><span class="var">LightGreen</span><!-- /a --> = -<span class="number">7278960</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/MediumSpringGreen //apple_ref/c/data/MediumSpringGreen //apple_ref/c/clconst/MediumSpringGreen " machineGenerated="true" --><span class="var">MediumSpringGreen</span><!-- /a --> = -<span class="number">16713062</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/SpringGreen //apple_ref/c/data/SpringGreen //apple_ref/c/clconst/SpringGreen " machineGenerated="true" --><span class="var">SpringGreen</span><!-- /a --> = -<span class="number">16711809</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/MediumSeaGreen //apple_ref/c/data/MediumSeaGreen //apple_ref/c/clconst/MediumSeaGreen " machineGenerated="true" --><span class="var">MediumSeaGreen</span><!-- /a --> = -<span class="number">12799119</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/SeaGreen //apple_ref/c/data/SeaGreen //apple_ref/c/clconst/SeaGreen " machineGenerated="true" --><span class="var">SeaGreen</span><!-- /a --> = -<span class="number">13726889</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/ForestGreen //apple_ref/c/data/ForestGreen //apple_ref/c/clconst/ForestGreen " machineGenerated="true" --><span class="var">ForestGreen</span><!-- /a --> = -<span class="number">14513374</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Green //apple_ref/c/data/Green //apple_ref/c/clconst/Green " machineGenerated="true" --><span class="var">Green</span><!-- /a --> = -<span class="number">16744448</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/DarkGreen //apple_ref/c/data/DarkGreen //apple_ref/c/clconst/DarkGreen " machineGenerated="true" --><span class="var">DarkGreen</span><!-- /a --> = -<span class="number">16751616</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/YellowGreen //apple_ref/c/data/YellowGreen //apple_ref/c/clconst/YellowGreen " machineGenerated="true" --><span class="var">YellowGreen</span><!-- /a --> = -<span class="number">6632142</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/OliveDrab //apple_ref/c/data/OliveDrab //apple_ref/c/clconst/OliveDrab " machineGenerated="true" --><span class="var">OliveDrab</span><!-- /a --> = -<span class="number">9728477</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Olive //apple_ref/c/data/Olive //apple_ref/c/clconst/Olive " machineGenerated="true" --><span class="var">Olive</span><!-- /a --> = -<span class="number">8355840</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/DarkOliveGreen //apple_ref/c/data/DarkOliveGreen //apple_ref/c/clconst/DarkOliveGreen " machineGenerated="true" --><span class="var">DarkOliveGreen</span><!-- /a --> = -<span class="number">11179217</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/MediumAquamarine //apple_ref/c/data/MediumAquamarine //apple_ref/c/clconst/MediumAquamarine " machineGenerated="true" --><span class="var">MediumAquamarine</span><!-- /a --> = -<span class="number">10039894</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/DarkSeaGreen //apple_ref/c/data/DarkSeaGreen //apple_ref/c/clconst/DarkSeaGreen " machineGenerated="true" --><span class="var">DarkSeaGreen</span><!-- /a --> = -<span class="number">7357301</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/LightSeaGreen //apple_ref/c/data/LightSeaGreen //apple_ref/c/clconst/LightSeaGreen " machineGenerated="true" --><span class="var">LightSeaGreen</span><!-- /a --> = -<span class="number">14634326</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/DarkCyan //apple_ref/c/data/DarkCyan //apple_ref/c/clconst/DarkCyan " machineGenerated="true" --><span class="var">DarkCyan</span><!-- /a --> = -<span class="number">16741493</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Teal //apple_ref/c/data/Teal //apple_ref/c/clconst/Teal " machineGenerated="true" --><span class="var">Teal</span><!-- /a --> = -<span class="number">16744320</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Aqua //apple_ref/c/data/Aqua //apple_ref/c/clconst/Aqua " machineGenerated="true" --><span class="var">Aqua</span><!-- /a --> = -<span class="number">16711681</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Cyan //apple_ref/c/data/Cyan //apple_ref/c/clconst/Cyan " machineGenerated="true" --><span class="var">Cyan</span><!-- /a --> = -<span class="number">16711681</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/LightCyan //apple_ref/c/data/LightCyan //apple_ref/c/clconst/LightCyan " machineGenerated="true" --><span class="var">LightCyan</span><!-- /a --> = -<span class="number">2031617</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/PaleTurquoise //apple_ref/c/data/PaleTurquoise //apple_ref/c/clconst/PaleTurquoise " machineGenerated="true" --><span class="var">PaleTurquoise</span><!-- /a --> = -<span class="number">5247250</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Aquamarine //apple_ref/c/data/Aquamarine //apple_ref/c/clconst/Aquamarine " machineGenerated="true" --><span class="var">Aquamarine</span><!-- /a --> = -<span class="number">8388652</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Turquoise //apple_ref/c/data/Turquoise //apple_ref/c/clconst/Turquoise " machineGenerated="true" --><span class="var">Turquoise</span><!-- /a --> = -<span class="number">12525360</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/MediumTurquoise //apple_ref/c/data/MediumTurquoise //apple_ref/c/clconst/MediumTurquoise " machineGenerated="true" --><span class="var">MediumTurquoise</span><!-- /a --> = -<span class="number">12004916</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/DarkTurquoise //apple_ref/c/data/DarkTurquoise //apple_ref/c/clconst/DarkTurquoise " machineGenerated="true" --><span class="var">DarkTurquoise</span><!-- /a --> = -<span class="number">16724271</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/CadetBlue //apple_ref/c/data/CadetBlue //apple_ref/c/clconst/CadetBlue " machineGenerated="true" --><span class="var">CadetBlue</span><!-- /a --> = -<span class="number">10510688</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/SteelBlue //apple_ref/c/data/SteelBlue //apple_ref/c/clconst/SteelBlue " machineGenerated="true" --><span class="var">SteelBlue</span><!-- /a --> = -<span class="number">12156236</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/LightSteelBlue //apple_ref/c/data/LightSteelBlue //apple_ref/c/clconst/LightSteelBlue " machineGenerated="true" --><span class="var">LightSteelBlue</span><!-- /a --> = -<span class="number">5192482</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/PowderBlue //apple_ref/c/data/PowderBlue //apple_ref/c/clconst/PowderBlue " machineGenerated="true" --><span class="var">PowderBlue</span><!-- /a --> = -<span class="number">5185306</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/LightBlue //apple_ref/c/data/LightBlue //apple_ref/c/clconst/LightBlue " machineGenerated="true" --><span class="var">LightBlue</span><!-- /a --> = -<span class="number">5383962</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/SkyBlue //apple_ref/c/data/SkyBlue //apple_ref/c/clconst/SkyBlue " machineGenerated="true" --><span class="var">SkyBlue</span><!-- /a --> = -<span class="number">7876885</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/LightSkyBlue //apple_ref/c/data/LightSkyBlue //apple_ref/c/clconst/LightSkyBlue " machineGenerated="true" --><span class="var">LightSkyBlue</span><!-- /a --> = -<span class="number">7876870</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/DeepSkyBlue //apple_ref/c/data/DeepSkyBlue //apple_ref/c/clconst/DeepSkyBlue " machineGenerated="true" --><span class="var">DeepSkyBlue</span><!-- /a --> = -<span class="number">16728065</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/DodgerBlue //apple_ref/c/data/DodgerBlue //apple_ref/c/clconst/DodgerBlue " machineGenerated="true" --><span class="var">DodgerBlue</span><!-- /a --> = -<span class="number">14774017</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/CornflowerBlue //apple_ref/c/data/CornflowerBlue //apple_ref/c/clconst/CornflowerBlue " machineGenerated="true" --><span class="var">CornflowerBlue</span><!-- /a --> = -<span class="number">10185235</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/RoyalBlue //apple_ref/c/data/RoyalBlue //apple_ref/c/clconst/RoyalBlue " machineGenerated="true" --><span class="var">RoyalBlue</span><!-- /a --> = -<span class="number">12490271</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Blue //apple_ref/c/data/Blue //apple_ref/c/clconst/Blue " machineGenerated="true" --><span class="var">Blue</span><!-- /a --> = -<span class="number">16776961</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/MediumBlue //apple_ref/c/data/MediumBlue //apple_ref/c/clconst/MediumBlue " machineGenerated="true" --><span class="var">MediumBlue</span><!-- /a --> = -<span class="number">16777011</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/DarkBlue //apple_ref/c/data/DarkBlue //apple_ref/c/clconst/DarkBlue " machineGenerated="true" --><span class="var">DarkBlue</span><!-- /a --> = -<span class="number">16777077</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Navy //apple_ref/c/data/Navy //apple_ref/c/clconst/Navy " machineGenerated="true" --><span class="var">Navy</span><!-- /a --> = -<span class="number">16777088</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/MidnightBlue //apple_ref/c/data/MidnightBlue //apple_ref/c/clconst/MidnightBlue " machineGenerated="true" --><span class="var">MidnightBlue</span><!-- /a --> = -<span class="number">15132304</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Cornsilk //apple_ref/c/data/Cornsilk //apple_ref/c/clconst/Cornsilk " machineGenerated="true" --><span class="var">Cornsilk</span><!-- /a --> = -<span class="number">1828</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/BlanchedAlmond //apple_ref/c/data/BlanchedAlmond //apple_ref/c/clconst/BlanchedAlmond " machineGenerated="true" --><span class="var">BlanchedAlmond</span><!-- /a --> = -<span class="number">5171</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Bisque //apple_ref/c/data/Bisque //apple_ref/c/clconst/Bisque " machineGenerated="true" --><span class="var">Bisque</span><!-- /a --> = -<span class="number">6972</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/NavajoWhite //apple_ref/c/data/NavajoWhite //apple_ref/c/clconst/NavajoWhite " machineGenerated="true" --><span class="var">NavajoWhite</span><!-- /a --> = -<span class="number">8531</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Wheat //apple_ref/c/data/Wheat //apple_ref/c/clconst/Wheat " machineGenerated="true" --><span class="var">Wheat</span><!-- /a --> = -<span class="number">663885</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/BurlyWood //apple_ref/c/data/BurlyWood //apple_ref/c/clconst/BurlyWood " machineGenerated="true" --><span class="var">BurlyWood</span><!-- /a --> = -<span class="number">2180985</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Tan //apple_ref/c/data/Tan //apple_ref/c/clconst/Tan " machineGenerated="true" --><span class="var">Tan</span><!-- /a --> = -<span class="number">2968436</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/RosyBrown //apple_ref/c/data/RosyBrown //apple_ref/c/clconst/RosyBrown " machineGenerated="true" --><span class="var">RosyBrown</span><!-- /a --> = -<span class="number">4419697</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/SandyBrown //apple_ref/c/data/SandyBrown //apple_ref/c/clconst/SandyBrown " machineGenerated="true" --><span class="var">SandyBrown</span><!-- /a --> = -<span class="number">744352</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Goldenrod //apple_ref/c/data/Goldenrod //apple_ref/c/clconst/Goldenrod " machineGenerated="true" --><span class="var">Goldenrod</span><!-- /a --> = -<span class="number">2448096</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/DarkGoldenrod //apple_ref/c/data/DarkGoldenrod //apple_ref/c/clconst/DarkGoldenrod " machineGenerated="true" --><span class="var">DarkGoldenrod</span><!-- /a --> = -<span class="number">4684277</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Peru //apple_ref/c/data/Peru //apple_ref/c/clconst/Peru " machineGenerated="true" --><span class="var">Peru</span><!-- /a --> = -<span class="number">3308225</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Chocolate //apple_ref/c/data/Chocolate //apple_ref/c/clconst/Chocolate " machineGenerated="true" --><span class="var">Chocolate</span><!-- /a --> = -<span class="number">2987746</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/SaddleBrown //apple_ref/c/data/SaddleBrown //apple_ref/c/clconst/SaddleBrown " machineGenerated="true" --><span class="var">SaddleBrown</span><!-- /a --> = -<span class="number">7650029</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Sienna //apple_ref/c/data/Sienna //apple_ref/c/clconst/Sienna " machineGenerated="true" --><span class="var">Sienna</span><!-- /a --> = -<span class="number">6270419</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Brown //apple_ref/c/data/Brown //apple_ref/c/clconst/Brown " machineGenerated="true" --><span class="var">Brown</span><!-- /a --> = -<span class="number">5952982</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Maroon //apple_ref/c/data/Maroon //apple_ref/c/clconst/Maroon " machineGenerated="true" --><span class="var">Maroon</span><!-- /a --> = -<span class="number">8388608</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/White //apple_ref/c/data/White //apple_ref/c/clconst/White " machineGenerated="true" --><span class="var">White</span><!-- /a --> = -<span class="number">1</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Snow //apple_ref/c/data/Snow //apple_ref/c/clconst/Snow " machineGenerated="true" --><span class="var">Snow</span><!-- /a --> = -<span class="number">1286</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/HoneyDew //apple_ref/c/data/HoneyDew //apple_ref/c/clconst/HoneyDew " machineGenerated="true" --><span class="var">HoneyDew</span><!-- /a --> = -<span class="number">983056</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/MintCream //apple_ref/c/data/MintCream //apple_ref/c/clconst/MintCream " machineGenerated="true" --><span class="var">MintCream</span><!-- /a --> = -<span class="number">655366</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Azure //apple_ref/c/data/Azure //apple_ref/c/clconst/Azure " machineGenerated="true" --><span class="var">Azure</span><!-- /a --> = -<span class="number">983041</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/AliceBlue //apple_ref/c/data/AliceBlue //apple_ref/c/clconst/AliceBlue " machineGenerated="true" --><span class="var">AliceBlue</span><!-- /a --> = -<span class="number">984833</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/GhostWhite //apple_ref/c/data/GhostWhite //apple_ref/c/clconst/GhostWhite " machineGenerated="true" --><span class="var">GhostWhite</span><!-- /a --> = -<span class="number">460545</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/WhiteSmoke //apple_ref/c/data/WhiteSmoke //apple_ref/c/clconst/WhiteSmoke " machineGenerated="true" --><span class="var">WhiteSmoke</span><!-- /a --> = -<span class="number">657931</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/SeaShell //apple_ref/c/data/SeaShell //apple_ref/c/clconst/SeaShell " machineGenerated="true" --><span class="var">SeaShell</span><!-- /a --> = -<span class="number">2578</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Beige //apple_ref/c/data/Beige //apple_ref/c/clconst/Beige " machineGenerated="true" --><span class="var">Beige</span><!-- /a --> = -<span class="number">657956</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/OldLace //apple_ref/c/data/OldLace //apple_ref/c/clconst/OldLace " machineGenerated="true" --><span class="var">OldLace</span><!-- /a --> = -<span class="number">133658</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/FloralWhite //apple_ref/c/data/FloralWhite //apple_ref/c/clconst/FloralWhite " machineGenerated="true" --><span class="var">FloralWhite</span><!-- /a --> = -<span class="number">1296</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Ivory //apple_ref/c/data/Ivory //apple_ref/c/clconst/Ivory " machineGenerated="true" --><span class="var">Ivory</span><!-- /a --> = -<span class="number">16</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/AntiqueWhite //apple_ref/c/data/AntiqueWhite //apple_ref/c/clconst/AntiqueWhite " machineGenerated="true" --><span class="var">AntiqueWhite</span><!-- /a --> = -<span class="number">332841</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Linen //apple_ref/c/data/Linen //apple_ref/c/clconst/Linen " machineGenerated="true" --><span class="var">Linen</span><!-- /a --> = -<span class="number">331546</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/LavenderBlush //apple_ref/c/data/LavenderBlush //apple_ref/c/clconst/LavenderBlush " machineGenerated="true" --><span class="var">LavenderBlush</span><!-- /a --> = -<span class="number">3851</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/MistyRose //apple_ref/c/data/MistyRose //apple_ref/c/clconst/MistyRose " machineGenerated="true" --><span class="var">MistyRose</span><!-- /a --> = -<span class="number">6943</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Gainsboro //apple_ref/c/data/Gainsboro //apple_ref/c/clconst/Gainsboro " machineGenerated="true" --><span class="var">Gainsboro</span><!-- /a --> = -<span class="number">2302756</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/LightGray //apple_ref/c/data/LightGray //apple_ref/c/clconst/LightGray " machineGenerated="true" --><span class="var">LightGray</span><!-- /a --> = -<span class="number">2894893</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Silver //apple_ref/c/data/Silver //apple_ref/c/clconst/Silver " machineGenerated="true" --><span class="var">Silver</span><!-- /a --> = -<span class="number">4144960</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/DarkGray //apple_ref/c/data/DarkGray //apple_ref/c/clconst/DarkGray " machineGenerated="true" --><span class="var">DarkGray</span><!-- /a --> = -<span class="number">5658199</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Gray //apple_ref/c/data/Gray //apple_ref/c/clconst/Gray " machineGenerated="true" --><span class="var">Gray</span><!-- /a --> = -<span class="number">8355712</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/DimGray //apple_ref/c/data/DimGray //apple_ref/c/clconst/DimGray " machineGenerated="true" --><span class="var">DimGray</span><!-- /a --> = -<span class="number">9868951</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/LightSlateGray //apple_ref/c/data/LightSlateGray //apple_ref/c/clconst/LightSlateGray " machineGenerated="true" --><span class="var">LightSlateGray</span><!-- /a --> = -<span class="number">8943463</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/SlateGray //apple_ref/c/data/SlateGray //apple_ref/c/clconst/SlateGray " machineGenerated="true" --><span class="var">SlateGray</span><!-- /a --> = -<span class="number">9404272</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/DarkSlateGray //apple_ref/c/data/DarkSlateGray //apple_ref/c/clconst/DarkSlateGray " machineGenerated="true" --><span class="var">DarkSlateGray</span><!-- /a --> = -<span class="number">13676721</span>, 
+    <!-- a logicalPath="//apple_ref/c/econst/Black //apple_ref/c/data/Black //apple_ref/c/clconst/Black " machineGenerated="true" --><span class="var">Black</span><!-- /a --> = -<span class="number">16777216</span>, 
+} <!-- a logicalPath="//apple_ref/c/econst/Color //apple_ref/c/data/Color //apple_ref/c/clconst/Color " machineGenerated="true" --><span class="var">Color</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/c/tdef/Color;name=end --></pre>
+</div>
 <hr class="betweenAPIEntries">
 <!-- headerDoc=tdef;  uid=//apple_ref/c/tdef/ppFlags;   name=ppFlags -->
 <a name="//apple_ref/c/tdef/ppFlags"></a>
@@ -722,7 +2628,7 @@ function disclosure_triangle(elt) {
 <p class="gapBeforeFooter">&nbsp;</p>
 <hr class="afterFooter">
 <div class="hd_copyright_and_timestamp">
-<p class="hd_timestamp">Last Updated: Wednesday, November 16, 2022
+<p class="hd_timestamp">Last Updated: Thursday, November 17, 2022
 </p>
 </div>
 </td>
