@@ -35,7 +35,7 @@
 #include "ppLive.h"
 
 static State *state = NULL;
-static App *app = NULL;
+static ppLiveApp *app = NULL;
 static struct {
     int width;
     int height;

@@ -40,8 +40,9 @@ static bool tick(State *state, Bitmap *pbo, double delta) {
     return true;
 }
 
-// App descriptor to
-const App pp = {
+// App descriptor to direct callbacks
+// Must be called "pp" as that is the symbol that is looked up
+const ppLiveApp pp = {
     .init = init,
     .deinit = deinit,
     .reload = reload,

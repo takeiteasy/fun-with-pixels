@@ -10,7 +10,7 @@ typedef struct {
     void(*reload)(State*);
     void(*unload)(State*);
     bool(*tick)(State*, Bitmap*, double);
-} App;
+} ppLiveApp;
 
-extern const App pp;
+extern const ppLiveApp pp;
 #endif // LIVE_APP_H

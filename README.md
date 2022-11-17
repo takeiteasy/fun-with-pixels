@@ -59,6 +59,7 @@ Nothing to see yet
 - [ ] Sixel context
 - [ ] Live coding (~~Mac~~, Windows, Linux)
 - [X] ~~Add bitmap.h to pp internally~~
+- [ ] Fix bitmap API to fit with rest of the library
 - [ ] Bindings (Ruby, Lua)
 
 ## License
