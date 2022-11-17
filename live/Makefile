@@ -15,7 +15,7 @@ else
 		$(error OS not supported by this Makefile)
 	endif
 endif
-CFLAGS=-I../ -I../src/bitmap/ ../pp.c $(LIBS)
+CFLAGS=-I../ ../pp.c $(LIBS)
 APP=app.c
 PROGRAM=pp$(PROGEXT)
 LIBRARY=libapp.$(LIBEXT)

@@ -1,6 +1,6 @@
 # pp
 
-_pp_ **[ˈpiːpiː]** or "_Pixel Playground_" is a small enviroment for quick experimentation with software rendering. Very simple API, build on top of my own [bitmap](https://github.com/takeiteasy/bitmap) library. See [here](https://takeiteasy.github.io/pp/) and [here](https://takeiteasy.github.io/bitmap/) for documentation.
+_pp_ **[ˈpiːpiː]** or "_Pixel Playground_" is a small enviroment for quick experimentation with software rendering. Very simple API, build on top of my own [bitmap](https://github.com/takeiteasy/headers/blob/master/bitmap.h) library. See [here](https://takeiteasy.github.io/pp/) for documentation.
 
 Includes a live coding solution, located in ```live``` directory (see [building](https://github.com/takeiteasy/pp#building) section for more info). Additionally, a [sokol_app](https://github.com/floooh/sokol/blob/master/sokol_app.h)-like application wrapper and more can be found in the ```extra``` directory.
 
@@ -33,7 +33,7 @@ int main(int argc, const char *argv[]) {
 
 ## Building
 
-The easiest way is to drop ```pp.c```, ```pp.h``` and ```bitmap.h``` into your project and add the appropriate flags (Mac: ```-framework Cocoa```, Windows: ```-lgdi32``` and Linux: ```-lX11```).
+The easiest way is to drop ```pp.c``` and ```pp.h``` into your project and add the appropriate flags (Mac: ```-framework Cocoa```, Windows: ```-lgdi32``` and Linux: ```-lX11```).
 
 To build pp as a library, simple run ```make```. This will generate ```pp.c``` in the root directory and then create a shared library in the ```build``` folder. Generating pp.c requires Ruby to be installed, if you don't have Ruby run ```make library``` instead.
 
@@ -51,14 +51,14 @@ Nothing to see yet
 
 ## TODO
 
-- [X] Documentation
-- [X] Mac context
+- [X] ~~Documentation~~
+- [X] ~~Mac context~~
 - [ ] Windows context (WIP)
 - [ ] Linux (X11) context
 - [ ] WebAssembly (Emscripten) context
 - [ ] Sixel context
 - [ ] Live coding (~~Mac~~, Windows, Linux)
-- [ ] Add bitmap.h to pp internally
+- [X] ~~Add bitmap.h to pp internally~~
 - [ ] Bindings (Ruby, Lua)
 
 ## License

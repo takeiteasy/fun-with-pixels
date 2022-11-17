@@ -16,9 +16,11 @@ targets:
     info:
       path: Info.plist
     sources:
-        - examples/basic.c
+        - examples
         - pp.c
+        - pp.h
+        - extra
     dependencies:
         - sdk: Cocoa.framework
     settings:
-        HEADER_SEARCH_PATHS: [$(PROJECT_DIR)/src, $(PROJECT_DIR)/ext, $(PROJECT_DIR)/, $(PROJECT_DIR)/lib/bitmap]
+        HEADER_SEARCH_PATHS: [$(PROJECT_DIR)/src, $(PROJECT_DIR)/extra, $(PROJECT_DIR)/]

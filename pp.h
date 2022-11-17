@@ -30,12 +30,6 @@
 extern "C" {
 #endif
 
-#define BITMAP_ENABLE_IO
-#define BITMAP_ENABLE_DEBUG_FONT
-#define BITMAP_ENABLE_BDF_FONT
-#define BITMAP_ENABLE_TTF_FONT
-#define BITMAP_ENABLE_GIFS
-#include "bitmap.h"
 #if defined(_MSC_VER) && _MSC_VER < 1800
 #include <windef.h>
 #define bool BOOL
@@ -48,6 +42,15 @@ typedef enum bool { false = 0, true = !false } bool;
 #include <stdbool.h>
 #endif
 #endif
+#include <stdio.h>
+#include <stdarg.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <string.h>
+#define _USE_MATH_DEFINES
+#include <math.h>
+#include <setjmp.h>
+#include <errno.h>
 
 #if defined(__EMSCRIPTEN__) || defined(EMSCRIPTEN)
 #define PP_EMSCRIPTEN
@@ -200,6 +203,495 @@ EXPORT bool ppRunning(void);
  * @return Elapsed program time in milliseconds
  */
 EXPORT double ppTime(void);
+
+/*!
+ * @function RGBA
+ * @abstract Create a packed RGBA integer
+ * @param r R channel
+ * @param g G channel
+ * @param b B channel
+ * @param a A channel
+ * @return Packed RGBA integer
+ */
+EXPORT int RGBA(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+/*!
+ * @function RGB
+ * @abstract Convert RGB to packed integer
+ * @param r R channel
+ * @param g G channel
+ * @param b B channel
+ * @return Packed RGB integer
+ * @discussion Alpha is 255 by default
+ */
+EXPORT int RGB(unsigned char r, unsigned char g, unsigned char b);
+/*!
+ * @function RGBA1
+ * @abstract Create a packed RGBA integer from one channel
+ * @param c R,G + B channels
+ * @param a A channel
+ * @return Packed RGBA integer
+ * @discussion This is a convenience wrapper for RGBA, e.g. RGBA(100, 100, 100, 255) == RGBA1(100, 255)
+ */
+EXPORT int RGBA1(unsigned char c, unsigned char a);
+/*!
+ * @function RGB1
+ * @abstract Create a packed RGBA integer from one channel
+ * @param c R, G + B channels
+ * @return Packed RGBA integer
+ * @discussion This is a convenience wrapper for RGB, e.g. RGB(100, 100, 100) == RGB1(100)
+ */
+EXPORT int RGB1(unsigned char c);
+/*!
+ * @function Rgba
+ * @abstract Retrieve R channel from packed RGBA integer
+ * @param c Packed RGBA integer
+ * @return R channel value
+ */
+EXPORT unsigned char Rgba(int c);
+/*!
+ * @function rGba
+ * @abstract Retrieve G channel from packed RGBA integer
+ * @param c Packed RGBA integer
+ * @return G channel value
+ */
+EXPORT unsigned char rGba(int c);
+/*!
+ * @function rgBa
+ * @abstract Retrieve B channel from packed RGBA integer
+ * @param c Packed RGBA integer
+ * @return B channel value
+ */
+EXPORT unsigned char rgBa(int c);
+/*!
+ * @function rgbA
+ * @abstract Retrieve A channel from packed RGBA integer
+ * @param c Packed RGBA integer
+ * @return A channel value
+ */
+EXPORT unsigned char rgbA(int c);
+/*!
+ * @function rGBA
+ * @abstract Modify R channel of packed RGBA integer
+ * @param c Packed RGBA integer
+ * @param r New R channel value
+ * @return Modified packed RGBA integer
+ */
+EXPORT int rGBA(int c, unsigned char r);
+/*!
+ * @function RgBA
+ * @abstract Modify G channel of packed RGBA integer
+ * @param c Packed RGBA integer
+ * @param g New G channel
+ * @return Modified packed RGBA integer
+ */
+EXPORT int RgBA(int c, unsigned char g);
+/*!
+ * @function RGbA
+ * @abstract Modify B channel of packed RGBA integer
+ * @param c Packed RGBA integer
+ * @param b New B channel
+ * @return Modified packed RGBA integer
+ */
+EXPORT int RGbA(int c, unsigned char b);
+/*!
+ * @function RGBa
+ * @abstract Modify A channel of packed RGBA integer
+ * @param c Packed RGBA integer
+ * @param a New A channel
+ * @return Modified packed RGBA integer
+ */
+EXPORT int RGBa(int c, unsigned char a);
+
+/*!
+ * @enum Color
+ * @abstract A list of colors with names
+ */
+typedef enum {
+    IndianRed = -3318692,
+    LightCoral = -1015680,
+    Salmon = -360334,
+    DarkSalmon = -1468806,
+    LightSalmon = -24454,
+    Crimson = -2354116,
+    Red = -65536,
+    FireBrick = -5103070,
+    DarkRed = -7667712,
+    Pink = -16181,
+    LightPink = -18751,
+    HotPink = -38476,
+    DeepPink = -60269,
+    MediumVioletRed = -3730043,
+    PaleVioletRed = -2396013,
+    Coral = -32944,
+    Tomato = -40121,
+    OrangeRed = -47872,
+    DarkOrange = -29696,
+    Orange = -23296,
+    Gold = -10496,
+    Yellow = -256,
+    LightYellow = -32,
+    LemonChiffon = -1331,
+    LightGoldenrodYellow = -329006,
+    PapayaWhip = -4139,
+    Moccasin = -6987,
+    PeachPuff = -9543,
+    PaleGoldenrod = -1120086,
+    Khaki = -989556,
+    DarkKhaki = -4343957,
+    Lavender = -1644806,
+    Thistle = -2572328,
+    Plum = -2252579,
+    Violet = -1146130,
+    Orchid = -2461482,
+    Fuchsia = -65281,
+    Magenta = -65281,
+    MediumOrchid = -4565549,
+    MediumPurple = -7114533,
+    RebeccaPurple = -10079335,
+    BlueViolet = -7722014,
+    DarkViolet = -7077677,
+    DarkOrchid = -6737204,
+    DarkMagenta = -7667573,
+    Purple = -8388480,
+    Indigo = -11861886,
+    SlateBlue = -9807155,
+    DarkSlateBlue = -12042869,
+    MediumSlateBlue = -8689426,
+    GreenYellow = -5374161,
+    Chartreuse = -8388864,
+    LawnGreen = -8586240,
+    Lime = -16711936,
+    LimeGreen = -13447886,
+    PaleGreen = -6751336,
+    LightGreen = -7278960,
+    MediumSpringGreen = -16713062,
+    SpringGreen = -16711809,
+    MediumSeaGreen = -12799119,
+    SeaGreen = -13726889,
+    ForestGreen = -14513374,
+    Green = -16744448,
+    DarkGreen = -16751616,
+    YellowGreen = -6632142,
+    OliveDrab = -9728477,
+    Olive = -8355840,
+    DarkOliveGreen = -11179217,
+    MediumAquamarine = -10039894,
+    DarkSeaGreen = -7357301,
+    LightSeaGreen = -14634326,
+    DarkCyan = -16741493,
+    Teal = -16744320,
+    Aqua = -16711681,
+    Cyan = -16711681,
+    LightCyan = -2031617,
+    PaleTurquoise = -5247250,
+    Aquamarine = -8388652,
+    Turquoise = -12525360,
+    MediumTurquoise = -12004916,
+    DarkTurquoise = -16724271,
+    CadetBlue = -10510688,
+    SteelBlue = -12156236,
+    LightSteelBlue = -5192482,
+    PowderBlue = -5185306,
+    LightBlue = -5383962,
+    SkyBlue = -7876885,
+    LightSkyBlue = -7876870,
+    DeepSkyBlue = -16728065,
+    DodgerBlue = -14774017,
+    CornflowerBlue = -10185235,
+    RoyalBlue = -12490271,
+    Blue = -16776961,
+    MediumBlue = -16777011,
+    DarkBlue = -16777077,
+    Navy = -16777088,
+    MidnightBlue = -15132304,
+    Cornsilk = -1828,
+    BlanchedAlmond = -5171,
+    Bisque = -6972,
+    NavajoWhite = -8531,
+    Wheat = -663885,
+    BurlyWood = -2180985,
+    Tan = -2968436,
+    RosyBrown = -4419697,
+    SandyBrown = -744352,
+    Goldenrod = -2448096,
+    DarkGoldenrod = -4684277,
+    Peru = -3308225,
+    Chocolate = -2987746,
+    SaddleBrown = -7650029,
+    Sienna = -6270419,
+    Brown = -5952982,
+    Maroon = -8388608,
+    White = -1,
+    Snow = -1286,
+    HoneyDew = -983056,
+    MintCream = -655366,
+    Azure = -983041,
+    AliceBlue = -984833,
+    GhostWhite = -460545,
+    WhiteSmoke = -657931,
+    SeaShell = -2578,
+    Beige = -657956,
+    OldLace = -133658,
+    FloralWhite = -1296,
+    Ivory = -16,
+    AntiqueWhite = -332841,
+    Linen = -331546,
+    LavenderBlush = -3851,
+    MistyRose = -6943,
+    Gainsboro = -2302756,
+    LightGray = -2894893,
+    Silver = -4144960,
+    DarkGray = -5658199,
+    Gray = -8355712,
+    DimGray = -9868951,
+    LightSlateGray = -8943463,
+    SlateGray = -9404272,
+    DarkSlateGray = -13676721,
+    Black = -16777216,
+} Color;
+
+/*!
+ * @struct Bitmap
+ * @abstract Bitmap object to hold image data
+ * @field buf Pixel data
+ * @field w Width of image
+ * @field h Height of image
+ */
+typedef struct {
+    int *buf, w, h;
+} Bitmap;
+
+/*!
+ * @function InitBitmap
+ * @abstract Create a new bitmap object
+ * @param b Pointer to bitmap object to create
+ * @param w Width of new bitmap
+ * @param h Height of new bitmap
+ * @return Boolean for success/failure
+ */
+EXPORT bool InitBitmap(Bitmap* b, unsigned int w, unsigned int h);
+/*!
+ * @function DestroyBitmap
+ * @abstract Free allocated image data
+ * @param b Reference to bitmap object
+ */
+EXPORT void DestroyBitmap(Bitmap* b);
+
+/*!
+ * @function FillBitmap
+ * @abstract Fill a bitmap with a given color
+ * @param b Bitmap object
+ * @param col Color
+ */
+EXPORT void FillBitmap(Bitmap* b, int col);
+/*!
+ * @function FloodBitmap
+ * @abstract Flood fill on bitmap object
+ * @param b Bitmap object
+ * @param x X start position
+ * @param y Y start position
+ * @param col Color
+ */
+EXPORT void FloodBitmap(Bitmap* b, int x, int y, int col);
+/*!
+ * @function ClearBitmap
+ * @abstract Clear a bitmap
+ * @param b Bitmap object
+ * @discussion Basically the same as calling FillBitmap(&bitmap, Black)
+ */
+EXPORT void ClearBitmap(Bitmap *b);
+/*!
+ * @function BSet
+ * @abstract Set and blend colors
+ * @param b Bitmap object
+ * @param x X position
+ * @param y Y position
+ * @param col Color to set
+ */
+EXPORT void BSet(Bitmap *b, int x, int y, int col);
+/*!
+ * @function PSet
+ * @abstract Set bitmap pixel color (without blending)
+ * @param b Bitmap object
+ * @param x X position
+ * @param y Y position
+ * @param col Color to set
+ */
+EXPORT void PSet(Bitmap *b, int x, int y, int col);
+/*!
+ * @function PGet
+ * @abstract Get bitmap pixel color at position
+ * @param b Bitmap object
+ * @param x X position
+ * @param y Y position
+ * @return Pixel color
+ */
+EXPORT int PGet(Bitmap *b, int x, int y);
+/*!
+ * @function PasteBitmap
+ * @abstract Blit one bitmap onto another at point
+ * @param dst Bitmap to blit to
+ * @param src Bitmap to blit
+ * @param x X position
+ * @param y Y position
+ * @return Boolean of success/failure
+ */
+EXPORT bool PasteBitmap(Bitmap *dst, Bitmap *src, int x, int y);
+/*!
+ * @function PasteBitmapClip
+ * @abstract Blit one bitmap onto another at point with clipping rect
+ * @param dst Bitmap to blit to
+ * @param src Bitmap to blit
+ * @param x X position
+ * @param y Y position
+ * @param rx Clip rect X
+ * @param ry Clip rect Y
+ * @param rw Clip rect width
+ * @param rh Clip rect height
+ * @return Boolean of success/failure
+ */
+EXPORT bool PasteBitmapClip(Bitmap *dst, Bitmap *src, int x, int y, int rx, int ry, int rw, int rh);
+/*!
+ * @function CopyBitmap
+ * @abstract Create a copy of a bitmap
+ * @param a Original bitmap object
+ * @param b New bitmap object to be allocated
+ * @return Boolean of success/failure
+ */
+EXPORT bool CopyBitmap(Bitmap *a, Bitmap *b);
+/*!
+ * @function PassthruBitmap
+ * @abstract Loop through each pixel of bitmap and run position and color through a callback.
+ * @param b Bitmap object
+ * @param fn Callback function
+ * @discussion Return value of the callback is the new color at the position
+ */
+EXPORT void PassthruBitmap(Bitmap *b, int(*fn)(int x, int y, int col));
+/*!
+ * @function ScaleBitmap
+ * @abstract Scale bitmap to given size
+ * @param a Original bitmap object
+ * @param nw New width
+ * @param nh New height
+ * @param b New bitmap object to be allocated
+ * @return Boolean of success/failure
+ */
+EXPORT bool ScaleBitmap(Bitmap *a, int nw, int nh, Bitmap *b);
+/*!
+ * @function RotateBitmap
+ * @abstract Rotate a bitmap by a given degree
+ * @param a Original bitmap object
+ * @param angle Angle to rotate by
+ * @param b New bitmap object to be allocated
+ * @return Boolean of success/failure
+ */
+EXPORT bool RotateBitmap(Bitmap *a, float angle, Bitmap *b);
+/*!
+ * @function DrawLine
+ * @abstract Simple Bresenham line
+ * @param b Bitmap object
+ * @param x0 Vector A X position
+ * @param y0 Vector A Y position
+ * @param x1 Vector B X position
+ * @param y1 Vector B Y position
+ * @param col Color of line
+ */
+EXPORT void DrawLine(Bitmap *b, int x0, int y0, int x1, int y1, int col);
+/*!
+ * @function DrawCricle
+ * @abstract Draw a circle
+ * @param b Bitmap object
+ * @param xc Centre X position
+ * @param yc Centre Y position
+ * @param r Circle radius
+ * @param col Color of cricle
+ * @param fill Fill circle boolean
+ */
+EXPORT void DrawCircle(Bitmap *b, int xc, int yc, int r, int col, bool fill);
+/*!
+ * @function DrawRect
+ * @abstract Draw a rectangle
+ * @param b Bitmap object
+ * @param x X position
+ * @param y Y position
+ * @param w Rectangle width
+ * @param h Rectangle height
+ * @param col Color of rectangle
+ * @param fill Fill rectangle boolean
+ */
+EXPORT void DrawRect(Bitmap *b, int x, int y, int w, int h, int col, bool fill);
+/*!
+ * @function DrawTri
+ * @abstract Draw a triangle
+ * @param b Bitmap object
+ * @param x0 Vector A X position
+ * @param y0 Vector A Y position
+ * @param x1 Vector B X position
+ * @param y1 Vector B Y position
+ * @param x2 Vector C X position
+ * @param y2 Vector C Y position
+ * @param col Color of line
+ * @param fill Fill triangle boolean
+ */
+EXPORT void DrawTri(Bitmap *b, int x0, int y0, int x1, int y1, int x2, int y2, int col, bool fill);
+
+/*!
+ * @function DrawCharacter
+ * @abstract Render a character to a bitmap
+ * @param b Bitmap destination
+ * @param c Character to render
+ * @param x X offset
+ * @param y Y offset
+ * @param col Color of character
+ */
+EXPORT void DrawCharacter(Bitmap *b, char c, int x, int y, int col);
+/*!
+ * @function DrawString
+ * @abstract Render a string to a bitmap
+ * @param b Bitmap destination
+ * @param str String to render
+ * @param x X offset
+ * @param y Y offset
+ * @param col Color of character
+ */
+EXPORT void DrawString(Bitmap *b, const char *str, int x, int y, int col);
+/*!
+ * @function DrawStringFormat
+ * @abstract Render a formatted string to a bitmap
+ * @param b Bitmap destination
+ * @param x X offset
+ * @param y Y offset
+ * @param col Color of character
+ * @param fmt Formatting string
+ * @param ... Formatting paramters
+ */
+EXPORT void DrawStringFormat(Bitmap *b, int x, int y, int col, const char *fmt, ...);
+
+/*!
+ * @function LoadBitmap
+ * @abstract Load a .png file to bitmap object
+ * @param out Bitmap object to load data to
+ * @param path Path to .png file
+ * @return Boolean of success/failure
+ */
+EXPORT bool LoadBitmap(Bitmap *out, const char *path);
+/*!
+ * @function LoadBitmapMemory
+ * @abstract Load a .png from memory to bitmap object
+ * @param out Bitmap object to load data to
+ * @param data .png data
+ * @param length Length of data
+ * @return Boolean of success/failure
+ */
+EXPORT bool LoadBitmapMemory(Bitmap *out, const void *data, size_t length);
+/*!
+ * @function SaveBitmap
+ * @abstract Save bitmap to .png file
+ * @param b Bitmap object to write to disk
+ * @param path Path to save bitmap
+ * @return Boolean of success/failure
+ */
+EXPORT bool SaveBitmap(Bitmap *b, const char *path);
 
 #if defined(__cplusplus)
 }

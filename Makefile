@@ -27,7 +27,7 @@ $(SOURCE): $(SOURCES)
 	ruby tools/generate.rb
 
 library: $(SOURCE)
-	$(CC) -shared -fpic $(LIBS) -Isrc/bitmap $^ -o build/libpp.$(LIBEXT)
+	$(CC) -shared -fpic $(LIBS) $^ -o build/libpp.$(LIBEXT)
 
 DOCS=./docs
 
