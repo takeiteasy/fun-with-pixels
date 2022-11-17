@@ -70,6 +70,17 @@ typedef enum bool { false = 0, true = !false } bool;
 #endif
 
 /*!
+ * @struct Bitmap
+ * @abstract Bitmap object to hold image data
+ * @field buf Pixel data
+ * @field w Width of image
+ * @field h Height of image
+ */
+typedef struct {
+    int *buf, w, h;
+} Bitmap;
+
+/*!
  * @enum ppFlags
  * @abstract Window config flags
  * @constant ppResizable Resizable window flag
@@ -188,7 +199,7 @@ PP_CALLBACKS
 /*!
  * @function ppUserdata
  * @abstract Set custom userdata to be passed to callback functions
- * @param Userdata stored by pp, passed to callback functions
+ * @param userdata stored by pp, passed to callback functions
  */
 EXPORT void ppUserdata(void *userdata);
 /*!
@@ -449,17 +460,6 @@ typedef enum {
     DarkSlateGray = -13676721,
     Black = -16777216,
 } Color;
-
-/*!
- * @struct Bitmap
- * @abstract Bitmap object to hold image data
- * @field buf Pixel data
- * @field w Width of image
- * @field h Height of image
- */
-typedef struct {
-    int *buf, w, h;
-} Bitmap;
 
 /*!
  * @function InitBitmap
