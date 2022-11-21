@@ -132,34 +132,34 @@ typedef enum {
 #define class(NAME) ((id)objc_getClass(__STRINGIFY(NAME)))
 #define protocol(NAME) objc_getProtocol(__STRINGIFY(NAME))
 
-#define $Super(RET, ...) ((RET(*)(struct objc_super*, SEL, ##__VA_ARGS__))objc_msgSendSuper)
-#define $Set(OBJ, VAR, VAL) object_setInstanceVariable(OBJ, __STRINGIFY(VAR), (void*)VAL)
-#define $Get(OBJ, VAR, OUT) object_getInstanceVariable(self, __STRINGIFY(VAR), (void**)&OUT)
-#define $SelfSet(VAR, VAL) $Set(self, VAR, VAL)
-#define $SelfGet(VAR, OUT) $Get(self, VAR, OUT)
-#define $(RET, ...) ((RET(*)(id, SEL, ##__VA_ARGS__))objc_msgSend)
+#define ObjC_Super(RET, ...) ((RET(*)(struct objc_super*, SEL, ##__VA_ARGS__))objc_msgSendSuper)
+#define ObjC_Set(OBJ, VAR, VAL) object_setInstanceVariable(OBJ, __STRINGIFY(VAR), (void*)VAL)
+#define ObjC_Get(OBJ, VAR, OUT) object_getInstanceVariable(self, __STRINGIFY(VAR), (void**)&OUT)
+#define ObjC_SelfSet(VAR, VAL) ObjC_Set(self, VAR, VAL)
+#define ObjC_SelfGet(VAR, OUT) ObjC_Get(self, VAR, OUT)
+#define ObjC(RET, ...) ((RET(*)(id, SEL, ##__VA_ARGS__))objc_msgSend)
 // ObjC functions that return regular structs (e.g. NSRect) must use this
-#define $Struct(RET, ...) ((RET(*)(id, SEL, ##__VA_ARGS__))abi_objc_msgSend_stret)
+#define ObjC_Struct(RET, ...) ((RET(*)(id, SEL, ##__VA_ARGS__))abi_objc_msgSend_stret)
 
-#define $Class(NAME, SUPER) \
+#define ObjC_Class(NAME, SUPER) \
     objc_allocateClassPair((Class)objc_getClass(__STRINGIFY(SUPER)), __STRINGIFY(NAME), 0)
-#define $Method(CLASS, SEL, IMPL, SIGNATURE)                         \
+#define ObjC_AddMethod(CLASS, SEL, IMPL, SIGNATURE)                  \
     if (!class_addMethod(CLASS, sel(SEL), (IMP)(IMPL), (SIGNATURE))) \
         assert(false)
-#define $IVar(CLASS, NAME, SIZE, SIGNATURE)                             \
-    if (!class_addIvar(CLASS, NAME, SIZE, rint(log2(SIZE)), SIGNATURE)) \
+#define ObjC_AddIVar(CLASS, NAME, SIZE, SIGNATURE)                                   \
+    if (!class_addIvar(CLASS, __STRINGIFY(NAME), SIZE, rint(log2(SIZE)), SIGNATURE)) \
         assert(false)
-#define $Protocol(CLASS, PROTOCOL)                                  \
+#define ObjC_AddProtocol(CLASS, PROTOCOL)                           \
     if (!class_addProtocol(CLASS, protocol(__STRINGIFY(PROTOCOL)))) \
         assert(false);
-#define $SubClass(NAME) objc_registerClassPair(NAME)
+#define ObjC_SubClass(NAME) objc_registerClassPair(NAME)
 
 #if defined(__OBJC__) && __has_feature(objc_arc) && !defined(OBJC_NO_ARC)
 #define OBJC_ARC_AVAILABLE
 #endif
 
 #if defined(OBJC_ARC_AVAILABLE)
-#define $Autorelease(CLASS)
+#define ObjC_Autorelease(CLASS)
 #define AutoreleasePool(...) \
     do                       \
     {                        \
@@ -169,19 +169,19 @@ typedef enum {
         }                    \
     } while (0)
 #else
-#define $Autorelease(CLASS) $(void)(class(CLASS), sel(autorelease))
-#define AutoreleasePool(...)                            \
-    do                                                  \
-    {                                                   \
-        id __OBJC_POOL = $Initalize(NSAutoreleasePool); \
-        __VA_ARGS__                                     \
-        $(void)(__OBJC_POOL, sel(drain));               \
+#define ObjC_Autorelease(CLASS) ObjC(void)(class(CLASS), sel(autorelease))
+#define AutoreleasePool(...)                                \
+    do                                                      \
+    {                                                       \
+        id __OBJC_POOL = ObjC_Initalize(NSAutoreleasePool); \
+        __VA_ARGS__                                         \
+        ObjC(void)(__OBJC_POOL, sel(drain));                \
     } while (0)
 #endif
-#define $Alloc(CLASS) $(id)(class(CLASS), sel(alloc))
-#define $Init(CLASS) $(id)(CLASS, sel(init))
-#define $Initalize(CLASS) $(id)($Alloc(CLASS), sel(init))
-#define $Release(CLASS) $(void)(CLASS, sel(release))
+#define ObjC_Alloc(CLASS) ObjC(id)(class(CLASS), sel(alloc))
+#define ObjC_Init(CLASS) ObjC(id)(CLASS, sel(init))
+#define ObjC_Initalize(CLASS) ObjC(id)(ObjC_Alloc(CLASS), sel(init))
+#define ObjC_Release(CLASS) ObjC(void)(CLASS, sel(release))
 
 static struct {
     id window;
@@ -209,7 +209,7 @@ static void windowDidResignKey(id self, SEL _sel, id notification) {
 }
 
 static void windowDidResize(id self, SEL _sel, id notification) {
-    CGRect frame = $(CGRect)($(id)(ppMacInternal.window, sel(contentView)), sel(frame));
+    CGRect frame = ObjC(CGRect)(ObjC(id)(ppMacInternal.window, sel(contentView)), sel(frame));
     ppCallCallback(Resized, frame.size.width, frame.size.height);
 }
 
@@ -225,11 +225,11 @@ static void drawRect(id self, SEL _self, CGRect rect) {
     if (!ppInternal.pbo)
         return;
     
-    CGContextRef ctx = (CGContextRef)$(id)($(id)(class(NSGraphicsContext), sel(currentContext)), sel(CGContext));
+    CGContextRef ctx = (CGContextRef)ObjC(id)(ObjC(id)(class(NSGraphicsContext), sel(currentContext)), sel(CGContext));
     CGColorSpaceRef s = CGColorSpaceCreateDeviceRGB();
     CGDataProviderRef p = CGDataProviderCreateWithData(NULL, ppInternal.pbo->buf, ppInternal.pbo->w * ppInternal.pbo->h * 4, NULL);
     CGImageRef img = CGImageCreate(ppInternal.pbo->w, ppInternal.pbo->h, 8, 32, ppInternal.pbo->w * 4, s, kCGImageAlphaNoneSkipFirst | kCGBitmapByteOrder32Little, p, NULL, 0, kCGRenderingIntentDefault);
-    CGRect wh = $Struct(CGRect)(self, sel(frame));
+    CGRect wh = ObjC_Struct(CGRect)(self, sel(frame));
     CGContextDrawImage(ctx, CGRectMake(0, 0, wh.size.width, wh.size.height), img);
     CGColorSpaceRelease(s);
     CGDataProviderRelease(p);
@@ -243,107 +243,107 @@ bool ppBegin(int w, int h, const char *title, ppFlags flags) {
     mach_timebase_info(&ppMacInternal.info);
     
     AutoreleasePool({
-        $(id)(class(NSApplication), sel(sharedApplication));
-        $(void, NSInteger)(NSApp, sel(setActivationPolicy:), NSApplicationActivationPolicyRegular);
+        ObjC(id)(class(NSApplication), sel(sharedApplication));
+        ObjC(void, NSInteger)(NSApp, sel(setActivationPolicy:), NSApplicationActivationPolicyRegular);
         
-        Class AppDelegate = $Class(AppDelegate, NSObject);
-        $Method(AppDelegate, applicationShouldTerminate, applicationShouldTerminate, NSUIntegerEncoding "@:@:");
-        id appDelegate = $(id)($(id)((id)AppDelegate, sel(alloc)), sel(init));
-        $Autorelease(AppDelegate);
+        Class AppDelegate = ObjC_Class(AppDelegate, NSObject);
+        ObjC_AddMethod(AppDelegate, applicationShouldTerminate, applicationShouldTerminate, NSUIntegerEncoding "@:@:");
+        id appDelegate = ObjC(id)(ObjC(id)((id)AppDelegate, sel(alloc)), sel(init));
+        ObjC_Autorelease(AppDelegate);
         
-        $(void, id)(NSApp, sel(setDelegate:), appDelegate);
-        $(void)(NSApp, sel(finishLaunching));
+        ObjC(void, id)(NSApp, sel(setDelegate:), appDelegate);
+        ObjC(void)(NSApp, sel(finishLaunching));
         
-        id menuBar = $Initalize(NSMenu);
-        $Autorelease(menuBar);
-        id menuItem = $Initalize(NSMenuItem);
-        $Autorelease(menuItem);
-        $(void, id)(menuBar, sel(addItem:), menuItem);
-        $(id, id)(NSApp, sel(setMainMenu:), menuBar);
-        id procInfo = $(id)(class(NSProcessInfo), sel(processInfo));
-        id appName = $(id)(procInfo, sel(processName));
+        id menuBar = ObjC_Initalize(NSMenu);
+        ObjC_Autorelease(menuBar);
+        id menuItem = ObjC_Initalize(NSMenuItem);
+        ObjC_Autorelease(menuItem);
+        ObjC(void, id)(menuBar, sel(addItem:), menuItem);
+        ObjC(id, id)(NSApp, sel(setMainMenu:), menuBar);
+        id procInfo = ObjC(id)(class(NSProcessInfo), sel(processInfo));
+        id appName = ObjC(id)(procInfo, sel(processName));
         
-        id appMenu = $(id, id)($Alloc(NSMenu), sel(initWithTitle:), appName);
-        $Autorelease(appMenu);
-        id quitTitleStr = $(id, const char*)(class(NSString), sel(stringWithUTF8String:), "Quit ");
-        id quitTitle = $(id, id)(quitTitleStr, sel(stringByAppendingString:), appName);
-        id quitItemKey = $(id, const char*)(class(NSString), sel(stringWithUTF8String:), "q");
-        id quitItem = $(id, id, SEL, id)($Alloc(NSMenuItem), sel(initWithTitle:action:keyEquivalent:), quitTitle, sel(terminate:), quitItemKey);
-        $Autorelease(quitItem);
+        id appMenu = ObjC(id, id)(ObjC_Alloc(NSMenu), sel(initWithTitle:), appName);
+        ObjC_Autorelease(appMenu);
+        id quitTitleStr = ObjC(id, const char*)(class(NSString), sel(stringWithUTF8String:), "Quit ");
+        id quitTitle = ObjC(id, id)(quitTitleStr, sel(stringByAppendingString:), appName);
+        id quitItemKey = ObjC(id, const char*)(class(NSString), sel(stringWithUTF8String:), "q");
+        id quitItem = ObjC(id, id, SEL, id)(ObjC_Alloc(NSMenuItem), sel(initWithTitle:action:keyEquivalent:), quitTitle, sel(terminate:), quitItemKey);
+        ObjC_Autorelease(quitItem);
         
-        $(void, id)(appMenu, sel(addItem:), quitItem);
-        $(void, id)(menuItem, sel(setSubmenu:), appMenu);
+        ObjC(void, id)(appMenu, sel(addItem:), quitItem);
+        ObjC(void, id)(menuItem, sel(setSubmenu:), appMenu);
     
         NSWindowStyleMask styleMask = NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskMiniaturizable;
         flags |= (flags & ppFullscreen ? (ppBorderless | ppResizable | ppFullscreenDesktop) : 0);
         styleMask |= (flags & ppResizable ? NSWindowStyleMaskResizable : 0);
         styleMask |= (flags & ppBorderless ? NSWindowStyleMaskFullSizeContentView : 0);
         if (flags & ppFullscreenDesktop) {
-            NSRect f = $Struct(NSRect)($(id)(class(NSScreen), sel(mainScreen)), sel(frame));
+            NSRect f = ObjC_Struct(NSRect)(ObjC(id)(class(NSScreen), sel(mainScreen)), sel(frame));
             w = f.size.width;
             h = f.size.height;
             styleMask |= NSWindowStyleMaskFullSizeContentView;
         }
         NSRect windowFrame = {{0, 0}, {w, h}};
         
-        ppMacInternal.window = $(id, NSRect, NSUInteger, NSUInteger, BOOL)($Alloc(NSWindow), sel(initWithContentRect:styleMask:backing:defer:), windowFrame, styleMask, NSBackingStoreBuffered, NO);
-        $(void, BOOL)(ppMacInternal.window, sel(setReleasedWhenClosed:), NO);
+        ppMacInternal.window = ObjC(id, NSRect, NSUInteger, NSUInteger, BOOL)(ObjC_Alloc(NSWindow), sel(initWithContentRect:styleMask:backing:defer:), windowFrame, styleMask, NSBackingStoreBuffered, NO);
+        ObjC(void, BOOL)(ppMacInternal.window, sel(setReleasedWhenClosed:), NO);
         
         if (flags & ppAlwaysOnTop)
-            $(void, NSInteger)(ppMacInternal.window, sel(setLevel:), NSFloatingWindowLevel);
+            ObjC(void, NSInteger)(ppMacInternal.window, sel(setLevel:), NSFloatingWindowLevel);
         
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_7
         if (flags & ppFullscreen) {
-            $(void, NSUInteger)(ppMacInternal.window, sel(setCollectionBehavior:), NSWindowCollectionBehaviorFullScreenPrimary);
-            $(void, SEL, id, BOOL)(ppMacInternal.window, sel(performSelectorOnMainThread:withObject:waitUntilDone:), sel(toggleFullScreen:), ppMacInternal.window, NO);
+            ObjC(void, NSUInteger)(ppMacInternal.window, sel(setCollectionBehavior:), NSWindowCollectionBehaviorFullScreenPrimary);
+            ObjC(void, SEL, id, BOOL)(ppMacInternal.window, sel(performSelectorOnMainThread:withObject:waitUntilDone:), sel(toggleFullScreen:), ppMacInternal.window, NO);
         }
 #else
 #pragma message("Fullscreen is unsupported on OSX versions < 10.7")
 #endif
         
-        $(void, BOOL)(ppMacInternal.window, sel(setAcceptsMouseMovedEvents:), YES);
-        $(void, BOOL)(ppMacInternal.window, sel(setRestorable:), NO);
-        $(void, BOOL)(ppMacInternal.window, sel(setReleasedWhenClosed:), NO);
+        ObjC(void, BOOL)(ppMacInternal.window, sel(setAcceptsMouseMovedEvents:), YES);
+        ObjC(void, BOOL)(ppMacInternal.window, sel(setRestorable:), NO);
+        ObjC(void, BOOL)(ppMacInternal.window, sel(setReleasedWhenClosed:), NO);
         
         id windowTitle = nil;
         if (flags & ppBorderless && flags & ~ppFullscreen) {
-            windowTitle = $(id)(class(NSString), sel(string));
-            $(void, BOOL)(ppMacInternal.window, sel(setTitlebarAppearsTransparent:), YES);
-            $(void, BOOL)($(id, NSUInteger)(ppMacInternal.window, sel(standardWindowButton:), NSWindowZoomButton), sel(setHidden:), YES);
-            $(void, BOOL)($(id, NSUInteger)(ppMacInternal.window, sel(standardWindowButton:), NSWindowCloseButton), sel(setHidden:), YES);
-            $(void, BOOL)($(id, NSUInteger)(ppMacInternal.window, sel(standardWindowButton:), NSWindowMiniaturizeButton), sel(setHidden:), YES);
+            windowTitle = ObjC(id)(class(NSString), sel(string));
+            ObjC(void, BOOL)(ppMacInternal.window, sel(setTitlebarAppearsTransparent:), YES);
+            ObjC(void, BOOL)(ObjC(id, NSUInteger)(ppMacInternal.window, sel(standardWindowButton:), NSWindowZoomButton), sel(setHidden:), YES);
+            ObjC(void, BOOL)(ObjC(id, NSUInteger)(ppMacInternal.window, sel(standardWindowButton:), NSWindowCloseButton), sel(setHidden:), YES);
+            ObjC(void, BOOL)(ObjC(id, NSUInteger)(ppMacInternal.window, sel(standardWindowButton:), NSWindowMiniaturizeButton), sel(setHidden:), YES);
         } else {
-            windowTitle = $(id, const char*)(class(NSString), sel(stringWithUTF8String:), title);
+            windowTitle = ObjC(id, const char*)(class(NSString), sel(stringWithUTF8String:), title);
         }
-        $(void, id)(ppMacInternal.window, sel(setTitle:), windowTitle);
-        $(void)(ppMacInternal.window, sel(center));
+        ObjC(void, id)(ppMacInternal.window, sel(setTitle:), windowTitle);
+        ObjC(void)(ppMacInternal.window, sel(center));
         
-        Class WindowDelegate = $Class(WindowDelegate, NSObject);
-        $Protocol(WindowDelegate, NSWindowDelegate);
-        $Method(WindowDelegate, windowWillClose:, windowWillClose, "v@:@");
-        $Method(WindowDelegate, windowDidBecomeKey:, windowDidBecomeKey, "v@:@");
-        $Method(WindowDelegate, windowDidResignKey:, windowDidResignKey, "v@:@");
-        $Method(WindowDelegate, windowDidResize:, windowDidResize, "v@:@");
-        $Method(WindowDelegate, mouseEntered:, mouseEntered, "v@:@");
-        $Method(WindowDelegate, mouseExited:, mouseExited, "v@:@");
-        id windowDelegate = $(id)($(id)((id)WindowDelegate, sel(alloc)), sel(init));
-        $Autorelease(windowDelegate);
-        $(void, id)(ppMacInternal.window, sel(setDelegate:), windowDelegate);
+        Class WindowDelegate = ObjC_Class(WindowDelegate, NSObject);
+        ObjC_AddProtocol(WindowDelegate, NSWindowDelegate);
+        ObjC_AddMethod(WindowDelegate, windowWillClose:, windowWillClose, "v@:@");
+        ObjC_AddMethod(WindowDelegate, windowDidBecomeKey:, windowDidBecomeKey, "v@:@");
+        ObjC_AddMethod(WindowDelegate, windowDidResignKey:, windowDidResignKey, "v@:@");
+        ObjC_AddMethod(WindowDelegate, windowDidResize:, windowDidResize, "v@:@");
+        ObjC_AddMethod(WindowDelegate, mouseEntered:, mouseEntered, "v@:@");
+        ObjC_AddMethod(WindowDelegate, mouseExited:, mouseExited, "v@:@");
+        id windowDelegate = ObjC(id)(ObjC(id)((id)WindowDelegate, sel(alloc)), sel(init));
+        ObjC_Autorelease(windowDelegate);
+        ObjC(void, id)(ppMacInternal.window, sel(setDelegate:), windowDelegate);
         
-        Class View = $Class(View, NSView);
-        $Method(View, drawRect:, drawRect, "v@:");
-        $SubClass(View);
+        Class View = ObjC_Class(View, NSView);
+        ObjC_AddMethod(View, drawRect:, drawRect, "v@:");
+        ObjC_SubClass(View);
         int trackingFlags = NSTrackingMouseEnteredAndExited | NSTrackingActiveInKeyWindow | NSTrackingInVisibleRect;
-        id trackingArea = $(id, NSRect, int, id, id)($Alloc(NSTrackingArea), sel(initWithRect:options:owner:userInfo:), windowFrame, trackingFlags, windowDelegate, nil);
-        id view = $(id, NSRect)($Alloc(View), sel(initWithFrame:), windowFrame);
-        $(void, id)(view, sel(addTrackingArea:), trackingArea);
-        $(void, id)(ppMacInternal.window, sel(setContentView:), view);
-        $Autorelease(view);
-        $Autorelease(trackingArea);
+        id trackingArea = ObjC(id, NSRect, int, id, id)(ObjC_Alloc(NSTrackingArea), sel(initWithRect:options:owner:userInfo:), windowFrame, trackingFlags, windowDelegate, nil);
+        id view = ObjC(id, NSRect)(ObjC_Alloc(View), sel(initWithFrame:), windowFrame);
+        ObjC(void, id)(view, sel(addTrackingArea:), trackingArea);
+        ObjC(void, id)(ppMacInternal.window, sel(setContentView:), view);
+        ObjC_Autorelease(view);
+        ObjC_Autorelease(trackingArea);
         
-        $(void, SEL, id, BOOL)(ppMacInternal.window, sel(performSelectorOnMainThread:withObject:waitUntilDone:), sel(makeKeyAndOrderFront:), nil, YES);
+        ObjC(void, SEL, id, BOOL)(ppMacInternal.window, sel(performSelectorOnMainThread:withObject:waitUntilDone:), sel(makeKeyAndOrderFront:), nil, YES);
         
-        $(void, BOOL)(NSApp, sel(activateIgnoringOtherApps:), YES);
+        ObjC(void, BOOL)(NSApp, sel(activateIgnoringOtherApps:), YES);
     });
     
     ppInternal.initialized = ppInternal.running = true;
@@ -698,41 +698,41 @@ bool ppPoll(void) {
         return false;
     
     AutoreleasePool({
-        id distantPast = $(id)(class(NSDate), sel(distantPast));
+        id distantPast = ObjC(id)(class(NSDate), sel(distantPast));
         id e = nil;
-        while (ppInternal.running && (e = $(id, unsigned long long, id, id, BOOL)(NSApp, sel(nextEventMatchingMask:untilDate:inMode:dequeue:), NSUIntegerMax, distantPast, NSDefaultRunLoopMode, YES))) {
-            NSUInteger type = $(NSUInteger)(e, sel(type));
+        while (ppInternal.running && (e = ObjC(id, unsigned long long, id, id, BOOL)(NSApp, sel(nextEventMatchingMask:untilDate:inMode:dequeue:), NSUIntegerMax, distantPast, NSDefaultRunLoopMode, YES))) {
+            NSUInteger type = ObjC(NSUInteger)(e, sel(type));
             switch (type) {
                 case NSEventTypeLeftMouseDown:
                 case NSEventTypeLeftMouseUp:
-                    ppCallCallback(MouseButton, 1, convertMacMod($(NSUInteger)(e, sel(modifierFlags))), type == NSEventTypeLeftMouseDown);
+                    ppCallCallback(MouseButton, 1, convertMacMod(ObjC(NSUInteger)(e, sel(modifierFlags))), type == NSEventTypeLeftMouseDown);
                     break;
                 case NSEventTypeRightMouseDown:
                 case NSEventTypeRightMouseUp:
-                    ppCallCallback(MouseButton, 2, convertMacMod($(NSUInteger)(e, sel(modifierFlags))), type == NSEventTypeRightMouseDown);
+                    ppCallCallback(MouseButton, 2, convertMacMod(ObjC(NSUInteger)(e, sel(modifierFlags))), type == NSEventTypeRightMouseDown);
                     break;
                 case NSEventTypeOtherMouseDown:
                 case NSEventTypeOtherMouseUp:
-                    ppCallCallback(MouseButton, (int)$(NSUInteger)(e, sel(buttonNumber)), convertMacMod($(NSUInteger)(e, sel(modifierFlags))), type == NSEventTypeOtherMouseDown);
+                    ppCallCallback(MouseButton, (int)ObjC(NSUInteger)(e, sel(buttonNumber)), convertMacMod(ObjC(NSUInteger)(e, sel(modifierFlags))), type == NSEventTypeOtherMouseDown);
                     break;
                 case NSEventTypeScrollWheel:
-                    ppCallCallback(MouseScroll, $(CGFloat)(e, sel(deltaX)), $(CGFloat)(e, sel(deltaY)), convertMacMod($(NSUInteger)(e, sel(modifierFlags))));
+                    ppCallCallback(MouseScroll, ObjC(CGFloat)(e, sel(deltaX)), ObjC(CGFloat)(e, sel(deltaY)), convertMacMod(ObjC(NSUInteger)(e, sel(modifierFlags))));
                     break;
                 case NSEventTypeKeyDown:
                 case NSEventTypeKeyUp:
-                    ppCallCallback(Keyboard, convertMacKey($(unsigned short)(e, sel(keyCode))), convertMacMod($(NSUInteger)(e, sel(modifierFlags))), type == NSEventTypeKeyDown);
+                    ppCallCallback(Keyboard, convertMacKey(ObjC(unsigned short)(e, sel(keyCode))), convertMacMod(ObjC(NSUInteger)(e, sel(modifierFlags))), type == NSEventTypeKeyDown);
                     break;
                 case NSEventTypeMouseMoved:
                     if (ppMacInternal.mouseInWindow) {
-                        CGPoint locationInWindow = $(CGPoint)(e, sel(locationInWindow));
-                        ppCallCallback(MouseMove, (int)locationInWindow.x, (int)($(CGRect)($(id)(ppMacInternal.window, sel(contentView)), sel(frame)).size.height - roundf(locationInWindow.y)), $(CGFloat)(e, sel(deltaX)), $(CGFloat)(e, sel(deltaY)));
+                        CGPoint locationInWindow = ObjC(CGPoint)(e, sel(locationInWindow));
+                        ppCallCallback(MouseMove, (int)locationInWindow.x, (int)(ObjC(CGRect)(ObjC(id)(ppMacInternal.window, sel(contentView)), sel(frame)).size.height - roundf(locationInWindow.y)), ObjC(CGFloat)(e, sel(deltaX)), ObjC(CGFloat)(e, sel(deltaY)));
                     }
                     break;
                 default:
                     break;
             }
-            $(void, id)(NSApp, sel(sendEvent:), e);
-            $(void)(NSApp, sel(updateWindows));
+            ObjC(void, id)(NSApp, sel(sendEvent:), e);
+            ObjC(void)(NSApp, sel(updateWindows));
         }
     });
     
@@ -745,16 +745,16 @@ void ppFlush(Bitmap *bitmap) {
         return;
     }
     ppInternal.pbo = bitmap;
-    $(void, BOOL)($(id)(ppMacInternal.window, sel(contentView)), sel(setNeedsDisplay:), YES);
+    ObjC(void, BOOL)(ObjC(id)(ppMacInternal.window, sel(contentView)), sel(setNeedsDisplay:), YES);
 }
 
 void ppEnd(void) {
     if (!ppInternal.initialized)
         return;
     if (ppInternal.running)
-        $(void)(ppMacInternal.window, sel(close));
-    $Release(ppMacInternal.window);
-    $(void, id)(NSApp, sel(terminate:), nil);
+        ObjC(void)(ppMacInternal.window, sel(close));
+    ObjC_Release(ppMacInternal.window);
+    ObjC(void, id)(NSApp, sel(terminate:), nil);
 }
 
 double ppTime(void) {
