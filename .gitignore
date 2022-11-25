@@ -7,3 +7,4 @@ live/*.so
 live/*.dll
 live/pp
 live/*.exe
+src/
