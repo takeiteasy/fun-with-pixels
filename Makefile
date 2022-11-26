@@ -16,28 +16,32 @@ else
 	endif
 endif
 SOURCES=$(wildcard src/*.c)
-SOURCE=pp.c
+
 CC=clang
 
-all: library docs
-default: library
+default: game
+all: run
 
-$(SOURCE): $(SOURCES)
+generate: $(SOURCES)
 	mkdir build/ || true
 	ruby tools/generate.rb
+	headerdoc2html -udpb pp.h -o docs/
+	gatherheaderdoc docs
+	mv docs/masterTOC.html docs/index.html
 
-library: $(SOURCE)
-	$(CC) -shared -fpic $(LIBS) $^ -o build/libpp.$(LIBEXT)
+library:
+	$(CC) -shared -fpic $(LIBS) pp.c -o build/libpp.$(LIBEXT)
 
-DOCS=./docs
+live: game
+	$(CC) pp.c $(LIBS) -DPP_LIVE -o build/pp$(PROGEXT)
 
-$(DOCS):
-	mkdir $(DOCS)
+game:
+	clang pp.c examples/live.c -shared -fpic $(LIBS) -I. -DPP_LIVE -o build/libpplive.$(LIBEXT)
 
-docs: $(DOCS)
-	rm -rf $(DOCS)
-	headerdoc2html -udpb pp.h -o $(DOCS)
-	gatherheaderdoc $(DOCS)
-	mv $(DOCS)/masterTOC.html $(DOCS)/index.html
+run: game live
+	./build/pp$(PROGEXT) -p build/libpplive.$(LIBEXT) &
 
-.PHONY: default library all docs
+kill:
+	pkill pp
+
+.PHONY: default all run game live library rebuild kill

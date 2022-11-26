@@ -31,11 +31,31 @@ static struct {
 #define X(NAME, ARGS) void(*NAME##Callback)ARGS;
     PP_CALLBACKS
 #undef X
+    struct {
+        int p1, p2;
+        unsigned int buffer[17];
+    } random;
     void *userdata;
     bool initialized;
     bool running;
     Bitmap *pbo;
 } ppInternal = {0};
+
+static bool ppBeginNative(int w, int h, const char *title, ppFlags flags);
+bool ppBegin(int w, int h, const char *title, ppFlags flags) {
+    if (ppInternal.initialized)
+        return false;
+
+    unsigned int seed = (unsigned int)clock();
+    for (unsigned int i = 0; i < 17; i++) {
+        seed = seed * 2891336453 + 1;
+        ppInternal.random.buffer[i] = seed;
+    }
+    ppInternal.random.p1 = 0;
+    ppInternal.random.p2 = 10;
+
+    return ppBeginNative(w, h, title, flags);
+}
 
 #define X(NAME, ARGS) \
     void(*NAME##Callback)ARGS,
@@ -65,6 +85,58 @@ void ppUserdata(void *userdata) {
 
 bool ppRunning() {
     return ppInternal.running;
+}
+
+static unsigned int rotl(unsigned int n, unsigned int r) {
+    return (n << r) | (n >> (32 - r));
+}
+
+unsigned int ppRandomBits(void) {
+    unsigned int result = ppInternal.random.buffer[ppInternal.random.p1] = rotl(ppInternal.random.buffer[ppInternal.random.p2], 13) + rotl(ppInternal.random.buffer[ppInternal.random.p1], 9);
+
+    if (--ppInternal.random.p1 < 0)
+        ppInternal.random.p1 = 16;
+    if (--ppInternal.random.p2 < 0)
+        ppInternal.random.p2 = 16;
+
+    return result;
+}
+
+float ppRandomFloat(void) {
+    union {
+        float value;
+        unsigned int word;
+    } convert = {
+        .word = (ppRandomBits() >> 9) | 0x3f800000};
+    return convert.value - 1.0f;
+}
+
+double ppRandomDouble(void) {
+    unsigned int bits = ppRandomBits();
+    union {
+        double value;
+        unsigned int words[2];
+    } convert = {
+        .words = {
+            bits << 20,
+            (bits >> 12) | 0x3FF00000}};
+    return convert.value - 1.0;
+}
+
+unsigned int ppRandomInt(int max) {
+    return ppRandomBits() % max;
+}
+
+float ppRandomFloatRange(float min, float max) {
+    return ppRandomFloat() * (max - min) + min;
+}
+
+double ppRandomDoubleRange(double min, double max) {
+    return ppRandomDouble() * (max - min) + min;
+}
+
+unsigned int ppRandomIntRange(int min, int max) {
+    return ppRandomBits() % (max + 1 - min) + min;
 }
 
 int RGBA(unsigned char r, unsigned char g, unsigned char b, unsigned char a) {
@@ -1341,12 +1413,690 @@ bool SaveBitmap(Bitmap *b, const char *path) {
 
     // Write back payload size.
     fseek(out, dataPos, SEEK_SET);
-    put32(&s, dataSize);
+    put32(&s, (int)dataSize);
 
     long err = ferror(out);
     fclose(out);
     return !err;
 }
+
+bool FlipBitmapHorizontal(Bitmap *a, Bitmap *b) {
+    if (!InitBitmap(b, a->w, a->h))
+        return false;
+    for (int y = 0; y < a->h; y++)
+        for (int x = a->w - 1, i = 0; x >= 0; x--, i++)
+            PSet(b, i, y, PGet(a, x, y));
+    return true;
+}
+
+bool FlipBitmapVertical(Bitmap *a, Bitmap *b) {
+    if (!InitBitmap(b, a->w, a->h))
+        return false;
+    for (int x = 0; x < a->w; x++)
+        for (int y = a->h - 1, i = 0; y >= 0; y--, i++)
+            PSet(b, x, i, PGet(a, x, y));
+    return true;
+}
+
+bool GenBitmapCheckerboard(Bitmap *b, int w, int h, int cw, int ch, int col1, int col2) {
+    if (!InitBitmap(b, w, h))
+        return false;
+    for (int x = 0; x < w; x++)
+        for (int y = 0; y < h; y++)
+            PSet(b, x, y, (x / cw + y / ch) % 2 == 0 ? col1 : col2);
+    return true;
+}
+
+#define GRADIENT(A, B, F) (int)((float)(B) * (F) + (float)(A)*(1.f - (F)))
+#define PSET_GRADIENT(B, X, Y, F, C1, C2) \
+    PSet((B), (X), (y), RGBA(GRADIENT(Rgba((C1)), Rgba((C2)), (F)), \
+                             GRADIENT(rGba((C1)), rGba((C2)), (F)), \
+                             GRADIENT(rgBa((C1)), rgBa((C2)), (F)), \
+                             GRADIENT(rgbA((C1)), rgbA((C2)), (F))));
+
+bool GenBitmapGradientHorizontal(Bitmap *b, int w, int h, int col1, int col2) {
+    if (!InitBitmap(b, w, h))
+        return false;
+    for (int x = 0; x < w; x++) {
+        float f = x / w;
+        for (int y = 0; y < h; y++)
+            PSET_GRADIENT(b, x, y, f, col1, col2);
+    }
+    return true;
+}
+
+bool GenBitmapGradientVertical(Bitmap *b, int w, int h, int col1, int col2) {
+    if (!InitBitmap(b, w, h))
+        return false;
+    for (int y = 0; y < h; y++) {
+        float f = y / h;
+        for (int x = 0; x < w; x++)
+            PSET_GRADIENT(b, x, y, f, col1, col2);
+    }
+    return true;
+}
+
+static float fclamp(float f, float min, float max) {
+    return fmaxf(fminf(f, max), min);
+}
+
+bool GenBitmapGradientRadial(Bitmap *b, int w, int h, float d, int col1, int col2) {
+    if (!InitBitmap(b, w, h))
+        return false;
+
+    float cx = (float)w / 2.f;
+    float cy = (float)h / 2.f;
+    float r = w < h ? cx : cy;
+    for (int x = 0; x < w; x++)
+        for (int y = 0; y < h; y++) {
+            float f = fclamp((hypotf((float)x - cx, (float)y - cy) - r * d)/(r * (1.0f - d)), 0.f, 1.f);
+            PSET_GRADIENT(b, x, y, f, col1, col2);
+        }
+    return true;
+}
+
+bool GenBitmapWhiteNoise(Bitmap *b, int w, int h, float factor) {
+    if (!InitBitmap(b, w, h))
+        return false;
+    for (int i = 0; i < w * h; i++)
+        b->buf[i] = ppRandomInt(99) < (int)(factor * 100.f) ? White : Black;
+    return true;
+}
+
+static const float grad3[][3] = {
+    { 1, 1, 0 }, { -1, 1, 0 }, { 1, -1, 0 }, { -1, -1, 0 },
+    { 1, 0, 1 }, { -1, 0, 1 }, { 1, 0, -1 }, { -1, 0, -1 },
+    { 0, 1, 1 }, { 0, -1, 1 }, { 0, 1, -1 }, { 0, -1, -1 }
+};
+
+static const unsigned int perm[] = {
+    182, 232, 51, 15, 55, 119, 7, 107, 230, 227, 6, 34, 216, 61, 183, 36,
+    40, 134, 74, 45, 157, 78, 81, 114, 145, 9, 209, 189, 147, 58, 126, 0,
+    240, 169, 228, 235, 67, 198, 72, 64, 88, 98, 129, 194, 99, 71, 30, 127,
+    18, 150, 155, 179, 132, 62, 116, 200, 251, 178, 32, 140, 130, 139, 250, 26,
+    151, 203, 106, 123, 53, 255, 75, 254, 86, 234, 223, 19, 199, 244, 241, 1,
+    172, 70, 24, 97, 196, 10, 90, 246, 252, 68, 84, 161, 236, 205, 80, 91,
+    233, 225, 164, 217, 239, 220, 20, 46, 204, 35, 31, 175, 154, 17, 133, 117,
+    73, 224, 125, 65, 77, 173, 3, 2, 242, 221, 120, 218, 56, 190, 166, 11,
+    138, 208, 231, 50, 135, 109, 213, 187, 152, 201, 47, 168, 185, 186, 167, 165,
+    102, 153, 156, 49, 202, 69, 195, 92, 21, 229, 63, 104, 197, 136, 148, 94,
+    171, 93, 59, 149, 23, 144, 160, 57, 76, 141, 96, 158, 163, 219, 237, 113,
+    206, 181, 112, 111, 191, 137, 207, 215, 13, 83, 238, 249, 100, 131, 118, 243,
+    162, 248, 43, 66, 226, 27, 211, 95, 214, 105, 108, 101, 170, 128, 210, 87,
+    38, 44, 174, 188, 176, 39, 14, 143, 159, 16, 124, 222, 33, 247, 37, 245,
+    8, 4, 22, 82, 110, 180, 184, 12, 25, 5, 193, 41, 85, 177, 192, 253,
+    79, 29, 115, 103, 142, 146, 52, 48, 89, 54, 121, 212, 122, 60, 28, 42,
+
+    182, 232, 51, 15, 55, 119, 7, 107, 230, 227, 6, 34, 216, 61, 183, 36,
+    40, 134, 74, 45, 157, 78, 81, 114, 145, 9, 209, 189, 147, 58, 126, 0,
+    240, 169, 228, 235, 67, 198, 72, 64, 88, 98, 129, 194, 99, 71, 30, 127,
+    18, 150, 155, 179, 132, 62, 116, 200, 251, 178, 32, 140, 130, 139, 250, 26,
+    151, 203, 106, 123, 53, 255, 75, 254, 86, 234, 223, 19, 199, 244, 241, 1,
+    172, 70, 24, 97, 196, 10, 90, 246, 252, 68, 84, 161, 236, 205, 80, 91,
+    233, 225, 164, 217, 239, 220, 20, 46, 204, 35, 31, 175, 154, 17, 133, 117,
+    73, 224, 125, 65, 77, 173, 3, 2, 242, 221, 120, 218, 56, 190, 166, 11,
+    138, 208, 231, 50, 135, 109, 213, 187, 152, 201, 47, 168, 185, 186, 167, 165,
+    102, 153, 156, 49, 202, 69, 195, 92, 21, 229, 63, 104, 197, 136, 148, 94,
+    171, 93, 59, 149, 23, 144, 160, 57, 76, 141, 96, 158, 163, 219, 237, 113,
+    206, 181, 112, 111, 191, 137, 207, 215, 13, 83, 238, 249, 100, 131, 118, 243,
+    162, 248, 43, 66, 226, 27, 211, 95, 214, 105, 108, 101, 170, 128, 210, 87,
+    38, 44, 174, 188, 176, 39, 14, 143, 159, 16, 124, 222, 33, 247, 37, 245,
+    8, 4, 22, 82, 110, 180, 184, 12, 25, 5, 193, 41, 85, 177, 192, 253,
+    79, 29, 115, 103, 142, 146, 52, 48, 89, 54, 121, 212, 122, 60, 28, 42
+};
+
+
+static float dot3(const float a[], float x, float y, float z) {
+    return a[0]*x + a[1]*y + a[2]*z;
+}
+
+static float lerp(float a, float b, float t) {
+    return (1 - t) * a + t * b;
+}
+
+static float fade(float t) {
+    return t * t * t * (t * (t * 6 - 15) + 10);
+}
+
+#if !defined(PP_SIMPLEX_NOISE) && !defined(PP_PERLIN_NOISE)
+#define PP_SIMPLEX_NOISE
+#endif
+#if defined(PP_SIMPLEX_NOISE) && defined(PP_PERLIN_NOISE)
+#undef PP_PERLIN_NOISE
+#endif
+
+#if defined(PP_SIMPLEX_NOISE)
+#define FASTFLOOR(x)  (((x) >= 0) ? (int)(x) : (int)(x)-1)
+
+static float noise(float x, float y, float z) {
+    /* Skew input space */
+    float s = (x+y+z)*(1.0/3.0);
+    int i = FASTFLOOR(x+s);
+    int j = FASTFLOOR(y+s);
+    int k = FASTFLOOR(z+s);
+
+    /* Unskew */
+    float t = (float)(i+j+k)*(1.0/6.0);
+    float gx0 = i-t;
+    float gy0 = j-t;
+    float gz0 = k-t;
+    float x0 = x-gx0;
+    float y0 = y-gy0;
+    float z0 = z-gz0;
+
+    /* Determine simplex */
+    int i1, j1, k1;
+    int i2, j2, k2;
+
+    if (x0 >= y0) {
+        if (y0 >= z0) {
+            i1 = 1; j1 = 0; k1 = 0;
+            i2 = 1; j2 = 1; k2 = 0;
+        } else if (x0 >= z0) {
+            i1 = 1; j1 = 0; k1 = 0;
+            i2 = 1; j2 = 0; k2 = 1;
+        } else {
+            i1 = 0; j1 = 0; k1 = 1;
+            i2 = 1; j2 = 0; k2 = 1;
+        }
+    } else {
+        if (y0 < z0) {
+            i1 = 0; j1 = 0; k1 = 1;
+            i2 = 0; j2 = 1; k2 = 1;
+        } else if (x0 < z0) {
+            i1 = 0; j1 = 1; k1 = 0;
+            i2 = 0; j2 = 1; k2 = 1;
+        } else {
+            i1 = 0; j1 = 1; k1 = 0;
+            i2 = 1; j2 = 1; k2 = 0;
+        }
+    }
+
+    /* Calculate offsets in x,y,z coords */
+    float x1 = x0 - i1 + (1.0/6.0);
+    float y1 = y0 - j1 + (1.0/6.0);
+    float z1 = z0 - k1 + (1.0/6.0);
+    float x2 = x0 - i2 + 2.0*(1.0/6.0);
+    float y2 = y0 - j2 + 2.0*(1.0/6.0);
+    float z2 = z0 - k2 + 2.0*(1.0/6.0);
+    float x3 = x0 - 1.0 + 3.0*(1.0/6.0);
+    float y3 = y0 - 1.0 + 3.0*(1.0/6.0);
+    float z3 = z0 - 1.0 + 3.0*(1.0/6.0);
+
+    int ii = i % 256;
+    int jj = j % 256;
+    int kk = k % 256;
+
+    /* Calculate gradient incides */
+    int gi0 = perm[ii+perm[jj+perm[kk]]] % 12;
+    int gi1 = perm[ii+i1+perm[jj+j1+perm[kk+k1]]] % 12;
+    int gi2 = perm[ii+i2+perm[jj+j2+perm[kk+k2]]] % 12;
+    int gi3 = perm[ii+1+perm[jj+1+perm[kk+1]]] % 12;
+
+    /* Calculate contributions */
+    float n0, n1, n2, n3;
+
+    float t0 = 0.6 - x0*x0 - y0*y0 - z0*z0;
+    if (t0 < 0)
+        n0 = 0.0;
+    else {
+        t0 *= t0;
+        n0 = t0 * t0 * dot3(grad3[gi0], x0, y0, z0);
+    }
+
+    float t1 = 0.6 - x1*x1 - y1*y1 - z1*z1;
+    if (t1 < 0)
+        n1 = 0.0;
+    else {
+        t1 *= t1;
+        n1 = t1 * t1 * dot3(grad3[gi1], x1, y1, z1);
+    }
+
+    float t2 = 0.6 - x2*x2 - y2*y2 - z2*z2;
+    if (t2 < 0)
+        n2 = 0.0;
+    else {
+        t2 *= t2;
+        n2 = t2 * t2 * dot3(grad3[gi2], x2, y2, z2);
+    }
+
+    float t3 = 0.6 - x3*x3 - y3*y3 - z3*z3;
+    if (t3 < 0)
+        n3 = 0.0;
+    else {
+        t3 *= t3;
+        n3 = t3 * t3 * dot3(grad3[gi3], x3, y3, z3);
+    }
+
+    /* Return scaled sum of contributions */
+    return 32.0*(n0 + n1 + n2 + n3);
+}
+#endif
+
+#if defined(PP_PERLIN_NOISE)
+static float noise(float x, float y, float z) {
+    /* Find grid points */
+    int gx = FASTFLOOR(x);
+    int gy = FASTFLOOR(y);
+    int gz = FASTFLOOR(z);
+
+    /* Relative coords within grid cell */
+    float rx = x - gx;
+    float ry = y - gy;
+    float rz = z - gz;
+
+    /* Wrap cell coords */
+    gx = gx & 255;
+    gy = gy & 255;
+    gz = gz & 255;
+
+    /* Calculate gradient indices */
+    unsigned int gi[8];
+    for (int i = 0; i < 8; i++)
+        gi[i] = perm[gx+((i>>2)&1)+perm[gy+((i>>1)&1)+perm[gz+(i&1)]]] % 12;
+
+    /* Noise contribution from each corner */
+    float n[8];
+    for (int i = 0; i < 8; i++)
+        n[i] = dot3(grad3[gi[i]], rx - ((i>>2)&1), ry - ((i>>1)&1), rz - (i&1));
+
+    /* Fade curves */
+    float u = fade(rx);
+    float v = fade(ry);
+    float w = fade(rz);
+
+    /* Interpolate */
+    float nx[4];
+    for (int i = 0; i < 4; i++)
+        nx[i] = lerp(n[i], n[4+i], u);
+
+    float nxy[2];
+    for (int i = 0; i < 2; i++)
+        nxy[i] = lerp(nx[i], nx[2+i], v);
+
+    return lerp(nxy[0], nxy[1], w);
+}
+#endif
+
+static float invlerp(float a, float b, float v) {
+    return (v - a) / (b - a);
+}
+
+static float remap(float imin, float imax, float omin, float omax, float v) {
+    return lerp(omin, omax, invlerp(imin, imax, v));
+}
+
+bool GenBitmapFBMNoise(Bitmap *b, int w, int h, int offsetX, int offsetY, float scale, float lacunarity, float gain, int octaves) {
+    if (!InitBitmap(b, w, h))
+        return false;
+
+    float max = FLT_MIN;
+    float min = FLT_MAX;
+    float *map = malloc(sizeof(float) * w * h);
+    if (!map)
+        return false;
+
+    for (int x = 0; x < w; x++)
+        for (int y = 0; y < h; y++) {
+            float amplitude = 1.f;
+            float frequency = 1.f;
+            float p = 0.f;
+
+            for (int i = 0; i < octaves; i++) {
+                float nx = (float)(x + offsetX) * scale / (float)w;
+                float ny = (float)(y + offsetY) * scale / (float)h;
+                float n  = noise(nx, ny, 1.f) * 2 - 1;
+                p += n * amplitude;
+
+                amplitude *= gain;
+                frequency *= lacunarity;
+            }
+
+            if (p > max)
+                max = p;
+            if (p < min)
+                min = p;
+            map[y * w + x] = p;
+        }
+
+    for (int x = 0; x < w; x++)
+        for (int y = 0; y < h; y++) {
+            int c = (int)remap(min, max, 0.f, 255.f, map[y * w + x]);
+            PSet(b, x, y, RGB1(c));
+        }
+
+    free(map);
+    return true;
+}
+
+#if defined(PP_LIVE)
+#include <getopt.h>
+#define _BSD_SOURCE // usleep()
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <dlfcn.h>
+
+static void *handle = NULL;
+static ino_t handleID;
+static ppState *state = NULL;
+static ppLiveApp *app = NULL;
+static struct {
+    int width;
+    int height;
+    const char *title;
+    ppFlags flags;
+    int clearColor;
+    char *path;
+} Args = {0};
+static Bitmap pbo;
+
+static struct option long_options[] = {
+    {"width", required_argument, NULL, 'w'},
+    {"height", required_argument, NULL, 'h'},
+    {"title", required_argument, NULL, 't'},
+    {"resizable", no_argument, NULL, 'r'},
+    {"top", no_argument, NULL, 'a'},
+    {"usage", no_argument, NULL, 'u'},
+    {"path", required_argument, NULL, 'p'},
+    {NULL, 0, NULL, 0}
+};
+
+static void usage(void) {
+    puts("usage: pp -p [path] [options]\n");
+    puts("\t-w/--width\tWindow width\t\t [default: 640]");
+    puts("\t-h/--height\tWindow height\t\t [default: 480]");
+    puts("\t-t/--title\tWindow title\t\t [default: \"pp\"]");
+    puts("\t-r/--resizable\tEnable resizable window");
+    puts("\t-a/--top\tEnable window always on top");
+    puts("\t-p/--path\tPath the dynamic library [required]");
+    puts("\t-u/--usage\tDisplay this message");
+}
+
+static struct ppInputManager {
+    struct {
+        bool buttons[8];
+        struct {
+            int x, y;
+        } Position;
+        struct {
+            float x, y;
+        } Scroll;
+    } Mouse, MousePrev;
+    struct {
+        bool keys[KEY_TICK];
+    } Keyboard, KeyboardPrev;
+    ppMod modifier, modifierPrev;
+    struct {
+        bool focused, closed;
+        struct {
+            int width, height;
+        } Size;
+    } Window, WindowPrev;
+} ppInput;
+
+static bool ShouldReloadLibrary(void) {
+    struct stat attr;
+    bool result = !stat(Args.path, &attr) && handleID != attr.st_ino;
+    if (result)
+        handleID = attr.st_ino;
+    return result;
+}
+
+static bool LoadLibrary(const char *path) {
+    if (!ShouldReloadLibrary())
+        return true;
+
+    if (handle) {
+        if (app->unload)
+            app->unload(state);
+        dlclose(handle);
+    }
+
+    if (!(handle = dlopen(path, RTLD_NOW)))
+        goto BAIL;
+    if (!(app = dlsym(handle, "pp")))
+        goto BAIL;
+    if (!state) {
+        if (!(state = app->init()))
+            goto BAIL;
+    } else {
+        if (app->reload)
+            app->reload(state);
+    }
+    return true;
+
+BAIL:
+    if (handle)
+        dlclose(handle);
+    handle = NULL;
+    handleID = 0;
+    return false;
+}
+
+void ppInputKeyboard(void *userdata, ppKey key, ppMod modifier, bool isDown) {
+    ppInput.Keyboard.keys[(int)key] = isDown;
+    ppInput.modifier = modifier;
+}
+
+void ppInputMouseButton(void *userdata, int button, ppMod modifier, bool isDown) {
+    ppInput.Mouse.buttons[button - 1] = isDown;
+    ppInput.modifier = modifier;
+}
+
+void ppInputMouseMove(void *userdata, int x, int y, float dx, float dy) {
+    ppInput.Mouse.Position.x = x;
+    ppInput.Mouse.Position.y = y;
+}
+
+void ppInputMouseScroll(void *userdata, float dx, float dy, ppMod modifier) {
+    ppInput.Mouse.Scroll.x = dx;
+    ppInput.Mouse.Scroll.y = dy;
+    ppInput.modifier = modifier;
+}
+
+void ppInputFocus(void *userdata, bool isFocused) {
+    ppInput.Window.focused = isFocused;
+}
+
+void ppInputResized(void *userdata, int w, int h) {
+    ppInput.Window.Size.width  = w;
+    ppInput.Window.Size.height = h;
+}
+
+void ppInputClosed(void *userdata) {
+    ppInput.Window.closed = true;
+}
+
+static void ppInitInput(void) {
+    memset(&ppInput.Keyboard, 0, sizeof(ppInput.Keyboard));
+    memset(&ppInput.KeyboardPrev, 0, sizeof(ppInput.Keyboard));
+    memset(&ppInput.Mouse, 0, sizeof(ppInput.Mouse));
+    memset(&ppInput.MousePrev, 0, sizeof(ppInput.Mouse));
+    memset(&ppInput.Window, 0, sizeof(ppInput.Window));
+
+#define X(NAME, ARGS) ppInput##NAME,
+    ppCallbacks(PP_CALLBACKS NULL);
+#undef X
+}
+
+static void ppUpdateInput(void) {
+    memcpy(&ppInput.KeyboardPrev, &ppInput.Keyboard, sizeof(ppInput.Keyboard));
+    memcpy(&ppInput.MousePrev, &ppInput.Mouse, sizeof(ppInput.Mouse));
+    memset(&ppInput.Mouse.Scroll, 0, sizeof(ppInput.Mouse.Scroll));
+    memcpy(&ppInput.WindowPrev, &ppInput.Window, sizeof(ppInput.Window));
+}
+
+bool ppIsKeyDown(uint8_t key) {
+    return ppInput.Keyboard.keys[key];
+}
+
+bool ppIsKeyUp(uint8_t key) {
+    return !ppInput.Keyboard.keys[key];
+}
+
+bool ppWasKeyPressed(uint8_t key) {
+    return ppInput.KeyboardPrev.keys[key] && !ppInput.Keyboard.keys[key];
+}
+
+bool ppAreKeysDown(int n, ...) {
+    va_list keys;
+    va_start(keys, n);
+    bool ret = true;
+    for (int i = 0, k = va_arg(keys, int); i < n; ++i, k = va_arg(keys, int))
+        if (!ppInput.Keyboard.keys[k]) {
+            ret = false;
+            break;
+        }
+    va_end(keys);
+    return ret;
+}
+
+bool ppAnyKeysDown(int n, ...) {
+    va_list keys;
+    va_start(keys, n);
+    bool ret = false;
+    for (int i = 0, k = va_arg(keys, int); i < n; ++i, k = va_arg(keys, int))
+        if (ppInput.Keyboard.keys[k]) {
+            ret = true;
+            break;
+        }
+    va_end(keys);
+    return ret;
+}
+
+bool ppIsButtonDown(int button) {
+    return ppInput.Mouse.buttons[button - 1];
+}
+
+bool ppIsButtonUp(int button) {
+    return !ppInput.Mouse.buttons[button - 1];
+}
+
+bool ppWasButtonPressed(int button) {
+    return ppInput.MousePrev.buttons[button - 1] && !ppInput.Mouse.buttons[button - 1];
+}
+
+void ppScroll(float *x, float *y) {
+    if (x)
+        *x = ppInput.Mouse.Scroll.x;
+    if (y)
+        *y = ppInput.Mouse.Scroll.y;
+}
+
+void ppMousePosition(int *x, int *y) {
+    if (x)
+        *x = ppInput.Mouse.Position.x;
+    if (y)
+        *y = ppInput.Mouse.Position.y;
+}
+
+void ppMouseDelta(int *x, int *y) {
+    if (x)
+        *x = ppInput.Mouse.Position.x - ppInput.MousePrev.Position.x;
+    if (y)
+        *y = ppInput.Mouse.Position.y - ppInput.MousePrev.Position.y;
+}
+
+bool ppModifier(uint32_t modifier) {
+    return ppInput.modifier == modifier;
+}
+
+int main(int argc, char *argv[]) {
+    extern char* optarg;
+    extern int optopt;
+    int opt;
+    while ((opt = getopt_long(argc, argv, ":w:h:t:p:uar", long_options, NULL)) != -1) {
+        switch (opt) {
+            case 'w':
+                Args.width = atoi(optarg);
+                break;
+            case 'h':
+                Args.height = atoi(optarg);
+                break;
+            case 't':
+                Args.title = optarg;
+                break;
+            case 'r':
+                Args.flags |= ppResizable;
+                break;
+            case 'a':
+                Args.flags |= ppAlwaysOnTop;
+                break;
+            case 'p':
+                Args.path = optarg;
+                break;
+            case ':':
+                printf("ERROR: \"-%c\" requires an value!\n", optopt);
+                usage();
+                return EXIT_FAILURE;
+            case '?':
+                printf("ERROR: Unknown argument \"-%c\"\n", optopt);
+                usage();
+                return EXIT_FAILURE;
+            case 'u':
+                usage();
+                return EXIT_SUCCESS;
+            default:
+                usage();
+                return EXIT_FAILURE;
+        }
+    }
+
+    if (!Args.path) {
+        puts("ERROR: No path to dynamic library provided (-p/--path)");
+        usage();
+        return EXIT_FAILURE;
+    } else {
+        if (Args.path[0] != '.' || Args.path[1] != '/') {
+            char *tmp = malloc(strlen(Args.path) + 2 * sizeof(char));
+            sprintf(tmp, "./%s", Args.path);
+            Args.path = tmp;
+        } else
+            Args.path = strdup(Args.path);
+    }
+    if (access(Args.path, F_OK)) {
+        printf("ERROR: No file found at path \"%s\"\n", Args.path);
+        return EXIT_FAILURE;
+    }
+
+    if (!Args.width)
+        Args.width = 640;
+    if (!Args.height)
+        Args.height = 480;
+    if (!Args.clearColor)
+        Args.clearColor = Black;
+    ppBegin(Args.width, Args.height, Args.title ? Args.title : "pp", Args.flags);
+    ppInitInput();
+    InitBitmap(&pbo, Args.width, Args.height);
+
+    if (!LoadLibrary(Args.path))
+        return EXIT_FAILURE;
+
+    double lastTime = ppTime();
+    while (ppPoll()) {
+        double now = ppTime();
+        double delta = now - lastTime;
+        lastTime = now;
+
+        if (!LoadLibrary(Args.path))
+            break;
+        if (!app->tick(state, &pbo, delta))
+            break;
+        ppFlush(&pbo);
+        ppUpdateInput();
+    }
+
+    app->deinit(state);
+    if (handle)
+        dlclose(handle);
+    DestroyBitmap(&pbo);
+    free(Args.path);
+    ppEnd();
+    return EXIT_SUCCESS;
+}
+#endif
 
 #if defined(PP_SIXEL)
 #error Sixel is not yet implemented!
@@ -1565,10 +2315,7 @@ static void drawRect(id self, SEL _self, CGRect rect) {
     CGImageRelease(img);
 }
 
-bool ppBegin(int w, int h, const char *title, ppFlags flags) {
-    if (ppInternal.initialized)
-        return false;
-
+static bool ppBeginNative(int w, int h, const char *title, ppFlags flags) {
     mach_timebase_info(&ppMacInternal.info);
 
     AutoreleasePool({
@@ -2170,10 +2917,7 @@ DEFAULT_PROC:
     return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
-bool ppBegin(int w, int h, const char *title, ppFlags flags) {
-    if (ppInternal.initialized)
-        return false;
-
+static bool ppBeginNative(int w, int h, const char *title, ppFlags flags) {
     RECT rect = {0};
     long windowFlags = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
     if (flags & ppFullscreen) {

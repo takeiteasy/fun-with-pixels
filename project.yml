@@ -16,10 +16,9 @@ targets:
     info:
       path: Info.plist
     sources:
-        - examples
-        - pp.c
-        - pp.h
-        - extra
+        - path: examples
+        - path: pp.c
+        - path: pp.h
     dependencies:
         - sdk: Cocoa.framework
     settings:

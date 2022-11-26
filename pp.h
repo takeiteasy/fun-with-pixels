@@ -46,8 +46,10 @@ typedef enum bool { false = 0, true = !false } bool;
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
+#include <time.h>
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include <float.h>
 #include <setjmp.h>
 #include <errno.h>
 
@@ -62,7 +64,14 @@ typedef enum bool { false = 0, true = !false } bool;
 #define PP_LINUX
 #endif
 
-#if defined(PP_WINDOWS)
+#if defined(PP_LIVE)
+#define PP_NO_EXPORT
+#if defined(PP_EMSCRIPTEN)
+#error Live reload is not supported for Emscripten
+#endif
+#endif
+
+#if defined(PP_WINDOWS) && !defined(PP_NO_EXPORT)
 #define EXPORT __declspec(dllexport)
 #else
 #define EXPORT
@@ -213,6 +222,14 @@ EXPORT bool ppRunning(void);
  * @return Elapsed program time in milliseconds
  */
 EXPORT double ppTime(void);
+
+EXPORT unsigned int ppRandomBits(void);
+EXPORT float ppRandomFloat(void);
+EXPORT double ppRandomDouble(void);
+EXPORT unsigned int ppRandomInt(int max);
+EXPORT float ppRandomFloatRange(float min, float max);
+EXPORT double ppRandomDoubleRange(double min, double max);
+EXPORT unsigned int ppRandomIntRange(int min, int max);
 
 /*!
  * @function RGBA
@@ -691,6 +708,211 @@ EXPORT bool LoadBitmapMemory(Bitmap *out, const void *data, size_t length);
  * @return Boolean of success/failure
  */
 EXPORT bool SaveBitmap(Bitmap *b, const char *path);
+/*!
+ * @function FlipBitmapHorizontal
+ * @abstract Flip a bitmap horizontally
+ * @param a Source bitmap
+ * @param b Destination bitmap
+ * @return Boolean of success/failure
+ */
+EXPORT bool FlipBitmapHorizontal(Bitmap *a, Bitmap *b);
+/*!
+ * @function FlipBitmapVertical
+ * @abstract Flip a bitmap vertically
+ * @param a Source bitmap
+ * @param b Destination bitmap
+ * @return Boolean of success/failure
+ */
+EXPORT bool FlipBitmapVertical(Bitmap *a, Bitmap *b);
+/*!
+ * @function GenBitmapCheckerboard
+ * @abstract Generate a checkboard image
+ * @param b Bitmap output
+ * @param w Bitmap width
+ * @param h Bitmap height
+ * @param cw Checkerboard width
+ * @param ch Checkboard height
+ * @param col1 First checkerboard color
+ * @param col2 Second checkboard color
+ * @return Boolean of success/failure
+ */
+EXPORT bool GenBitmapCheckerboard(Bitmap *b, int w, int h, int cw, int ch, int col1, int col2);
+/*!
+ * @function GenBitmapGradientHorizontal
+ * @abstract Generate a horizontal gradient bitmap
+ * @param b Bitmap output
+ * @param w Bitmap width
+ * @param h Bitmap height
+ * @param col1 First gradient color
+ * @param col2 Second gradient color
+ * @return Boolean of success/failure
+ */
+EXPORT bool GenBitmapGradientHorizontal(Bitmap *b, int w, int h, int col1, int col2);
+/*!
+ * @function GenBitmapGradientVertical
+ * @abstract Generate a vertical gradient bitmap
+ * @param b Bitmap output
+ * @param w Bitmap width
+ * @param h Bitmap height
+ * @param col1 First gradient color
+ * @param col2 Second gradient color
+ * @return Boolean of success/failure
+ */
+EXPORT bool GenBitmapGradientVertical(Bitmap *b, int w, int h, int col1, int col2);
+/*!
+ * @function GenBitmapGradientRadial
+ * @abstract Create a radial gradient bitmap
+ * @param b Bitmap output
+ * @param w Bitmap width
+ * @param h Bitmap height
+ * @param d Radial density
+ * @param col1 First gradient color (inner)
+ * @param col2 Second gradient color (outer)
+ * @return Boolean of success/failure
+ */
+EXPORT bool GenBitmapGradientRadial(Bitmap *b, int w, int h, float d, int col1, int col2);
+/*!
+ * @function GenBitmapWhiteNoise
+ * @abstract Create a white noise bitmap
+ * @param b Bitmap output
+ * @param w Bitmap width
+ * @param h Bitmap height
+ * @param factor Noise factor
+ * @return Boolean of success/failure
+ */
+EXPORT bool GenBitmapWhiteNoise(Bitmap *b, int w, int h, float factor);
+/*!
+ * @function GenBitmapFBMNoise
+ * @abstract Create a simplex or perlin noise bitmap with FBM
+ * @param b Bitmap output
+ * @param w Bitmap width
+ * @param h Bitmap height
+ * @param offsetX Noise offset
+ * @param offsetY Noise offset
+ * @param scale Noise scale
+ * @param lacunarity Controls the size of the secondary fine details (2.0 is a good start)
+ * @param gain The amount to multiply the noise's amplitude by (0.5 is a good start)
+ * @param octaves Describes the level of detail of the noise (8 is a good start)
+ * @return Boolean of success/failure
+ * @discussion Define PP_SIMPLEX_NOISE or PP_PERLIN_NOISE to select noise algorithm (PP_SIMPLEX_NOISE is default)
+ */
+EXPORT bool GenBitmapFBMNoise(Bitmap *b, int w, int h, int offsetX, int offsetY, float scale, float lacunarity, float gain, int octaves);
+
+#if defined(PP_LIVE)
+typedef struct ppState ppState;
+
+typedef struct {
+    ppState*(*init)(void);
+    void(*deinit)(ppState*);
+    void(*reload)(ppState*);
+    void(*unload)(ppState*);
+    bool(*tick)(ppState*, Bitmap*, double);
+} ppLiveApp;
+
+extern const ppLiveApp pp;
+
+#include <stdarg.h>
+
+/*!
+ * @function ppIsKeyDown
+ * @abstract Check if a key is down
+ * @param key Keyboard key
+ * @return Returns true if key is down
+ * @discussion PP_LIVE only
+ */
+bool ppIsKeyDown(uint8_t key);
+/*!
+ * @function ppIsKeyUp
+ * @abstract Check if a key is up
+ * @param key Keyboard key
+ * @return Returns true if key is up
+ * @discussion PP_LIVE only
+ */
+bool ppIsKeyUp(uint8_t key);
+/*!
+ * @function ppWasKeyPressed
+ * @abstract Check if a key was just released
+ * @param key Keyboard key
+ * @return Returns true if key was released this frame
+ * @discussion PP_LIVE only
+ */
+bool ppWasKeyPressed(uint8_t key);
+/*!
+ * @function ppAreKeysDown
+ * @abstract Check if multiple keys are all down
+ * @param n Number of keys
+ * @param ... Keyboard keys
+ * @return Returns true is ALL keys are down
+ * @discussion PP_LIVE only
+ */
+bool ppAreKeysDown(int n, ...);
+/*!
+ * @function ppAnyKeysDown
+ * @abstract Check if any keys are down
+ * @param n Number of keys
+ * @param ... Keyboard keys
+ * @return Returns true if any of the keys are down, false if none of the keys are pressed
+ * @discussion PP_LIVE only
+ */
+bool ppAnyKeysDown(int n, ...);
+/*!
+ * @function ppIsButtonDown
+ * @abstract Check if mouse button is down
+ * @param button Mouse button
+ * @return Returns true if mouse button is down
+ * @discussion PP_LIVE only
+ */
+bool ppIsButtonDown(int button);
+/*!
+ * @function ppIsButtonUp
+ * @abstract Check if mouse button is up
+ * @param button Mouse button
+ * @return Returns true if mouse button is up
+ * @discussion PP_LIVE only
+ */
+bool ppIsButtonUp(int button);
+/*!
+ * @function ppWasButtonPressed
+ * @abstract Check if a button was just released
+ * @param button Mouse button
+ * @return Returns true if button was released this frame
+ * @discussion PP_LIVE only
+ */
+bool ppWasButtonPressed(int button);
+/*!
+ * @function ppScroll
+ * @abstract Get scroll wheel delta
+ * @param x Returns X scroll value
+ * @param y Returns Y scroll value
+ * @discussion PP_LIVE only
+ */
+void ppScroll(float *x, float *y);
+/*!
+ * @function ppMousePosition
+ * @abstract Get cursor position
+ * @param x Returns X scroll value
+ * @param y Returns Y scroll value
+ * @discussion PP_LIVE only
+ */
+void ppMousePosition(int *x, int *y);
+/*!
+ * @function ppMouseDelta
+ * @abstract Get mouse movement delta
+ * @param x Returns X scroll value
+ * @param y Returns Y scroll value
+ * @discussion PP_LIVE only
+ */
+void ppMouseDelta(int *x, int *y);
+/*!
+ * @function ppModifier
+ * @abstract Check if modifier flags match
+ * @param modifier Flags to check
+ * @return Returns true if flags match
+ * @discussion PP_LIVE only
+ */
+bool ppModifier(uint32_t modifier);
+
+#endif
 
 #if defined(__cplusplus)
 }

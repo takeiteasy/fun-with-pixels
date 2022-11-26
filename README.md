@@ -1,8 +1,7 @@
 # pp
 
-_pp_ **[ˈpiːpiː]** or "_Pixel Playground_" is a small enviroment for quick experimentation with software rendering. Very simple API, build on top of my own [bitmap](https://github.com/takeiteasy/headers/blob/master/bitmap.h) library. See [here](https://takeiteasy.github.io/pp/) for documentation.
+_pp_ **[ˈpiːpiː]** or "_Pixel Playground_" is a small enviroment for quick experimentation with software rendering. Very simple API, build on top of my own [bitmap](https://github.com/takeiteasy/headers/blob/master/bitmap.h) library. See [here](https://takeiteasy.github.io/pp/) for documentation. Includes a live coding option built in, see [building](https://github.com/takeiteasy/pp#building) for more info.
 
-Includes a live coding solution, located in ```live``` directory (see [building](https://github.com/takeiteasy/pp#building) section for more info). Additionally, a [sokol_app](https://github.com/floooh/sokol/blob/master/sokol_app.h)-like application wrapper and more can be found in the ```extra``` directory.
 
 **WIP** -- See [TODO](https://github.com/takeiteasy/pp#todo) section for current progress.
 
@@ -33,13 +32,9 @@ int main(int argc, const char *argv[]) {
 
 ## Building
 
-The easiest way is to drop ```pp.c``` and ```pp.h``` into your project and add the appropriate flags (Mac: ```-framework Cocoa```, Windows: ```-lgdi32``` and Linux: ```-lX11```).
+The easiest way is to drop ```pp.c``` and ```pp.h``` into your project and add the appropriate flags (Mac: ```-framework Cocoa```, Windows: ```-lgdi32``` and Linux: ```-lX11```). Or, run ```make library``` to build a dynamic library.
 
-To build pp as a library, simple run ```make```. This will generate ```pp.c``` in the root directory and then create a shared library in the ```build``` folder. Generating pp.c requires Ruby to be installed, if you don't have Ruby run ```make library``` instead.
-
-Also available is a small live coding enviroment, inspired by [this](https://nullprogram.com/blog/2014/12/23/). To get started, change to the ```live``` directory and run ```make all```. This will build the base application and the shared library. 
-
-You can now run ```./pp -p libapp.dylib``` (.dylib on Mac, .so on Linux and .dll on Windows) to start the live program. Now simply edit ```app.c``` and run ```make library``` while the program is still running and the changes will be reloaded automatically.
+To build the live-reload app, run ```make all``` or ```make run```. This will build an executable and library in the ```build``` folder and then run the app. Edit ```examples/live.c```, and run ```make``` or ```make game```, and the program will automatically reload the changes. Inspired by [this](https://nullprogram.com/blog/2014/12/23/).
 
 On Windows, there is a simple batch file to build pp as a dll or build a program. Run ```build.bat``` with no arguments to build a dll file, or pass files as arguments to build an application, e.g. ```build.bat .\examples\basic.c```.
 

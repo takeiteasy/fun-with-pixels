@@ -1,14 +1,14 @@
-#include "ppLive.h"
+#include "pp.h"
 #include <time.h>
 #include <stdlib.h>
 
-struct State {
+struct ppState {
     int clearColor;
 };
 
 // Called once at the beginning of runtime
-static State* init(void) {
-    State *state = malloc(sizeof(State));
+static ppState* init(void) {
+    ppState *state = malloc(sizeof(ppState));
     if (!state)
         return NULL;
     state->clearColor = Black;
@@ -17,23 +17,23 @@ static State* init(void) {
 }
 
 // Called once at the end of runtime
-static void deinit(State *state) {
+static void deinit(ppState *state) {
     if (!state)
         return;
     free(state);
 }
 
 // Called whenever the app is modified and reloaded
-static void reload(State *state) {
+static void reload(ppState *state) {
     state->clearColor = RGB(rand() % 256, rand() % 256, rand() % 256);
 }
 
 // Called just before the app is reloaded
-static void unload(State *state) {
+static void unload(ppState *state) {
 }
 
 // Called every frame
-static bool tick(State *state, Bitmap *pbo, double delta) {
+static bool tick(ppState *state, Bitmap *pbo, double delta) {
     FillBitmap(pbo, state->clearColor);
     DrawString(pbo, "Rebuild to change the background color!", 1, 1, White);
     DrawRect(pbo, 50, 50, 50, 50, Red, true);

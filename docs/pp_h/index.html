@@ -271,9 +271,12 @@ function disclosure_triangle(elt) {
 <!-- a logicalPath="//apple_ref/doc/header/stdlib.h" machineGenerated="true" -->&lt;stdlib.h&gt;<!-- /a --><br>
 <!-- a logicalPath="//apple_ref/doc/header/stdarg.h" machineGenerated="true" -->&lt;stdarg.h&gt;<!-- /a --><br>
 <!-- a logicalPath="//apple_ref/doc/header/string.h" machineGenerated="true" -->&lt;string.h&gt;<!-- /a --><br>
+<!-- a logicalPath="//apple_ref/doc/header/time.h" machineGenerated="true" -->&lt;time.h&gt;<!-- /a --><br>
 <!-- a logicalPath="//apple_ref/doc/header/math.h" machineGenerated="true" -->&lt;math.h&gt;<!-- /a --><br>
+<!-- a logicalPath="//apple_ref/doc/header/float.h" machineGenerated="true" -->&lt;float.h&gt;<!-- /a --><br>
 <!-- a logicalPath="//apple_ref/doc/header/setjmp.h" machineGenerated="true" -->&lt;setjmp.h&gt;<!-- /a --><br>
-<!-- a logicalPath="//apple_ref/doc/header/errno.h" machineGenerated="true" -->&lt;errno.h&gt;<!-- /a -->
+<!-- a logicalPath="//apple_ref/doc/header/errno.h" machineGenerated="true" -->&lt;errno.h&gt;<!-- /a --><br>
+<!-- a logicalPath="//apple_ref/doc/header/stdarg.h" machineGenerated="true" -->&lt;stdarg.h&gt;<!-- /a -->
 </div></div></td>
 </tr>
 </table></div>
@@ -323,8 +326,32 @@ function disclosure_triangle(elt) {
 <dt><tt><a href="index.html#//apple_ref/c/func/FillBitmap" target="_top">FillBitmap</a></tt></dt>
 <dd><p>Fill a bitmap with a given color
 </p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/FlipBitmapHorizontal" target="_top">FlipBitmapHorizontal</a></tt></dt>
+<dd><p>Flip a bitmap horizontally
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/FlipBitmapVertical" target="_top">FlipBitmapVertical</a></tt></dt>
+<dd><p>Flip a bitmap vertically
+</p></dd>
 <dt><tt><a href="index.html#//apple_ref/c/func/FloodBitmap" target="_top">FloodBitmap</a></tt></dt>
 <dd><p>Flood fill on bitmap object
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/GenBitmapCheckerboard" target="_top">GenBitmapCheckerboard</a></tt></dt>
+<dd><p>Generate a checkboard image
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/GenBitmapFBMNoise" target="_top">GenBitmapFBMNoise</a></tt></dt>
+<dd><p>Create a simplex or perlin noise bitmap with FBM
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/GenBitmapGradientHorizontal" target="_top">GenBitmapGradientHorizontal</a></tt></dt>
+<dd><p>Generate a horizontal gradient bitmap
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/GenBitmapGradientRadial" target="_top">GenBitmapGradientRadial</a></tt></dt>
+<dd><p>Create a radial gradient bitmap
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/GenBitmapGradientVertical" target="_top">GenBitmapGradientVertical</a></tt></dt>
+<dd><p>Generate a vertical gradient bitmap
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/GenBitmapWhiteNoise" target="_top">GenBitmapWhiteNoise</a></tt></dt>
+<dd><p>Create a white noise bitmap
 </p></dd>
 <dt><tt><a href="index.html#//apple_ref/c/func/InitBitmap" target="_top">InitBitmap</a></tt></dt>
 <dd><p>Create a new bitmap object
@@ -347,6 +374,12 @@ function disclosure_triangle(elt) {
 <dt><tt><a href="index.html#//apple_ref/c/func/PGet" target="_top">PGet</a></tt></dt>
 <dd><p>Get bitmap pixel color at position
 </p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/ppAnyKeysDown" target="_top">ppAnyKeysDown</a></tt></dt>
+<dd><p>Check if any keys are down
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/ppAreKeysDown" target="_top">ppAreKeysDown</a></tt></dt>
+<dd><p>Check if multiple keys are all down
+</p></dd>
 <dt><tt><a href="index.html#//apple_ref/c/func/ppBegin" target="_top">ppBegin</a></tt></dt>
 <dd><p>pp initialization function
 </p></dd>
@@ -359,17 +392,47 @@ function disclosure_triangle(elt) {
 <dt><tt><a href="index.html#//apple_ref/c/func/ppFlush" target="_top">ppFlush</a></tt></dt>
 <dd><p>Draw bitmap to the window
 </p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/ppIsButtonDown" target="_top">ppIsButtonDown</a></tt></dt>
+<dd><p>Check if mouse button is down
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/ppIsButtonUp" target="_top">ppIsButtonUp</a></tt></dt>
+<dd><p>Check if mouse button is up
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/ppIsKeyDown" target="_top">ppIsKeyDown</a></tt></dt>
+<dd><p>Check if a key is down
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/ppIsKeyUp" target="_top">ppIsKeyUp</a></tt></dt>
+<dd><p>Check if a key is up
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/ppModifier" target="_top">ppModifier</a></tt></dt>
+<dd><p>Check if modifier flags match
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/ppMouseDelta" target="_top">ppMouseDelta</a></tt></dt>
+<dd><p>Get mouse movement delta
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/ppMousePosition" target="_top">ppMousePosition</a></tt></dt>
+<dd><p>Get cursor position
+</p></dd>
 <dt><tt><a href="index.html#//apple_ref/c/func/ppPoll" target="_top">ppPoll</a></tt></dt>
 <dd><p>Poll window events
 </p></dd>
 <dt><tt><a href="index.html#//apple_ref/c/func/ppRunning" target="_top">ppRunning</a></tt></dt>
 <dd><p>Check if the window is still open
 </p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/ppScroll" target="_top">ppScroll</a></tt></dt>
+<dd><p>Get scroll wheel delta
+</p></dd>
 <dt><tt><a href="index.html#//apple_ref/c/func/ppTime" target="_top">ppTime</a></tt></dt>
 <dd><p>Returns the elapsed time in millisecons since the program started
 </p></dd>
 <dt><tt><a href="index.html#//apple_ref/c/func/ppUserdata" target="_top">ppUserdata</a></tt></dt>
 <dd><p>Set custom userdata to be passed to callback functions
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/ppWasButtonPressed" target="_top">ppWasButtonPressed</a></tt></dt>
+<dd><p>Check if a button was just released
+</p></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/ppWasKeyPressed" target="_top">ppWasKeyPressed</a></tt></dt>
+<dd><p>Check if a key was just released
 </p></dd>
 <dt><tt><a href="index.html#//apple_ref/c/func/PSet" target="_top">PSet</a></tt></dt>
 <dd><p>Set bitmap pixel color (without blending)
@@ -1058,6 +1121,76 @@ function disclosure_triangle(elt) {
 </dl>
 </div>
 <hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/FlipBitmapHorizontal;   name=FlipBitmapHorizontal -->
+<a name="//apple_ref/c/func/FlipBitmapHorizontal"></a>
+<h3><a name="FlipBitmapHorizontal">FlipBitmapHorizontal</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/FlipBitmapHorizontal;name=start --><!-- begin abstract --></p>
+<p>Flip a bitmap horizontally
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/FlipBitmapHorizontal;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/FlipBitmapHorizontal;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/FlipBitmapHorizontal" logicalPath="//apple_ref/c/instm/FlipBitmapHorizontal //apple_ref/c/clm/FlipBitmapHorizontal //apple_ref/c/intfcm/FlipBitmapHorizontal //apple_ref/c/intfm/FlipBitmapHorizontal //apple_ref/c/func/FlipBitmapHorizontal" target="_top"><span class="function">FlipBitmapHorizontal</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">a</span>,
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/FlipBitmapHorizontal;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/FlipBitmapHorizontal/a;   name=a -->
+<a name="//apple_ref/doc/functionparam/FlipBitmapHorizontal/a"></a>
+<code>a</code>
+</dt>
+<dd><p>Source bitmap</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/FlipBitmapHorizontal/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/FlipBitmapHorizontal/b"></a>
+<code>b</code>
+</dt>
+<dd><p>Destination bitmap</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Boolean of success/failure
+
+<!-- end return value --></p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/FlipBitmapVertical;   name=FlipBitmapVertical -->
+<a name="//apple_ref/c/func/FlipBitmapVertical"></a>
+<h3><a name="FlipBitmapVertical">FlipBitmapVertical</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/FlipBitmapVertical;name=start --><!-- begin abstract --></p>
+<p>Flip a bitmap vertically
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/FlipBitmapVertical;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/FlipBitmapVertical;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/FlipBitmapVertical" logicalPath="//apple_ref/c/instm/FlipBitmapVertical //apple_ref/c/clm/FlipBitmapVertical //apple_ref/c/intfcm/FlipBitmapVertical //apple_ref/c/intfm/FlipBitmapVertical //apple_ref/c/func/FlipBitmapVertical" target="_top"><span class="function">FlipBitmapVertical</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">a</span>,
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/FlipBitmapVertical;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/FlipBitmapVertical/a;   name=a -->
+<a name="//apple_ref/doc/functionparam/FlipBitmapVertical/a"></a>
+<code>a</code>
+</dt>
+<dd><p>Source bitmap</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/FlipBitmapVertical/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/FlipBitmapVertical/b"></a>
+<code>b</code>
+</dt>
+<dd><p>Destination bitmap</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Boolean of success/failure
+
+<!-- end return value --></p>
+<hr class="betweenAPIEntries">
 <!-- headerDoc=func;  uid=//apple_ref/c/func/FloodBitmap;   name=FloodBitmap -->
 <a name="//apple_ref/c/func/FloodBitmap"></a>
 <h3><a name="FloodBitmap">FloodBitmap</a></h3>
@@ -1101,6 +1234,388 @@ function disclosure_triangle(elt) {
 <dd><p>Color</p></dd>
 </dl>
 </div>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/GenBitmapCheckerboard;   name=GenBitmapCheckerboard -->
+<a name="//apple_ref/c/func/GenBitmapCheckerboard"></a>
+<h3><a name="GenBitmapCheckerboard">GenBitmapCheckerboard</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/GenBitmapCheckerboard;name=start --><!-- begin abstract --></p>
+<p>Generate a checkboard image
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/GenBitmapCheckerboard;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/GenBitmapCheckerboard;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/GenBitmapCheckerboard" logicalPath="//apple_ref/c/instm/GenBitmapCheckerboard //apple_ref/c/clm/GenBitmapCheckerboard //apple_ref/c/intfcm/GenBitmapCheckerboard //apple_ref/c/intfm/GenBitmapCheckerboard //apple_ref/c/func/GenBitmapCheckerboard" target="_top"><span class="function">GenBitmapCheckerboard</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">w</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">h</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">cw</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">ch</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">col1</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">col2</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/GenBitmapCheckerboard;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapCheckerboard/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/GenBitmapCheckerboard/b"></a>
+<code>b</code>
+</dt>
+<dd><p>Bitmap output</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapCheckerboard/w;   name=w -->
+<a name="//apple_ref/doc/functionparam/GenBitmapCheckerboard/w"></a>
+<code>w</code>
+</dt>
+<dd><p>Bitmap width</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapCheckerboard/h;   name=h -->
+<a name="//apple_ref/doc/functionparam/GenBitmapCheckerboard/h"></a>
+<code>h</code>
+</dt>
+<dd><p>Bitmap height</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapCheckerboard/cw;   name=cw -->
+<a name="//apple_ref/doc/functionparam/GenBitmapCheckerboard/cw"></a>
+<code>cw</code>
+</dt>
+<dd><p>Checkerboard width</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapCheckerboard/ch;   name=ch -->
+<a name="//apple_ref/doc/functionparam/GenBitmapCheckerboard/ch"></a>
+<code>ch</code>
+</dt>
+<dd><p>Checkboard height</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapCheckerboard/col1;   name=col1 -->
+<a name="//apple_ref/doc/functionparam/GenBitmapCheckerboard/col1"></a>
+<code>col1</code>
+</dt>
+<dd><p>First checkerboard color</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapCheckerboard/col2;   name=col2 -->
+<a name="//apple_ref/doc/functionparam/GenBitmapCheckerboard/col2"></a>
+<code>col2</code>
+</dt>
+<dd><p>Second checkboard color</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Boolean of success/failure
+
+<!-- end return value --></p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/GenBitmapFBMNoise;   name=GenBitmapFBMNoise -->
+<a name="//apple_ref/c/func/GenBitmapFBMNoise"></a>
+<h3><a name="GenBitmapFBMNoise">GenBitmapFBMNoise</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/GenBitmapFBMNoise;name=start --><!-- begin abstract --></p>
+<p>Create a simplex or perlin noise bitmap with FBM
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/GenBitmapFBMNoise;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/GenBitmapFBMNoise;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/GenBitmapFBMNoise" logicalPath="//apple_ref/c/instm/GenBitmapFBMNoise //apple_ref/c/clm/GenBitmapFBMNoise //apple_ref/c/intfcm/GenBitmapFBMNoise //apple_ref/c/intfm/GenBitmapFBMNoise //apple_ref/c/func/GenBitmapFBMNoise" target="_top"><span class="function">GenBitmapFBMNoise</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">w</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">h</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">offsetX</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">offsetY</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/float //apple_ref/c/tdef/float //apple_ref/c/tag/float //apple_ref/c/struct/float //apple_ref/c/intf/float //apple_ref/doc/anysymbol/float" machineGenerated="true" --><span class="type">float</span><!-- /a --> <span class="param">scale</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/float //apple_ref/c/tdef/float //apple_ref/c/tag/float //apple_ref/c/struct/float //apple_ref/c/intf/float //apple_ref/doc/anysymbol/float" machineGenerated="true" --><span class="type">float</span><!-- /a --> <span class="param">lacunarity</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/float //apple_ref/c/tdef/float //apple_ref/c/tag/float //apple_ref/c/struct/float //apple_ref/c/intf/float //apple_ref/doc/anysymbol/float" machineGenerated="true" --><span class="type">float</span><!-- /a --> <span class="param">gain</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">octaves</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/GenBitmapFBMNoise;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapFBMNoise/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/GenBitmapFBMNoise/b"></a>
+<code>b</code>
+</dt>
+<dd><p>Bitmap output</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapFBMNoise/w;   name=w -->
+<a name="//apple_ref/doc/functionparam/GenBitmapFBMNoise/w"></a>
+<code>w</code>
+</dt>
+<dd><p>Bitmap width</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapFBMNoise/h;   name=h -->
+<a name="//apple_ref/doc/functionparam/GenBitmapFBMNoise/h"></a>
+<code>h</code>
+</dt>
+<dd><p>Bitmap height</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapFBMNoise/offsetX;   name=offsetX -->
+<a name="//apple_ref/doc/functionparam/GenBitmapFBMNoise/offsetX"></a>
+<code>offsetX</code>
+</dt>
+<dd><p>Noise offset</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapFBMNoise/offsetY;   name=offsetY -->
+<a name="//apple_ref/doc/functionparam/GenBitmapFBMNoise/offsetY"></a>
+<code>offsetY</code>
+</dt>
+<dd><p>Noise offset</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapFBMNoise/scale;   name=scale -->
+<a name="//apple_ref/doc/functionparam/GenBitmapFBMNoise/scale"></a>
+<code>scale</code>
+</dt>
+<dd><p>Noise scale</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapFBMNoise/lacunarity;   name=lacunarity -->
+<a name="//apple_ref/doc/functionparam/GenBitmapFBMNoise/lacunarity"></a>
+<code>lacunarity</code>
+</dt>
+<dd><p>Controls the size of the secondary fine details (2.0 is a good start)</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapFBMNoise/gain;   name=gain -->
+<a name="//apple_ref/doc/functionparam/GenBitmapFBMNoise/gain"></a>
+<code>gain</code>
+</dt>
+<dd><p>The amount to multiply the noise's amplitude by (0.5 is a good start)</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapFBMNoise/octaves;   name=octaves -->
+<a name="//apple_ref/doc/functionparam/GenBitmapFBMNoise/octaves"></a>
+<code>octaves</code>
+</dt>
+<dd><p>Describes the level of detail of the noise (8 is a good start)</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Boolean of success/failure
+
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/GenBitmapFBMNoise;name=start --><p>Define PP_SIMPLEX_NOISE or PP_PERLIN_NOISE to select noise algorithm (PP_SIMPLEX_NOISE is default)
+<!-- headerDoc=discussion;uid=//apple_ref/c/func/GenBitmapFBMNoise;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/GenBitmapGradientHorizontal;   name=GenBitmapGradientHorizontal -->
+<a name="//apple_ref/c/func/GenBitmapGradientHorizontal"></a>
+<h3><a name="GenBitmapGradientHorizontal">GenBitmapGradientHorizontal</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/GenBitmapGradientHorizontal;name=start --><!-- begin abstract --></p>
+<p>Generate a horizontal gradient bitmap
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/GenBitmapGradientHorizontal;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/GenBitmapGradientHorizontal;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/GenBitmapGradientHorizontal" logicalPath="//apple_ref/c/instm/GenBitmapGradientHorizontal //apple_ref/c/clm/GenBitmapGradientHorizontal //apple_ref/c/intfcm/GenBitmapGradientHorizontal //apple_ref/c/intfm/GenBitmapGradientHorizontal //apple_ref/c/func/GenBitmapGradientHorizontal" target="_top"><span class="function">GenBitmapGradientHorizontal</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">w</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">h</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">col1</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">col2</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/GenBitmapGradientHorizontal;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapGradientHorizontal/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/GenBitmapGradientHorizontal/b"></a>
+<code>b</code>
+</dt>
+<dd><p>Bitmap output</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapGradientHorizontal/w;   name=w -->
+<a name="//apple_ref/doc/functionparam/GenBitmapGradientHorizontal/w"></a>
+<code>w</code>
+</dt>
+<dd><p>Bitmap width</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapGradientHorizontal/h;   name=h -->
+<a name="//apple_ref/doc/functionparam/GenBitmapGradientHorizontal/h"></a>
+<code>h</code>
+</dt>
+<dd><p>Bitmap height</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapGradientHorizontal/col1;   name=col1 -->
+<a name="//apple_ref/doc/functionparam/GenBitmapGradientHorizontal/col1"></a>
+<code>col1</code>
+</dt>
+<dd><p>First gradient color</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapGradientHorizontal/col2;   name=col2 -->
+<a name="//apple_ref/doc/functionparam/GenBitmapGradientHorizontal/col2"></a>
+<code>col2</code>
+</dt>
+<dd><p>Second gradient color</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Boolean of success/failure
+
+<!-- end return value --></p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/GenBitmapGradientRadial;   name=GenBitmapGradientRadial -->
+<a name="//apple_ref/c/func/GenBitmapGradientRadial"></a>
+<h3><a name="GenBitmapGradientRadial">GenBitmapGradientRadial</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/GenBitmapGradientRadial;name=start --><!-- begin abstract --></p>
+<p>Create a radial gradient bitmap
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/GenBitmapGradientRadial;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/GenBitmapGradientRadial;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/GenBitmapGradientRadial" logicalPath="//apple_ref/c/instm/GenBitmapGradientRadial //apple_ref/c/clm/GenBitmapGradientRadial //apple_ref/c/intfcm/GenBitmapGradientRadial //apple_ref/c/intfm/GenBitmapGradientRadial //apple_ref/c/func/GenBitmapGradientRadial" target="_top"><span class="function">GenBitmapGradientRadial</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">w</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">h</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/float //apple_ref/c/tdef/float //apple_ref/c/tag/float //apple_ref/c/struct/float //apple_ref/c/intf/float //apple_ref/doc/anysymbol/float" machineGenerated="true" --><span class="type">float</span><!-- /a --> <span class="param">d</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">col1</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">col2</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/GenBitmapGradientRadial;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapGradientRadial/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/GenBitmapGradientRadial/b"></a>
+<code>b</code>
+</dt>
+<dd><p>Bitmap output</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapGradientRadial/w;   name=w -->
+<a name="//apple_ref/doc/functionparam/GenBitmapGradientRadial/w"></a>
+<code>w</code>
+</dt>
+<dd><p>Bitmap width</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapGradientRadial/h;   name=h -->
+<a name="//apple_ref/doc/functionparam/GenBitmapGradientRadial/h"></a>
+<code>h</code>
+</dt>
+<dd><p>Bitmap height</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapGradientRadial/d;   name=d -->
+<a name="//apple_ref/doc/functionparam/GenBitmapGradientRadial/d"></a>
+<code>d</code>
+</dt>
+<dd><p>Radial density</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapGradientRadial/col1;   name=col1 -->
+<a name="//apple_ref/doc/functionparam/GenBitmapGradientRadial/col1"></a>
+<code>col1</code>
+</dt>
+<dd><p>First gradient color (inner)</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapGradientRadial/col2;   name=col2 -->
+<a name="//apple_ref/doc/functionparam/GenBitmapGradientRadial/col2"></a>
+<code>col2</code>
+</dt>
+<dd><p>Second gradient color (outer)</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Boolean of success/failure
+
+<!-- end return value --></p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/GenBitmapGradientVertical;   name=GenBitmapGradientVertical -->
+<a name="//apple_ref/c/func/GenBitmapGradientVertical"></a>
+<h3><a name="GenBitmapGradientVertical">GenBitmapGradientVertical</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/GenBitmapGradientVertical;name=start --><!-- begin abstract --></p>
+<p>Generate a vertical gradient bitmap
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/GenBitmapGradientVertical;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/GenBitmapGradientVertical;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/GenBitmapGradientVertical" logicalPath="//apple_ref/c/instm/GenBitmapGradientVertical //apple_ref/c/clm/GenBitmapGradientVertical //apple_ref/c/intfcm/GenBitmapGradientVertical //apple_ref/c/intfm/GenBitmapGradientVertical //apple_ref/c/func/GenBitmapGradientVertical" target="_top"><span class="function">GenBitmapGradientVertical</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">w</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">h</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">col1</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">col2</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/GenBitmapGradientVertical;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapGradientVertical/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/GenBitmapGradientVertical/b"></a>
+<code>b</code>
+</dt>
+<dd><p>Bitmap output</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapGradientVertical/w;   name=w -->
+<a name="//apple_ref/doc/functionparam/GenBitmapGradientVertical/w"></a>
+<code>w</code>
+</dt>
+<dd><p>Bitmap width</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapGradientVertical/h;   name=h -->
+<a name="//apple_ref/doc/functionparam/GenBitmapGradientVertical/h"></a>
+<code>h</code>
+</dt>
+<dd><p>Bitmap height</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapGradientVertical/col1;   name=col1 -->
+<a name="//apple_ref/doc/functionparam/GenBitmapGradientVertical/col1"></a>
+<code>col1</code>
+</dt>
+<dd><p>First gradient color</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapGradientVertical/col2;   name=col2 -->
+<a name="//apple_ref/doc/functionparam/GenBitmapGradientVertical/col2"></a>
+<code>col2</code>
+</dt>
+<dd><p>Second gradient color</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Boolean of success/failure
+
+<!-- end return value --></p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/GenBitmapWhiteNoise;   name=GenBitmapWhiteNoise -->
+<a name="//apple_ref/c/func/GenBitmapWhiteNoise"></a>
+<h3><a name="GenBitmapWhiteNoise">GenBitmapWhiteNoise</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/GenBitmapWhiteNoise;name=start --><!-- begin abstract --></p>
+<p>Create a white noise bitmap
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/GenBitmapWhiteNoise;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/GenBitmapWhiteNoise;name=start --><!-- a logicalPath="//apple_ref/c/cl/EXPORT //apple_ref/c/tdef/EXPORT //apple_ref/c/tag/EXPORT //apple_ref/c/struct/EXPORT //apple_ref/c/intf/EXPORT //apple_ref/doc/anysymbol/EXPORT" machineGenerated="true" --><span class="type">EXPORT</span><!-- /a --> <!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/GenBitmapWhiteNoise" logicalPath="//apple_ref/c/instm/GenBitmapWhiteNoise //apple_ref/c/clm/GenBitmapWhiteNoise //apple_ref/c/intfcm/GenBitmapWhiteNoise //apple_ref/c/intfm/GenBitmapWhiteNoise //apple_ref/c/func/GenBitmapWhiteNoise" target="_top"><span class="function">GenBitmapWhiteNoise</span></a>(
+    <a machinegenerated="true" href="index.html#//apple_ref/c/tdef/Bitmap" logicalPath="//apple_ref/c/cl/Bitmap //apple_ref/c/tdef/Bitmap" target="_top"><span class="type">Bitmap</span></a> <span class="type">*</span><span class="param">b</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">w</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">h</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/float //apple_ref/c/tdef/float //apple_ref/c/tag/float //apple_ref/c/struct/float //apple_ref/c/intf/float //apple_ref/doc/anysymbol/float" machineGenerated="true" --><span class="type">float</span><!-- /a --> <span class="param">factor</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/GenBitmapWhiteNoise;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapWhiteNoise/b;   name=b -->
+<a name="//apple_ref/doc/functionparam/GenBitmapWhiteNoise/b"></a>
+<code>b</code>
+</dt>
+<dd><p>Bitmap output</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapWhiteNoise/w;   name=w -->
+<a name="//apple_ref/doc/functionparam/GenBitmapWhiteNoise/w"></a>
+<code>w</code>
+</dt>
+<dd><p>Bitmap width</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapWhiteNoise/h;   name=h -->
+<a name="//apple_ref/doc/functionparam/GenBitmapWhiteNoise/h"></a>
+<code>h</code>
+</dt>
+<dd><p>Bitmap height</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/GenBitmapWhiteNoise/factor;   name=factor -->
+<a name="//apple_ref/doc/functionparam/GenBitmapWhiteNoise/factor"></a>
+<code>factor</code>
+</dt>
+<dd><p>Noise factor</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Boolean of success/failure
+
+<!-- end return value --></p>
 <hr class="betweenAPIEntries">
 <!-- headerDoc=func;  uid=//apple_ref/c/func/InitBitmap;   name=InitBitmap -->
 <a name="//apple_ref/c/func/InitBitmap"></a>
@@ -1426,6 +1941,84 @@ function disclosure_triangle(elt) {
 
 <!-- end return value --></p>
 <hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/ppAnyKeysDown;   name=ppAnyKeysDown -->
+<a name="//apple_ref/c/func/ppAnyKeysDown"></a>
+<h3><a name="ppAnyKeysDown">ppAnyKeysDown</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppAnyKeysDown;name=start --><!-- begin abstract --></p>
+<p>Check if any keys are down
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppAnyKeysDown;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ppAnyKeysDown;name=start --><!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ppAnyKeysDown" logicalPath="//apple_ref/c/instm/ppAnyKeysDown //apple_ref/c/clm/ppAnyKeysDown //apple_ref/c/intfcm/ppAnyKeysDown //apple_ref/c/intfm/ppAnyKeysDown //apple_ref/c/func/ppAnyKeysDown" target="_top"><span class="function">ppAnyKeysDown</span></a>(
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">n</span>,
+    ...);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ppAnyKeysDown;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppAnyKeysDown/n;   name=n -->
+<a name="//apple_ref/doc/functionparam/ppAnyKeysDown/n"></a>
+<code>n</code>
+</dt>
+<dd><p>Number of keys</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppAnyKeysDown/...;   name=... -->
+<a name="//apple_ref/doc/functionparam/ppAnyKeysDown/..."></a>
+<code>...</code>
+</dt>
+<dd><p>Keyboard keys</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Returns true if any of the keys are down, false if none of the keys are pressed
+
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/ppAnyKeysDown;name=start --><p>PP_LIVE only
+<!-- headerDoc=discussion;uid=//apple_ref/c/func/ppAnyKeysDown;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/ppAreKeysDown;   name=ppAreKeysDown -->
+<a name="//apple_ref/c/func/ppAreKeysDown"></a>
+<h3><a name="ppAreKeysDown">ppAreKeysDown</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppAreKeysDown;name=start --><!-- begin abstract --></p>
+<p>Check if multiple keys are all down
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppAreKeysDown;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ppAreKeysDown;name=start --><!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ppAreKeysDown" logicalPath="//apple_ref/c/instm/ppAreKeysDown //apple_ref/c/clm/ppAreKeysDown //apple_ref/c/intfcm/ppAreKeysDown //apple_ref/c/intfm/ppAreKeysDown //apple_ref/c/func/ppAreKeysDown" target="_top"><span class="function">ppAreKeysDown</span></a>(
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">n</span>,
+    ...);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ppAreKeysDown;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppAreKeysDown/n;   name=n -->
+<a name="//apple_ref/doc/functionparam/ppAreKeysDown/n"></a>
+<code>n</code>
+</dt>
+<dd><p>Number of keys</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppAreKeysDown/...;   name=... -->
+<a name="//apple_ref/doc/functionparam/ppAreKeysDown/..."></a>
+<code>...</code>
+</dt>
+<dd><p>Keyboard keys</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Returns true is ALL keys are down
+
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/ppAreKeysDown;name=start --><p>PP_LIVE only
+<!-- headerDoc=discussion;uid=//apple_ref/c/func/ppAreKeysDown;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
 <!-- headerDoc=func;  uid=//apple_ref/c/func/ppBegin;   name=ppBegin -->
 <a name="//apple_ref/c/func/ppBegin"></a>
 <h3><a name="ppBegin">ppBegin</a></h3>
@@ -1591,6 +2184,234 @@ function disclosure_triangle(elt) {
 <!-- headerDoc=discussion;uid=//apple_ref/c/func/ppFlush;name=end --><!-- end discussion -->
 </p>
 <hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/ppIsButtonDown;   name=ppIsButtonDown -->
+<a name="//apple_ref/c/func/ppIsButtonDown"></a>
+<h3><a name="ppIsButtonDown">ppIsButtonDown</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppIsButtonDown;name=start --><!-- begin abstract --></p>
+<p>Check if mouse button is down
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppIsButtonDown;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ppIsButtonDown;name=start --><!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ppIsButtonDown" logicalPath="//apple_ref/c/instm/ppIsButtonDown //apple_ref/c/clm/ppIsButtonDown //apple_ref/c/intfcm/ppIsButtonDown //apple_ref/c/intfm/ppIsButtonDown //apple_ref/c/func/ppIsButtonDown" target="_top"><span class="function">ppIsButtonDown</span></a>(
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">button</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ppIsButtonDown;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppIsButtonDown/button;   name=button -->
+<a name="//apple_ref/doc/functionparam/ppIsButtonDown/button"></a>
+<code>button</code>
+</dt>
+<dd><p>Mouse button</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Returns true if mouse button is down
+
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/ppIsButtonDown;name=start --><p>PP_LIVE only
+<!-- headerDoc=discussion;uid=//apple_ref/c/func/ppIsButtonDown;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/ppIsButtonUp;   name=ppIsButtonUp -->
+<a name="//apple_ref/c/func/ppIsButtonUp"></a>
+<h3><a name="ppIsButtonUp">ppIsButtonUp</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppIsButtonUp;name=start --><!-- begin abstract --></p>
+<p>Check if mouse button is up
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppIsButtonUp;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ppIsButtonUp;name=start --><!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ppIsButtonUp" logicalPath="//apple_ref/c/instm/ppIsButtonUp //apple_ref/c/clm/ppIsButtonUp //apple_ref/c/intfcm/ppIsButtonUp //apple_ref/c/intfm/ppIsButtonUp //apple_ref/c/func/ppIsButtonUp" target="_top"><span class="function">ppIsButtonUp</span></a>(
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">button</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ppIsButtonUp;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppIsButtonUp/button;   name=button -->
+<a name="//apple_ref/doc/functionparam/ppIsButtonUp/button"></a>
+<code>button</code>
+</dt>
+<dd><p>Mouse button</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Returns true if mouse button is up
+
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/ppIsButtonUp;name=start --><p>PP_LIVE only
+<!-- headerDoc=discussion;uid=//apple_ref/c/func/ppIsButtonUp;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/ppIsKeyDown;   name=ppIsKeyDown -->
+<a name="//apple_ref/c/func/ppIsKeyDown"></a>
+<h3><a name="ppIsKeyDown">ppIsKeyDown</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppIsKeyDown;name=start --><!-- begin abstract --></p>
+<p>Check if a key is down
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppIsKeyDown;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ppIsKeyDown;name=start --><!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ppIsKeyDown" logicalPath="//apple_ref/c/instm/ppIsKeyDown //apple_ref/c/clm/ppIsKeyDown //apple_ref/c/intfcm/ppIsKeyDown //apple_ref/c/intfm/ppIsKeyDown //apple_ref/c/func/ppIsKeyDown" target="_top"><span class="function">ppIsKeyDown</span></a>(
+    <!-- a logicalPath="//apple_ref/c/cl/uint8_t //apple_ref/c/tdef/uint8_t //apple_ref/c/tag/uint8_t //apple_ref/c/struct/uint8_t //apple_ref/c/intf/uint8_t //apple_ref/doc/anysymbol/uint8_t" machineGenerated="true" --><span class="type">uint8_t</span><!-- /a --> <span class="param">key</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ppIsKeyDown;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppIsKeyDown/key;   name=key -->
+<a name="//apple_ref/doc/functionparam/ppIsKeyDown/key"></a>
+<code>key</code>
+</dt>
+<dd><p>Keyboard key</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Returns true if key is down
+
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/ppIsKeyDown;name=start --><p>PP_LIVE only
+<!-- headerDoc=discussion;uid=//apple_ref/c/func/ppIsKeyDown;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/ppIsKeyUp;   name=ppIsKeyUp -->
+<a name="//apple_ref/c/func/ppIsKeyUp"></a>
+<h3><a name="ppIsKeyUp">ppIsKeyUp</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppIsKeyUp;name=start --><!-- begin abstract --></p>
+<p>Check if a key is up
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppIsKeyUp;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ppIsKeyUp;name=start --><!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ppIsKeyUp" logicalPath="//apple_ref/c/instm/ppIsKeyUp //apple_ref/c/clm/ppIsKeyUp //apple_ref/c/intfcm/ppIsKeyUp //apple_ref/c/intfm/ppIsKeyUp //apple_ref/c/func/ppIsKeyUp" target="_top"><span class="function">ppIsKeyUp</span></a>(
+    <!-- a logicalPath="//apple_ref/c/cl/uint8_t //apple_ref/c/tdef/uint8_t //apple_ref/c/tag/uint8_t //apple_ref/c/struct/uint8_t //apple_ref/c/intf/uint8_t //apple_ref/doc/anysymbol/uint8_t" machineGenerated="true" --><span class="type">uint8_t</span><!-- /a --> <span class="param">key</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ppIsKeyUp;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppIsKeyUp/key;   name=key -->
+<a name="//apple_ref/doc/functionparam/ppIsKeyUp/key"></a>
+<code>key</code>
+</dt>
+<dd><p>Keyboard key</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Returns true if key is up
+
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/ppIsKeyUp;name=start --><p>PP_LIVE only
+<!-- headerDoc=discussion;uid=//apple_ref/c/func/ppIsKeyUp;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/ppModifier;   name=ppModifier -->
+<a name="//apple_ref/c/func/ppModifier"></a>
+<h3><a name="ppModifier">ppModifier</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppModifier;name=start --><!-- begin abstract --></p>
+<p>Check if modifier flags match
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppModifier;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ppModifier;name=start --><!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ppModifier" logicalPath="//apple_ref/c/instm/ppModifier //apple_ref/c/clm/ppModifier //apple_ref/c/intfcm/ppModifier //apple_ref/c/intfm/ppModifier //apple_ref/c/func/ppModifier" target="_top"><span class="function">ppModifier</span></a>(
+    <!-- a logicalPath="//apple_ref/c/cl/uint32_t //apple_ref/c/tdef/uint32_t //apple_ref/c/tag/uint32_t //apple_ref/c/struct/uint32_t //apple_ref/c/intf/uint32_t //apple_ref/doc/anysymbol/uint32_t" machineGenerated="true" --><span class="type">uint32_t</span><!-- /a --> <span class="param">modifier</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ppModifier;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppModifier/modifier;   name=modifier -->
+<a name="//apple_ref/doc/functionparam/ppModifier/modifier"></a>
+<code>modifier</code>
+</dt>
+<dd><p>Flags to check</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Returns true if flags match
+
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/ppModifier;name=start --><p>PP_LIVE only
+<!-- headerDoc=discussion;uid=//apple_ref/c/func/ppModifier;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/ppMouseDelta;   name=ppMouseDelta -->
+<a name="//apple_ref/c/func/ppMouseDelta"></a>
+<h3><a name="ppMouseDelta">ppMouseDelta</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppMouseDelta;name=start --><!-- begin abstract --></p>
+<p>Get mouse movement delta
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppMouseDelta;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ppMouseDelta;name=start --><!-- a logicalPath="//apple_ref/c/cl/void //apple_ref/c/tdef/void //apple_ref/c/tag/void //apple_ref/c/struct/void //apple_ref/c/intf/void //apple_ref/doc/anysymbol/void" machineGenerated="true" --><span class="type">void</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ppMouseDelta" logicalPath="//apple_ref/c/instm/ppMouseDelta //apple_ref/c/clm/ppMouseDelta //apple_ref/c/intfcm/ppMouseDelta //apple_ref/c/intfm/ppMouseDelta //apple_ref/c/func/ppMouseDelta" target="_top"><span class="function">ppMouseDelta</span></a>(
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="type">*</span><span class="param">x</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="type">*</span><span class="param">y</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ppMouseDelta;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppMouseDelta/x;   name=x -->
+<a name="//apple_ref/doc/functionparam/ppMouseDelta/x"></a>
+<code>x</code>
+</dt>
+<dd><p>Returns X scroll value</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppMouseDelta/y;   name=y -->
+<a name="//apple_ref/doc/functionparam/ppMouseDelta/y"></a>
+<code>y</code>
+</dt>
+<dd><p>Returns Y scroll value</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/ppMouseDelta;name=start --><p>PP_LIVE only
+<!-- headerDoc=discussion;uid=//apple_ref/c/func/ppMouseDelta;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/ppMousePosition;   name=ppMousePosition -->
+<a name="//apple_ref/c/func/ppMousePosition"></a>
+<h3><a name="ppMousePosition">ppMousePosition</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppMousePosition;name=start --><!-- begin abstract --></p>
+<p>Get cursor position
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppMousePosition;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ppMousePosition;name=start --><!-- a logicalPath="//apple_ref/c/cl/void //apple_ref/c/tdef/void //apple_ref/c/tag/void //apple_ref/c/struct/void //apple_ref/c/intf/void //apple_ref/doc/anysymbol/void" machineGenerated="true" --><span class="type">void</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ppMousePosition" logicalPath="//apple_ref/c/instm/ppMousePosition //apple_ref/c/clm/ppMousePosition //apple_ref/c/intfcm/ppMousePosition //apple_ref/c/intfm/ppMousePosition //apple_ref/c/func/ppMousePosition" target="_top"><span class="function">ppMousePosition</span></a>(
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="type">*</span><span class="param">x</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="type">*</span><span class="param">y</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ppMousePosition;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppMousePosition/x;   name=x -->
+<a name="//apple_ref/doc/functionparam/ppMousePosition/x"></a>
+<code>x</code>
+</dt>
+<dd><p>Returns X scroll value</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppMousePosition/y;   name=y -->
+<a name="//apple_ref/doc/functionparam/ppMousePosition/y"></a>
+<code>y</code>
+</dt>
+<dd><p>Returns Y scroll value</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/ppMousePosition;name=start --><p>PP_LIVE only
+<!-- headerDoc=discussion;uid=//apple_ref/c/func/ppMousePosition;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
 <!-- headerDoc=func;  uid=//apple_ref/c/func/ppPoll;   name=ppPoll -->
 <a name="//apple_ref/c/func/ppPoll"></a>
 <h3><a name="ppPoll">ppPoll</a></h3>
@@ -1628,6 +2449,40 @@ function disclosure_triangle(elt) {
 <p>Returns true is window is still open, false if it's not!
 
 <!-- end return value --></p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/ppScroll;   name=ppScroll -->
+<a name="//apple_ref/c/func/ppScroll"></a>
+<h3><a name="ppScroll">ppScroll</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppScroll;name=start --><!-- begin abstract --></p>
+<p>Get scroll wheel delta
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppScroll;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ppScroll;name=start --><!-- a logicalPath="//apple_ref/c/cl/void //apple_ref/c/tdef/void //apple_ref/c/tag/void //apple_ref/c/struct/void //apple_ref/c/intf/void //apple_ref/doc/anysymbol/void" machineGenerated="true" --><span class="type">void</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ppScroll" logicalPath="//apple_ref/c/instm/ppScroll //apple_ref/c/clm/ppScroll //apple_ref/c/intfcm/ppScroll //apple_ref/c/intfm/ppScroll //apple_ref/c/func/ppScroll" target="_top"><span class="function">ppScroll</span></a>(
+    <!-- a logicalPath="//apple_ref/c/cl/float //apple_ref/c/tdef/float //apple_ref/c/tag/float //apple_ref/c/struct/float //apple_ref/c/intf/float //apple_ref/doc/anysymbol/float" machineGenerated="true" --><span class="type">float</span><!-- /a --> <span class="type">*</span><span class="param">x</span>,
+    <!-- a logicalPath="//apple_ref/c/cl/float //apple_ref/c/tdef/float //apple_ref/c/tag/float //apple_ref/c/struct/float //apple_ref/c/intf/float //apple_ref/doc/anysymbol/float" machineGenerated="true" --><span class="type">float</span><!-- /a --> <span class="type">*</span><span class="param">y</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ppScroll;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppScroll/x;   name=x -->
+<a name="//apple_ref/doc/functionparam/ppScroll/x"></a>
+<code>x</code>
+</dt>
+<dd><p>Returns X scroll value</p></dd>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppScroll/y;   name=y -->
+<a name="//apple_ref/doc/functionparam/ppScroll/y"></a>
+<code>y</code>
+</dt>
+<dd><p>Returns Y scroll value</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/ppScroll;name=start --><p>PP_LIVE only
+<!-- headerDoc=discussion;uid=//apple_ref/c/func/ppScroll;name=end --><!-- end discussion -->
+</p>
 <hr class="betweenAPIEntries">
 <!-- headerDoc=func;  uid=//apple_ref/c/func/ppTime;   name=ppTime -->
 <a name="//apple_ref/c/func/ppTime"></a>
@@ -1668,6 +2523,70 @@ function disclosure_triangle(elt) {
 <dd><p>stored by pp, passed to callback functions</p></dd>
 </dl>
 </div>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/ppWasButtonPressed;   name=ppWasButtonPressed -->
+<a name="//apple_ref/c/func/ppWasButtonPressed"></a>
+<h3><a name="ppWasButtonPressed">ppWasButtonPressed</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppWasButtonPressed;name=start --><!-- begin abstract --></p>
+<p>Check if a button was just released
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppWasButtonPressed;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ppWasButtonPressed;name=start --><!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ppWasButtonPressed" logicalPath="//apple_ref/c/instm/ppWasButtonPressed //apple_ref/c/clm/ppWasButtonPressed //apple_ref/c/intfcm/ppWasButtonPressed //apple_ref/c/intfm/ppWasButtonPressed //apple_ref/c/func/ppWasButtonPressed" target="_top"><span class="function">ppWasButtonPressed</span></a>(
+    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">button</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ppWasButtonPressed;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppWasButtonPressed/button;   name=button -->
+<a name="//apple_ref/doc/functionparam/ppWasButtonPressed/button"></a>
+<code>button</code>
+</dt>
+<dd><p>Mouse button</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Returns true if button was released this frame
+
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/ppWasButtonPressed;name=start --><p>PP_LIVE only
+<!-- headerDoc=discussion;uid=//apple_ref/c/func/ppWasButtonPressed;name=end --><!-- end discussion -->
+</p>
+<hr class="betweenAPIEntries">
+<!-- headerDoc=func;  uid=//apple_ref/c/func/ppWasKeyPressed;   name=ppWasKeyPressed -->
+<a name="//apple_ref/c/func/ppWasKeyPressed"></a>
+<h3><a name="ppWasKeyPressed">ppWasKeyPressed</a></h3>
+<hr class="afterName">
+<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppWasKeyPressed;name=start --><!-- begin abstract --></p>
+<p>Check if a key was just released
+<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppWasKeyPressed;name=end --></p>
+<div class="declaration_indent">
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ppWasKeyPressed;name=start --><!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ppWasKeyPressed" logicalPath="//apple_ref/c/instm/ppWasKeyPressed //apple_ref/c/clm/ppWasKeyPressed //apple_ref/c/intfcm/ppWasKeyPressed //apple_ref/c/intfm/ppWasKeyPressed //apple_ref/c/func/ppWasKeyPressed" target="_top"><span class="function">ppWasKeyPressed</span></a>(
+    <!-- a logicalPath="//apple_ref/c/cl/uint8_t //apple_ref/c/tdef/uint8_t //apple_ref/c/tag/uint8_t //apple_ref/c/struct/uint8_t //apple_ref/c/intf/uint8_t //apple_ref/doc/anysymbol/uint8_t" machineGenerated="true" --><span class="type">uint8_t</span><!-- /a --> <span class="param">key</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ppWasKeyPressed;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<div class="param_indent">
+<dl>
+<dt>
+<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppWasKeyPressed/key;   name=key -->
+<a name="//apple_ref/doc/functionparam/ppWasKeyPressed/key"></a>
+<code>key</code>
+</dt>
+<dd><p>Keyboard key</p></dd>
+</dl>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value --></p>
+<p>Returns true if key was released this frame
+
+<!-- end return value --></p>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/ppWasKeyPressed;name=start --><p>PP_LIVE only
+<!-- headerDoc=discussion;uid=//apple_ref/c/func/ppWasKeyPressed;name=end --><!-- end discussion -->
+</p>
 <hr class="betweenAPIEntries">
 <!-- headerDoc=func;  uid=//apple_ref/c/func/PSet;   name=PSet -->
 <a name="//apple_ref/c/func/PSet"></a>
@@ -2628,7 +3547,7 @@ function disclosure_triangle(elt) {
 <p class="gapBeforeFooter">&nbsp;</p>
 <hr class="afterFooter">
 <div class="hd_copyright_and_timestamp">
-<p class="hd_timestamp">Last Updated: Thursday, November 17, 2022
+<p class="hd_timestamp">Last Updated: Saturday, November 26, 2022
 </p>
 </div>
 </td>
