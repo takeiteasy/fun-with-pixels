@@ -41,7 +41,7 @@ To build the live-reload app, run ```make all``` or ```make run```. This will bu
 ## Gallery
 
 <p align="center">
-    <img src="https://github.com/takeiteasy/pp/blob/master/live.png?raw=true">
+     <img src="https://github.com/takeiteasy/pp/blob/master/live.gif?raw=true">
 </p>
 
 ## TODO
