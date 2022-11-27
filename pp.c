@@ -2018,9 +2018,7 @@ int main(int argc, char *argv[]) {
 #endif
 
 #if !defined(PP_LIVE_LIBRARY)
-#if defined(PP_SIXEL)
-#error Sixel is not yet implemented!
-#elif defined(PP_EMSCRIPTEN)
+#if defined(PP_EMSCRIPTEN)
 #include <emscripten.h>
 #include <emscripten/html5.h>
 

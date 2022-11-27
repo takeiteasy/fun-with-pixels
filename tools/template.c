@@ -29,9 +29,7 @@
 {{src/ppCommon.c}}
 
 #if !defined(PP_LIVE_LIBRARY)
-#if defined(PP_SIXEL)
-{{src/ppSixel.c}}
-#elif defined(PP_EMSCRIPTEN)
+#if defined(PP_EMSCRIPTEN)
 {{src/ppEmscripten.c}}
 #elif defined(PP_MAC)
 {{src/ppMac.c}}

@@ -56,8 +56,7 @@ typedef enum bool { false = 0, true = !false } bool;
 #include <setjmp.h>
 #include <errno.h>
 
-#if defined(PP_SIXEL)
-#elif defined(__EMSCRIPTEN__) || defined(EMSCRIPTEN)
+#if defined(__EMSCRIPTEN__) || defined(EMSCRIPTEN)
 #include <emscripten.h>
 #define PP_EMSCRIPTEN
 #elif defined(macintosh) || defined(Macintosh) || (defined(__APPLE__) && defined(__MACH__))

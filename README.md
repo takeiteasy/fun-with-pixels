@@ -49,7 +49,6 @@ Nothing to see yet
 - [X] ~~Windows context~~
 - [X] ~~Linux (X11) context~~
 - [ ] WebAssembly (Emscripten) context (WIP)
-- [ ] Sixel context
 - [X] ~~Live coding (Mac, Windows, Linux)~~
 - [X] ~~Add bitmap.h to pp internally~~
 - [ ] Fix bitmap API to fit with rest of the library
