@@ -3093,11 +3093,12 @@ double ppTime(void) {
 static struct {
     Display *display;
     Window root, window;
-    int screen;
+    int screen, depth;
     int width, height;
+    Bitmap resized;
     Atom delete;
     GC gc;
-    XImage *img;
+    XImage *img, *scaler;
 } ppLinuxInternal = {0};
 
 struct Hints {
@@ -3113,6 +3114,8 @@ static bool ppBeginNative(int w, int h, const char *title, ppFlags flags) {
         return false;
     ppLinuxInternal.root   = DefaultRootWindow(ppLinuxInternal.display);
     ppLinuxInternal.screen = DefaultScreen(ppLinuxInternal.display);
+    ppLinuxInternal.scaler = NULL;
+    ppLinuxInternal.resized.buf = NULL;
 
     int screen_w = DisplayWidth(ppLinuxInternal.display, ppLinuxInternal.screen);
     int screen_h = DisplayHeight(ppLinuxInternal.display, ppLinuxInternal.screen);
@@ -3132,10 +3135,10 @@ static bool ppBeginNative(int w, int h, const char *title, ppFlags flags) {
     Visual *visual = DefaultVisual(ppLinuxInternal.display, ppLinuxInternal.screen);
     int format_c = 0;
     XPixmapFormatValues* formats = XListPixmapFormats(ppLinuxInternal.display, &format_c);
-    int depth = DefaultDepth(ppLinuxInternal.display, ppLinuxInternal.screen);
+    ppLinuxInternal.depth = DefaultDepth(ppLinuxInternal.display, ppLinuxInternal.screen);
     int depth_c;
     for (int i = 0; i < format_c; ++i)
-        if (depth == formats[i].depth) {
+        if (ppLinuxInternal.depth == formats[i].depth) {
             depth_c = formats[i].bits_per_pixel;
             break;
         }
@@ -3148,7 +3151,7 @@ static bool ppBeginNative(int w, int h, const char *title, ppFlags flags) {
     swa.border_pixel = BlackPixel(ppLinuxInternal.display, ppLinuxInternal.screen);
     swa.background_pixel = BlackPixel(ppLinuxInternal.display, ppLinuxInternal.screen);
     swa.backing_store = NotUseful;
-    if (!(ppLinuxInternal.window = XCreateWindow(ppLinuxInternal.display, ppLinuxInternal.root, x, y, w, h, 0, depth, InputOutput, visual, CWBackPixel | CWBorderPixel | CWBackingStore, &swa)))
+    if (!(ppLinuxInternal.window = XCreateWindow(ppLinuxInternal.display, ppLinuxInternal.root, x, y, w, h, 0, ppLinuxInternal.depth, InputOutput, visual, CWBackPixel | CWBorderPixel | CWBackingStore, &swa)))
         return false;
     ppLinuxInternal.width = w;
     ppLinuxInternal.height = h;
@@ -3196,7 +3199,7 @@ static bool ppBeginNative(int w, int h, const char *title, ppFlags flags) {
     XMapRaised(ppLinuxInternal.display, ppLinuxInternal.window);
     XFlush(ppLinuxInternal.display);
     ppLinuxInternal.gc = DefaultGC(ppLinuxInternal.display, ppLinuxInternal.screen);
-    ppLinuxInternal.img = XCreateImage(ppLinuxInternal.display, CopyFromParent, depth, ZPixmap, 0, NULL, w, h, 32, w * 4);
+    ppLinuxInternal.img = XCreateImage(ppLinuxInternal.display, CopyFromParent, ppLinuxInternal.depth, ZPixmap, 0, NULL, w, h, 32, w * 4);
 
     ppInternal.initialized = ppInternal.running = true;
     return true;
@@ -3206,6 +3209,25 @@ bool ppPoll(void) {
     XEvent e;
     while (XPending(ppLinuxInternal.display)) {
         XNextEvent(ppLinuxInternal.display, &e);
+        switch (e.type) {
+            case ConfigureNotify: {
+                int w = e.xconfigure.width;
+                int h = e.xconfigure.height;
+                if (ppLinuxInternal.width == w && ppLinuxInternal.height == h)
+                    break;
+                ppCallCallback(Resized, w, h);
+                ppLinuxInternal.width = w;
+                ppLinuxInternal.height = h;
+
+                if (ppLinuxInternal.scaler) {
+                    ppLinuxInternal.scaler->data = NULL;
+                    XDestroyImage(ppLinuxInternal.scaler);
+                    ppLinuxInternal.scaler = NULL;
+                }
+                XClearWindow(ppLinuxInternal.display, ppLinuxInternal.window);
+                break;
+            }
+        }
     }
     return ppInternal.running;
 }
@@ -3215,15 +3237,45 @@ void ppFlush(Bitmap *bitmap) {
         ppInternal.pbo = NULL;
         return;
     }
-    ppInternal.pbo = bitmap;
-    ppLinuxInternal.img->data = (char*)ppInternal.pbo->buf;
-    XPutImage(ppLinuxInternal.display, ppLinuxInternal.window, ppLinuxInternal.gc, ppLinuxInternal.img, 0, 0, 0, 0, ppLinuxInternal.width, ppLinuxInternal.height);
+
+    if (ppLinuxInternal.width != bitmap->w || ppLinuxInternal.height != bitmap->h) {
+        if (ppLinuxInternal.scaler) {
+            ppLinuxInternal.scaler->data = NULL;
+            XDestroyImage(ppLinuxInternal.scaler);
+            ppLinuxInternal.scaler = NULL;
+        }
+        ppLinuxInternal.scaler = XCreateImage(ppLinuxInternal.display, CopyFromParent, ppLinuxInternal.depth, ZPixmap, 0, NULL, ppLinuxInternal.width, ppLinuxInternal.height, 32, ppLinuxInternal.width * 4);
+
+        if (ppLinuxInternal.resized.buf)
+            DestroyBitmap(&ppLinuxInternal.resized);
+        ScaleBitmap(bitmap, ppLinuxInternal.width, ppLinuxInternal.height, &ppLinuxInternal.resized);
+
+        ppLinuxInternal.scaler->data = (char*)ppLinuxInternal.resized.buf;
+        XPutImage(ppLinuxInternal.display, ppLinuxInternal.window, ppLinuxInternal.gc, ppLinuxInternal.scaler, 0, 0, 0, 0, ppLinuxInternal.width, ppLinuxInternal.height);
+    } else {
+        ppLinuxInternal.img->data = (char*)bitmap->buf;
+        XPutImage(ppLinuxInternal.display, ppLinuxInternal.window, ppLinuxInternal.gc, ppLinuxInternal.img, 0, 0, 0, 0, ppLinuxInternal.width, ppLinuxInternal.height);
+    }
     XFlush(ppLinuxInternal.display);
 }
 
 void ppEnd(void) {
     if (!ppInternal.initialized)
         return;
+    if (ppLinuxInternal.img) {
+        ppLinuxInternal.img->data = NULL;
+        XDestroyImage(ppLinuxInternal.img);
+    }
+    if (ppLinuxInternal.scaler) {
+        ppLinuxInternal.scaler->data = NULL;
+        XDestroyImage(ppLinuxInternal.scaler);
+    }
+    if (ppLinuxInternal.resized.buf)
+        DestroyBitmap(&ppLinuxInternal.resized);
+    if (ppLinuxInternal.window)
+        XDestroyWindow(ppLinuxInternal.display, ppLinuxInternal.window);
+    if (ppLinuxInternal.display)
+        XCloseDisplay(ppLinuxInternal.display);
 }
 
 double ppTime(void) {

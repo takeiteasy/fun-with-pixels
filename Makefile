@@ -10,7 +10,7 @@ else
 		LIBS=-framework Cocoa
 	else ifeq ($(UNAME),Linux)
 		LIBEXT=so
-		LIBS=-lX11
+		LIBS=-lX11 -lm
 	else
 		$(error OS not supported by this Makefile)
 	endif
