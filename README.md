@@ -48,7 +48,7 @@ Nothing to see yet
 - [X] ~~Mac context~~
 - [X] ~~Windows context~~
 - [X] ~~Linux (X11) context~~
-- [ ] WebAssembly (Emscripten) context
+- [ ] WebAssembly (Emscripten) context (WIP)
 - [ ] Sixel context
 - [X] ~~Live coding (Mac, Windows, Linux)~~
 - [X] ~~Add bitmap.h to pp internally~~

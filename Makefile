@@ -44,4 +44,7 @@ run: game live
 kill:
 	pkill pp
 
-.PHONY: default all run game live library rebuild kill
+web:
+	emcc pp.c examples/basic.c -I. -o build/pp.html
+
+.PHONY: default all run game live library rebuild kill web

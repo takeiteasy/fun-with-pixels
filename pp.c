@@ -2021,7 +2021,63 @@ int main(int argc, char *argv[]) {
 #if defined(PP_SIXEL)
 #error Sixel is not yet implemented!
 #elif defined(PP_EMSCRIPTEN)
-#error Emscripten is not yet implemented!
+#include <emscripten.h>
+#include <emscripten/html5.h>
+
+static bool ppBeginNative(int w, int h, const char *title, ppFlags flags) {
+    emscripten_set_canvas_size(w, h);
+    ppInternal.initialized = ppInternal.running = true;
+    return true;
+}
+
+bool ppPoll(void) {
+    return true;
+}
+
+void ppFlush(Bitmap *bitmap) {
+    if (!bitmap || !bitmap->buf || !bitmap->w || !bitmap->h) {
+        ppInternal.pbo = NULL;
+        return;
+    }
+    EM_ASM({
+        var w = $0;
+        var h = $1;
+        var buf = $2;
+        var src = buf >> 2;
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+        var img = ctx.createImageData(w, h);
+        var data = img.data;
+
+        var i = 0;
+        var j = data.length;
+        while (i < j) {
+            var val = HEAP32[src];
+            data[i  ] = (val >> 16) & 0xFF;
+            data[i+1] = (val >> 8) & 0xFF;
+            data[i+2] = val & 0xFF;
+            data[i+3] = 0xFF;
+            src++;
+            i += 4;
+        }
+
+        ctx.putImageData(img, 0, 0);
+    }, bitmap->w, bitmap->h, bitmap->buf);
+}
+
+void ppEnd(void) {
+    // ...
+}
+
+double ppTime(void) {
+    static double last = 0;
+    if (!last)
+        last = emscripten_get_now();
+    double now = emscripten_get_now();
+    double elapsed = last - emscripten_get_now();
+    last = now;
+    return elapsed;
+}
 #elif defined(PP_MAC)
 #include <objc/objc.h>
 #include <objc/runtime.h>

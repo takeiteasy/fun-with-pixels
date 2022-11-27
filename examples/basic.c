@@ -33,6 +33,18 @@ void onClosed(void *userdata) {
 
 #define WIDTH  640
 #define HEIGHT 480
+static Bitmap pbo;
+
+static void loop(void) {
+    // Fill framebuffer bitmap solid red
+    FillBitmap(&pbo, Red);
+    // Draw a string to framebuffer using in-built debug font
+    DrawStringFormat(&pbo, 0, 0, White, "Frame Delta: %f", ppTime());
+    // Draw a blue rectangle to framebuffer
+    DrawRect(&pbo, 50, 50, 50, 50, Blue, true);
+    // Draw framebuffer to screen
+    ppFlush(&pbo);
+}
 
 int main(int argc, const char *argv[]) {
     // Create new resizable window
@@ -46,20 +58,15 @@ int main(int argc, const char *argv[]) {
     
     // Create empty bitmap to act as framebuffer
     // The "framebuffer" can be any size and will resize to fit the window
-    Bitmap pbo;
     InitBitmap(&pbo, WIDTH, HEIGHT);
     
     // ppPoll collects all window events and will return true while window is open
-    while (ppPoll()) {
-        // Fill framebuffer bitmap solid red
-        FillBitmap(&pbo, Red);
-        // Draw a string to framebuffer using in-built debug font
-        DrawStringFormat(&pbo, 0, 0, White, "Frame Delta: %f", ppTime());
-        // Draw a blue rectangle to framebuffer
-        DrawRect(&pbo, 50, 50, 50, 50, Blue, true);
-        // Draw framebuffer to screen
-        ppFlush(&pbo);
-    }
+#if defined(PP_EMSCRIPTEN)
+    emscripten_set_main_loop(loop, 0, 1);
+#else
+    while (ppPoll())
+        loop();
+#endif
     
     // Free bitmap
     DestroyBitmap(&pbo);
