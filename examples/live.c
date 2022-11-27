@@ -36,13 +36,13 @@ static void unload(ppState *state) {
 static bool tick(ppState *state, Bitmap *pbo, double delta) {
     FillBitmap(pbo, state->clearColor);
     DrawString(pbo, "Rebuild to change the background color!", 1, 1, White);
-    DrawRect(pbo, 50, 50, 50, 50, Red, true);
+    DrawRect(pbo, 50, 50, 50, 50, White, true);
     return true;
 }
 
 // App descriptor to direct callbacks
 // Must be called "pp" as that is the symbol that is looked up
-const ppLiveApp pp = {
+EXPORT const ppApp pp = {
     .init = init,
     .deinit = deinit,
     .reload = reload,

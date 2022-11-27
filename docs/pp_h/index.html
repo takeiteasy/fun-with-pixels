@@ -275,8 +275,7 @@ function disclosure_triangle(elt) {
 <!-- a logicalPath="//apple_ref/doc/header/math.h" machineGenerated="true" -->&lt;math.h&gt;<!-- /a --><br>
 <!-- a logicalPath="//apple_ref/doc/header/float.h" machineGenerated="true" -->&lt;float.h&gt;<!-- /a --><br>
 <!-- a logicalPath="//apple_ref/doc/header/setjmp.h" machineGenerated="true" -->&lt;setjmp.h&gt;<!-- /a --><br>
-<!-- a logicalPath="//apple_ref/doc/header/errno.h" machineGenerated="true" -->&lt;errno.h&gt;<!-- /a --><br>
-<!-- a logicalPath="//apple_ref/doc/header/stdarg.h" machineGenerated="true" -->&lt;stdarg.h&gt;<!-- /a -->
+<!-- a logicalPath="//apple_ref/doc/header/errno.h" machineGenerated="true" -->&lt;errno.h&gt;<!-- /a -->
 </div></div></td>
 </tr>
 </table></div>
@@ -374,12 +373,6 @@ function disclosure_triangle(elt) {
 <dt><tt><a href="index.html#//apple_ref/c/func/PGet" target="_top">PGet</a></tt></dt>
 <dd><p>Get bitmap pixel color at position
 </p></dd>
-<dt><tt><a href="index.html#//apple_ref/c/func/ppAnyKeysDown" target="_top">ppAnyKeysDown</a></tt></dt>
-<dd><p>Check if any keys are down
-</p></dd>
-<dt><tt><a href="index.html#//apple_ref/c/func/ppAreKeysDown" target="_top">ppAreKeysDown</a></tt></dt>
-<dd><p>Check if multiple keys are all down
-</p></dd>
 <dt><tt><a href="index.html#//apple_ref/c/func/ppBegin" target="_top">ppBegin</a></tt></dt>
 <dd><p>pp initialization function
 </p></dd>
@@ -392,47 +385,17 @@ function disclosure_triangle(elt) {
 <dt><tt><a href="index.html#//apple_ref/c/func/ppFlush" target="_top">ppFlush</a></tt></dt>
 <dd><p>Draw bitmap to the window
 </p></dd>
-<dt><tt><a href="index.html#//apple_ref/c/func/ppIsButtonDown" target="_top">ppIsButtonDown</a></tt></dt>
-<dd><p>Check if mouse button is down
-</p></dd>
-<dt><tt><a href="index.html#//apple_ref/c/func/ppIsButtonUp" target="_top">ppIsButtonUp</a></tt></dt>
-<dd><p>Check if mouse button is up
-</p></dd>
-<dt><tt><a href="index.html#//apple_ref/c/func/ppIsKeyDown" target="_top">ppIsKeyDown</a></tt></dt>
-<dd><p>Check if a key is down
-</p></dd>
-<dt><tt><a href="index.html#//apple_ref/c/func/ppIsKeyUp" target="_top">ppIsKeyUp</a></tt></dt>
-<dd><p>Check if a key is up
-</p></dd>
-<dt><tt><a href="index.html#//apple_ref/c/func/ppModifier" target="_top">ppModifier</a></tt></dt>
-<dd><p>Check if modifier flags match
-</p></dd>
-<dt><tt><a href="index.html#//apple_ref/c/func/ppMouseDelta" target="_top">ppMouseDelta</a></tt></dt>
-<dd><p>Get mouse movement delta
-</p></dd>
-<dt><tt><a href="index.html#//apple_ref/c/func/ppMousePosition" target="_top">ppMousePosition</a></tt></dt>
-<dd><p>Get cursor position
-</p></dd>
 <dt><tt><a href="index.html#//apple_ref/c/func/ppPoll" target="_top">ppPoll</a></tt></dt>
 <dd><p>Poll window events
 </p></dd>
 <dt><tt><a href="index.html#//apple_ref/c/func/ppRunning" target="_top">ppRunning</a></tt></dt>
 <dd><p>Check if the window is still open
 </p></dd>
-<dt><tt><a href="index.html#//apple_ref/c/func/ppScroll" target="_top">ppScroll</a></tt></dt>
-<dd><p>Get scroll wheel delta
-</p></dd>
 <dt><tt><a href="index.html#//apple_ref/c/func/ppTime" target="_top">ppTime</a></tt></dt>
 <dd><p>Returns the elapsed time in millisecons since the program started
 </p></dd>
 <dt><tt><a href="index.html#//apple_ref/c/func/ppUserdata" target="_top">ppUserdata</a></tt></dt>
 <dd><p>Set custom userdata to be passed to callback functions
-</p></dd>
-<dt><tt><a href="index.html#//apple_ref/c/func/ppWasButtonPressed" target="_top">ppWasButtonPressed</a></tt></dt>
-<dd><p>Check if a button was just released
-</p></dd>
-<dt><tt><a href="index.html#//apple_ref/c/func/ppWasKeyPressed" target="_top">ppWasKeyPressed</a></tt></dt>
-<dd><p>Check if a key was just released
 </p></dd>
 <dt><tt><a href="index.html#//apple_ref/c/func/PSet" target="_top">PSet</a></tt></dt>
 <dd><p>Set bitmap pixel color (without blending)
@@ -1941,84 +1904,6 @@ function disclosure_triangle(elt) {
 
 <!-- end return value --></p>
 <hr class="betweenAPIEntries">
-<!-- headerDoc=func;  uid=//apple_ref/c/func/ppAnyKeysDown;   name=ppAnyKeysDown -->
-<a name="//apple_ref/c/func/ppAnyKeysDown"></a>
-<h3><a name="ppAnyKeysDown">ppAnyKeysDown</a></h3>
-<hr class="afterName">
-<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppAnyKeysDown;name=start --><!-- begin abstract --></p>
-<p>Check if any keys are down
-<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppAnyKeysDown;name=end --></p>
-<div class="declaration_indent">
-<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ppAnyKeysDown;name=start --><!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ppAnyKeysDown" logicalPath="//apple_ref/c/instm/ppAnyKeysDown //apple_ref/c/clm/ppAnyKeysDown //apple_ref/c/intfcm/ppAnyKeysDown //apple_ref/c/intfm/ppAnyKeysDown //apple_ref/c/func/ppAnyKeysDown" target="_top"><span class="function">ppAnyKeysDown</span></a>(
-    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">n</span>,
-    ...);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ppAnyKeysDown;name=end --></pre>
-</div>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
-<div class="param_indent">
-<dl>
-<dt>
-<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppAnyKeysDown/n;   name=n -->
-<a name="//apple_ref/doc/functionparam/ppAnyKeysDown/n"></a>
-<code>n</code>
-</dt>
-<dd><p>Number of keys</p></dd>
-<dt>
-<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppAnyKeysDown/...;   name=... -->
-<a name="//apple_ref/doc/functionparam/ppAnyKeysDown/..."></a>
-<code>...</code>
-</dt>
-<dd><p>Keyboard keys</p></dd>
-</dl>
-</div>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
-<p><!-- begin return value --></p>
-<p>Returns true if any of the keys are down, false if none of the keys are pressed
-
-<!-- end return value --></p>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
-<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/ppAnyKeysDown;name=start --><p>PP_LIVE only
-<!-- headerDoc=discussion;uid=//apple_ref/c/func/ppAnyKeysDown;name=end --><!-- end discussion -->
-</p>
-<hr class="betweenAPIEntries">
-<!-- headerDoc=func;  uid=//apple_ref/c/func/ppAreKeysDown;   name=ppAreKeysDown -->
-<a name="//apple_ref/c/func/ppAreKeysDown"></a>
-<h3><a name="ppAreKeysDown">ppAreKeysDown</a></h3>
-<hr class="afterName">
-<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppAreKeysDown;name=start --><!-- begin abstract --></p>
-<p>Check if multiple keys are all down
-<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppAreKeysDown;name=end --></p>
-<div class="declaration_indent">
-<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ppAreKeysDown;name=start --><!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ppAreKeysDown" logicalPath="//apple_ref/c/instm/ppAreKeysDown //apple_ref/c/clm/ppAreKeysDown //apple_ref/c/intfcm/ppAreKeysDown //apple_ref/c/intfm/ppAreKeysDown //apple_ref/c/func/ppAreKeysDown" target="_top"><span class="function">ppAreKeysDown</span></a>(
-    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">n</span>,
-    ...);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ppAreKeysDown;name=end --></pre>
-</div>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
-<div class="param_indent">
-<dl>
-<dt>
-<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppAreKeysDown/n;   name=n -->
-<a name="//apple_ref/doc/functionparam/ppAreKeysDown/n"></a>
-<code>n</code>
-</dt>
-<dd><p>Number of keys</p></dd>
-<dt>
-<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppAreKeysDown/...;   name=... -->
-<a name="//apple_ref/doc/functionparam/ppAreKeysDown/..."></a>
-<code>...</code>
-</dt>
-<dd><p>Keyboard keys</p></dd>
-</dl>
-</div>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
-<p><!-- begin return value --></p>
-<p>Returns true is ALL keys are down
-
-<!-- end return value --></p>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
-<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/ppAreKeysDown;name=start --><p>PP_LIVE only
-<!-- headerDoc=discussion;uid=//apple_ref/c/func/ppAreKeysDown;name=end --><!-- end discussion -->
-</p>
-<hr class="betweenAPIEntries">
 <!-- headerDoc=func;  uid=//apple_ref/c/func/ppBegin;   name=ppBegin -->
 <a name="//apple_ref/c/func/ppBegin"></a>
 <h3><a name="ppBegin">ppBegin</a></h3>
@@ -2184,234 +2069,6 @@ function disclosure_triangle(elt) {
 <!-- headerDoc=discussion;uid=//apple_ref/c/func/ppFlush;name=end --><!-- end discussion -->
 </p>
 <hr class="betweenAPIEntries">
-<!-- headerDoc=func;  uid=//apple_ref/c/func/ppIsButtonDown;   name=ppIsButtonDown -->
-<a name="//apple_ref/c/func/ppIsButtonDown"></a>
-<h3><a name="ppIsButtonDown">ppIsButtonDown</a></h3>
-<hr class="afterName">
-<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppIsButtonDown;name=start --><!-- begin abstract --></p>
-<p>Check if mouse button is down
-<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppIsButtonDown;name=end --></p>
-<div class="declaration_indent">
-<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ppIsButtonDown;name=start --><!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ppIsButtonDown" logicalPath="//apple_ref/c/instm/ppIsButtonDown //apple_ref/c/clm/ppIsButtonDown //apple_ref/c/intfcm/ppIsButtonDown //apple_ref/c/intfm/ppIsButtonDown //apple_ref/c/func/ppIsButtonDown" target="_top"><span class="function">ppIsButtonDown</span></a>(
-    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">button</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ppIsButtonDown;name=end --></pre>
-</div>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
-<div class="param_indent">
-<dl>
-<dt>
-<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppIsButtonDown/button;   name=button -->
-<a name="//apple_ref/doc/functionparam/ppIsButtonDown/button"></a>
-<code>button</code>
-</dt>
-<dd><p>Mouse button</p></dd>
-</dl>
-</div>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
-<p><!-- begin return value --></p>
-<p>Returns true if mouse button is down
-
-<!-- end return value --></p>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
-<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/ppIsButtonDown;name=start --><p>PP_LIVE only
-<!-- headerDoc=discussion;uid=//apple_ref/c/func/ppIsButtonDown;name=end --><!-- end discussion -->
-</p>
-<hr class="betweenAPIEntries">
-<!-- headerDoc=func;  uid=//apple_ref/c/func/ppIsButtonUp;   name=ppIsButtonUp -->
-<a name="//apple_ref/c/func/ppIsButtonUp"></a>
-<h3><a name="ppIsButtonUp">ppIsButtonUp</a></h3>
-<hr class="afterName">
-<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppIsButtonUp;name=start --><!-- begin abstract --></p>
-<p>Check if mouse button is up
-<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppIsButtonUp;name=end --></p>
-<div class="declaration_indent">
-<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ppIsButtonUp;name=start --><!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ppIsButtonUp" logicalPath="//apple_ref/c/instm/ppIsButtonUp //apple_ref/c/clm/ppIsButtonUp //apple_ref/c/intfcm/ppIsButtonUp //apple_ref/c/intfm/ppIsButtonUp //apple_ref/c/func/ppIsButtonUp" target="_top"><span class="function">ppIsButtonUp</span></a>(
-    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">button</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ppIsButtonUp;name=end --></pre>
-</div>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
-<div class="param_indent">
-<dl>
-<dt>
-<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppIsButtonUp/button;   name=button -->
-<a name="//apple_ref/doc/functionparam/ppIsButtonUp/button"></a>
-<code>button</code>
-</dt>
-<dd><p>Mouse button</p></dd>
-</dl>
-</div>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
-<p><!-- begin return value --></p>
-<p>Returns true if mouse button is up
-
-<!-- end return value --></p>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
-<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/ppIsButtonUp;name=start --><p>PP_LIVE only
-<!-- headerDoc=discussion;uid=//apple_ref/c/func/ppIsButtonUp;name=end --><!-- end discussion -->
-</p>
-<hr class="betweenAPIEntries">
-<!-- headerDoc=func;  uid=//apple_ref/c/func/ppIsKeyDown;   name=ppIsKeyDown -->
-<a name="//apple_ref/c/func/ppIsKeyDown"></a>
-<h3><a name="ppIsKeyDown">ppIsKeyDown</a></h3>
-<hr class="afterName">
-<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppIsKeyDown;name=start --><!-- begin abstract --></p>
-<p>Check if a key is down
-<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppIsKeyDown;name=end --></p>
-<div class="declaration_indent">
-<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ppIsKeyDown;name=start --><!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ppIsKeyDown" logicalPath="//apple_ref/c/instm/ppIsKeyDown //apple_ref/c/clm/ppIsKeyDown //apple_ref/c/intfcm/ppIsKeyDown //apple_ref/c/intfm/ppIsKeyDown //apple_ref/c/func/ppIsKeyDown" target="_top"><span class="function">ppIsKeyDown</span></a>(
-    <!-- a logicalPath="//apple_ref/c/cl/uint8_t //apple_ref/c/tdef/uint8_t //apple_ref/c/tag/uint8_t //apple_ref/c/struct/uint8_t //apple_ref/c/intf/uint8_t //apple_ref/doc/anysymbol/uint8_t" machineGenerated="true" --><span class="type">uint8_t</span><!-- /a --> <span class="param">key</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ppIsKeyDown;name=end --></pre>
-</div>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
-<div class="param_indent">
-<dl>
-<dt>
-<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppIsKeyDown/key;   name=key -->
-<a name="//apple_ref/doc/functionparam/ppIsKeyDown/key"></a>
-<code>key</code>
-</dt>
-<dd><p>Keyboard key</p></dd>
-</dl>
-</div>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
-<p><!-- begin return value --></p>
-<p>Returns true if key is down
-
-<!-- end return value --></p>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
-<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/ppIsKeyDown;name=start --><p>PP_LIVE only
-<!-- headerDoc=discussion;uid=//apple_ref/c/func/ppIsKeyDown;name=end --><!-- end discussion -->
-</p>
-<hr class="betweenAPIEntries">
-<!-- headerDoc=func;  uid=//apple_ref/c/func/ppIsKeyUp;   name=ppIsKeyUp -->
-<a name="//apple_ref/c/func/ppIsKeyUp"></a>
-<h3><a name="ppIsKeyUp">ppIsKeyUp</a></h3>
-<hr class="afterName">
-<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppIsKeyUp;name=start --><!-- begin abstract --></p>
-<p>Check if a key is up
-<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppIsKeyUp;name=end --></p>
-<div class="declaration_indent">
-<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ppIsKeyUp;name=start --><!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ppIsKeyUp" logicalPath="//apple_ref/c/instm/ppIsKeyUp //apple_ref/c/clm/ppIsKeyUp //apple_ref/c/intfcm/ppIsKeyUp //apple_ref/c/intfm/ppIsKeyUp //apple_ref/c/func/ppIsKeyUp" target="_top"><span class="function">ppIsKeyUp</span></a>(
-    <!-- a logicalPath="//apple_ref/c/cl/uint8_t //apple_ref/c/tdef/uint8_t //apple_ref/c/tag/uint8_t //apple_ref/c/struct/uint8_t //apple_ref/c/intf/uint8_t //apple_ref/doc/anysymbol/uint8_t" machineGenerated="true" --><span class="type">uint8_t</span><!-- /a --> <span class="param">key</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ppIsKeyUp;name=end --></pre>
-</div>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
-<div class="param_indent">
-<dl>
-<dt>
-<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppIsKeyUp/key;   name=key -->
-<a name="//apple_ref/doc/functionparam/ppIsKeyUp/key"></a>
-<code>key</code>
-</dt>
-<dd><p>Keyboard key</p></dd>
-</dl>
-</div>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
-<p><!-- begin return value --></p>
-<p>Returns true if key is up
-
-<!-- end return value --></p>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
-<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/ppIsKeyUp;name=start --><p>PP_LIVE only
-<!-- headerDoc=discussion;uid=//apple_ref/c/func/ppIsKeyUp;name=end --><!-- end discussion -->
-</p>
-<hr class="betweenAPIEntries">
-<!-- headerDoc=func;  uid=//apple_ref/c/func/ppModifier;   name=ppModifier -->
-<a name="//apple_ref/c/func/ppModifier"></a>
-<h3><a name="ppModifier">ppModifier</a></h3>
-<hr class="afterName">
-<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppModifier;name=start --><!-- begin abstract --></p>
-<p>Check if modifier flags match
-<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppModifier;name=end --></p>
-<div class="declaration_indent">
-<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ppModifier;name=start --><!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ppModifier" logicalPath="//apple_ref/c/instm/ppModifier //apple_ref/c/clm/ppModifier //apple_ref/c/intfcm/ppModifier //apple_ref/c/intfm/ppModifier //apple_ref/c/func/ppModifier" target="_top"><span class="function">ppModifier</span></a>(
-    <!-- a logicalPath="//apple_ref/c/cl/uint32_t //apple_ref/c/tdef/uint32_t //apple_ref/c/tag/uint32_t //apple_ref/c/struct/uint32_t //apple_ref/c/intf/uint32_t //apple_ref/doc/anysymbol/uint32_t" machineGenerated="true" --><span class="type">uint32_t</span><!-- /a --> <span class="param">modifier</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ppModifier;name=end --></pre>
-</div>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
-<div class="param_indent">
-<dl>
-<dt>
-<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppModifier/modifier;   name=modifier -->
-<a name="//apple_ref/doc/functionparam/ppModifier/modifier"></a>
-<code>modifier</code>
-</dt>
-<dd><p>Flags to check</p></dd>
-</dl>
-</div>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
-<p><!-- begin return value --></p>
-<p>Returns true if flags match
-
-<!-- end return value --></p>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
-<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/ppModifier;name=start --><p>PP_LIVE only
-<!-- headerDoc=discussion;uid=//apple_ref/c/func/ppModifier;name=end --><!-- end discussion -->
-</p>
-<hr class="betweenAPIEntries">
-<!-- headerDoc=func;  uid=//apple_ref/c/func/ppMouseDelta;   name=ppMouseDelta -->
-<a name="//apple_ref/c/func/ppMouseDelta"></a>
-<h3><a name="ppMouseDelta">ppMouseDelta</a></h3>
-<hr class="afterName">
-<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppMouseDelta;name=start --><!-- begin abstract --></p>
-<p>Get mouse movement delta
-<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppMouseDelta;name=end --></p>
-<div class="declaration_indent">
-<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ppMouseDelta;name=start --><!-- a logicalPath="//apple_ref/c/cl/void //apple_ref/c/tdef/void //apple_ref/c/tag/void //apple_ref/c/struct/void //apple_ref/c/intf/void //apple_ref/doc/anysymbol/void" machineGenerated="true" --><span class="type">void</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ppMouseDelta" logicalPath="//apple_ref/c/instm/ppMouseDelta //apple_ref/c/clm/ppMouseDelta //apple_ref/c/intfcm/ppMouseDelta //apple_ref/c/intfm/ppMouseDelta //apple_ref/c/func/ppMouseDelta" target="_top"><span class="function">ppMouseDelta</span></a>(
-    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="type">*</span><span class="param">x</span>,
-    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="type">*</span><span class="param">y</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ppMouseDelta;name=end --></pre>
-</div>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
-<div class="param_indent">
-<dl>
-<dt>
-<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppMouseDelta/x;   name=x -->
-<a name="//apple_ref/doc/functionparam/ppMouseDelta/x"></a>
-<code>x</code>
-</dt>
-<dd><p>Returns X scroll value</p></dd>
-<dt>
-<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppMouseDelta/y;   name=y -->
-<a name="//apple_ref/doc/functionparam/ppMouseDelta/y"></a>
-<code>y</code>
-</dt>
-<dd><p>Returns Y scroll value</p></dd>
-</dl>
-</div>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
-<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/ppMouseDelta;name=start --><p>PP_LIVE only
-<!-- headerDoc=discussion;uid=//apple_ref/c/func/ppMouseDelta;name=end --><!-- end discussion -->
-</p>
-<hr class="betweenAPIEntries">
-<!-- headerDoc=func;  uid=//apple_ref/c/func/ppMousePosition;   name=ppMousePosition -->
-<a name="//apple_ref/c/func/ppMousePosition"></a>
-<h3><a name="ppMousePosition">ppMousePosition</a></h3>
-<hr class="afterName">
-<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppMousePosition;name=start --><!-- begin abstract --></p>
-<p>Get cursor position
-<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppMousePosition;name=end --></p>
-<div class="declaration_indent">
-<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ppMousePosition;name=start --><!-- a logicalPath="//apple_ref/c/cl/void //apple_ref/c/tdef/void //apple_ref/c/tag/void //apple_ref/c/struct/void //apple_ref/c/intf/void //apple_ref/doc/anysymbol/void" machineGenerated="true" --><span class="type">void</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ppMousePosition" logicalPath="//apple_ref/c/instm/ppMousePosition //apple_ref/c/clm/ppMousePosition //apple_ref/c/intfcm/ppMousePosition //apple_ref/c/intfm/ppMousePosition //apple_ref/c/func/ppMousePosition" target="_top"><span class="function">ppMousePosition</span></a>(
-    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="type">*</span><span class="param">x</span>,
-    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="type">*</span><span class="param">y</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ppMousePosition;name=end --></pre>
-</div>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
-<div class="param_indent">
-<dl>
-<dt>
-<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppMousePosition/x;   name=x -->
-<a name="//apple_ref/doc/functionparam/ppMousePosition/x"></a>
-<code>x</code>
-</dt>
-<dd><p>Returns X scroll value</p></dd>
-<dt>
-<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppMousePosition/y;   name=y -->
-<a name="//apple_ref/doc/functionparam/ppMousePosition/y"></a>
-<code>y</code>
-</dt>
-<dd><p>Returns Y scroll value</p></dd>
-</dl>
-</div>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
-<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/ppMousePosition;name=start --><p>PP_LIVE only
-<!-- headerDoc=discussion;uid=//apple_ref/c/func/ppMousePosition;name=end --><!-- end discussion -->
-</p>
-<hr class="betweenAPIEntries">
 <!-- headerDoc=func;  uid=//apple_ref/c/func/ppPoll;   name=ppPoll -->
 <a name="//apple_ref/c/func/ppPoll"></a>
 <h3><a name="ppPoll">ppPoll</a></h3>
@@ -2449,40 +2106,6 @@ function disclosure_triangle(elt) {
 <p>Returns true is window is still open, false if it's not!
 
 <!-- end return value --></p>
-<hr class="betweenAPIEntries">
-<!-- headerDoc=func;  uid=//apple_ref/c/func/ppScroll;   name=ppScroll -->
-<a name="//apple_ref/c/func/ppScroll"></a>
-<h3><a name="ppScroll">ppScroll</a></h3>
-<hr class="afterName">
-<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppScroll;name=start --><!-- begin abstract --></p>
-<p>Get scroll wheel delta
-<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppScroll;name=end --></p>
-<div class="declaration_indent">
-<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ppScroll;name=start --><!-- a logicalPath="//apple_ref/c/cl/void //apple_ref/c/tdef/void //apple_ref/c/tag/void //apple_ref/c/struct/void //apple_ref/c/intf/void //apple_ref/doc/anysymbol/void" machineGenerated="true" --><span class="type">void</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ppScroll" logicalPath="//apple_ref/c/instm/ppScroll //apple_ref/c/clm/ppScroll //apple_ref/c/intfcm/ppScroll //apple_ref/c/intfm/ppScroll //apple_ref/c/func/ppScroll" target="_top"><span class="function">ppScroll</span></a>(
-    <!-- a logicalPath="//apple_ref/c/cl/float //apple_ref/c/tdef/float //apple_ref/c/tag/float //apple_ref/c/struct/float //apple_ref/c/intf/float //apple_ref/doc/anysymbol/float" machineGenerated="true" --><span class="type">float</span><!-- /a --> <span class="type">*</span><span class="param">x</span>,
-    <!-- a logicalPath="//apple_ref/c/cl/float //apple_ref/c/tdef/float //apple_ref/c/tag/float //apple_ref/c/struct/float //apple_ref/c/intf/float //apple_ref/doc/anysymbol/float" machineGenerated="true" --><span class="type">float</span><!-- /a --> <span class="type">*</span><span class="param">y</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ppScroll;name=end --></pre>
-</div>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
-<div class="param_indent">
-<dl>
-<dt>
-<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppScroll/x;   name=x -->
-<a name="//apple_ref/doc/functionparam/ppScroll/x"></a>
-<code>x</code>
-</dt>
-<dd><p>Returns X scroll value</p></dd>
-<dt>
-<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppScroll/y;   name=y -->
-<a name="//apple_ref/doc/functionparam/ppScroll/y"></a>
-<code>y</code>
-</dt>
-<dd><p>Returns Y scroll value</p></dd>
-</dl>
-</div>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
-<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/ppScroll;name=start --><p>PP_LIVE only
-<!-- headerDoc=discussion;uid=//apple_ref/c/func/ppScroll;name=end --><!-- end discussion -->
-</p>
 <hr class="betweenAPIEntries">
 <!-- headerDoc=func;  uid=//apple_ref/c/func/ppTime;   name=ppTime -->
 <a name="//apple_ref/c/func/ppTime"></a>
@@ -2523,70 +2146,6 @@ function disclosure_triangle(elt) {
 <dd><p>stored by pp, passed to callback functions</p></dd>
 </dl>
 </div>
-<hr class="betweenAPIEntries">
-<!-- headerDoc=func;  uid=//apple_ref/c/func/ppWasButtonPressed;   name=ppWasButtonPressed -->
-<a name="//apple_ref/c/func/ppWasButtonPressed"></a>
-<h3><a name="ppWasButtonPressed">ppWasButtonPressed</a></h3>
-<hr class="afterName">
-<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppWasButtonPressed;name=start --><!-- begin abstract --></p>
-<p>Check if a button was just released
-<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppWasButtonPressed;name=end --></p>
-<div class="declaration_indent">
-<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ppWasButtonPressed;name=start --><!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ppWasButtonPressed" logicalPath="//apple_ref/c/instm/ppWasButtonPressed //apple_ref/c/clm/ppWasButtonPressed //apple_ref/c/intfcm/ppWasButtonPressed //apple_ref/c/intfm/ppWasButtonPressed //apple_ref/c/func/ppWasButtonPressed" target="_top"><span class="function">ppWasButtonPressed</span></a>(
-    <!-- a logicalPath="//apple_ref/c/cl/int //apple_ref/c/tdef/int //apple_ref/c/tag/int //apple_ref/c/struct/int //apple_ref/c/intf/int //apple_ref/doc/anysymbol/int" machineGenerated="true" --><span class="type">int</span><!-- /a --> <span class="param">button</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ppWasButtonPressed;name=end --></pre>
-</div>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
-<div class="param_indent">
-<dl>
-<dt>
-<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppWasButtonPressed/button;   name=button -->
-<a name="//apple_ref/doc/functionparam/ppWasButtonPressed/button"></a>
-<code>button</code>
-</dt>
-<dd><p>Mouse button</p></dd>
-</dl>
-</div>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
-<p><!-- begin return value --></p>
-<p>Returns true if button was released this frame
-
-<!-- end return value --></p>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
-<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/ppWasButtonPressed;name=start --><p>PP_LIVE only
-<!-- headerDoc=discussion;uid=//apple_ref/c/func/ppWasButtonPressed;name=end --><!-- end discussion -->
-</p>
-<hr class="betweenAPIEntries">
-<!-- headerDoc=func;  uid=//apple_ref/c/func/ppWasKeyPressed;   name=ppWasKeyPressed -->
-<a name="//apple_ref/c/func/ppWasKeyPressed"></a>
-<h3><a name="ppWasKeyPressed">ppWasKeyPressed</a></h3>
-<hr class="afterName">
-<p><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppWasKeyPressed;name=start --><!-- begin abstract --></p>
-<p>Check if a key was just released
-<!-- end abstract --><!-- headerDoc=abstract;uid=//apple_ref/c/func/ppWasKeyPressed;name=end --></p>
-<div class="declaration_indent">
-<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/ppWasKeyPressed;name=start --><!-- a logicalPath="//apple_ref/c/cl/bool //apple_ref/c/tdef/bool //apple_ref/c/tag/bool //apple_ref/c/struct/bool //apple_ref/c/intf/bool //apple_ref/doc/anysymbol/bool" machineGenerated="true" --><span class="type">bool</span><!-- /a --> <a machinegenerated="true" href="index.html#//apple_ref/c/func/ppWasKeyPressed" logicalPath="//apple_ref/c/instm/ppWasKeyPressed //apple_ref/c/clm/ppWasKeyPressed //apple_ref/c/intfcm/ppWasKeyPressed //apple_ref/c/intfm/ppWasKeyPressed //apple_ref/c/func/ppWasKeyPressed" target="_top"><span class="function">ppWasKeyPressed</span></a>(
-    <!-- a logicalPath="//apple_ref/c/cl/uint8_t //apple_ref/c/tdef/uint8_t //apple_ref/c/tag/uint8_t //apple_ref/c/struct/uint8_t //apple_ref/c/intf/uint8_t //apple_ref/doc/anysymbol/uint8_t" machineGenerated="true" --><span class="type">uint8_t</span><!-- /a --> <span class="param">key</span>);  <!-- headerDoc=declaration;uid=//apple_ref/c/func/ppWasKeyPressed;name=end --></pre>
-</div>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
-<div class="param_indent">
-<dl>
-<dt>
-<!-- headerDoc=functionparam;  uid=//apple_ref/doc/functionparam/ppWasKeyPressed/key;   name=key -->
-<a name="//apple_ref/doc/functionparam/ppWasKeyPressed/key"></a>
-<code>key</code>
-</dt>
-<dd><p>Keyboard key</p></dd>
-</dl>
-</div>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
-<p><!-- begin return value --></p>
-<p>Returns true if key was released this frame
-
-<!-- end return value --></p>
-<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
-<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/ppWasKeyPressed;name=start --><p>PP_LIVE only
-<!-- headerDoc=discussion;uid=//apple_ref/c/func/ppWasKeyPressed;name=end --><!-- end discussion -->
-</p>
 <hr class="betweenAPIEntries">
 <!-- headerDoc=func;  uid=//apple_ref/c/func/PSet;   name=PSet -->
 <a name="//apple_ref/c/func/PSet"></a>
@@ -3547,7 +3106,7 @@ function disclosure_triangle(elt) {
 <p class="gapBeforeFooter">&nbsp;</p>
 <hr class="afterFooter">
 <div class="hd_copyright_and_timestamp">
-<p class="hd_timestamp">Last Updated: Saturday, November 26, 2022
+<p class="hd_timestamp">Last Updated: Sunday, November 27, 2022
 </p>
 </div>
 </td>

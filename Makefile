@@ -36,7 +36,7 @@ live: game
 	$(CC) pp.c $(LIBS) -DPP_LIVE -o build/pp$(PROGEXT)
 
 game:
-	clang pp.c examples/live.c -shared -fpic $(LIBS) -I. -DPP_LIVE -o build/libpplive.$(LIBEXT)
+	clang pp.c examples/live.c -shared -fpic $(LIBS) -I. -DPP_LIVE_LIBRARY -o build/libpplive.$(LIBEXT)
 
 run: game live
 	./build/pp$(PROGEXT) -p build/libpplive.$(LIBEXT) &

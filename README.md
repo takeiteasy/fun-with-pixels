@@ -34,9 +34,7 @@ int main(int argc, const char *argv[]) {
 
 The easiest way is to drop ```pp.c``` and ```pp.h``` into your project and add the appropriate flags (Mac: ```-framework Cocoa```, Windows: ```-lgdi32``` and Linux: ```-lX11```). Or, run ```make library``` to build a dynamic library.
 
-To build the live-reload app, run ```make all``` or ```make run```. This will build an executable and library in the ```build``` folder and then run the app. Edit ```examples/live.c```, and run ```make``` or ```make game```, and the program will automatically reload the changes. Inspired by [this](https://nullprogram.com/blog/2014/12/23/).
-
-On Windows, there is a simple batch file to build pp as a dll or build a program. Run ```build.bat``` with no arguments to build a dll file, or pass files as arguments to build an application, e.g. ```build.bat .\examples\basic.c```.
+To build the live-reload app, run ```make all``` or ```make run```. This will build an executable and library in the ```build``` folder and then run the app. Edit ```examples/live.c```, and run ```make``` or ```make game```, and the program will automatically reload the changes. Inspired by [this](https://nullprogram.com/blog/2014/12/23/). On Windows, run ```build.bat``` to build the live-reload app, and "rebuild.bat" to rebuild the library.
 
 **NOTE**: The batch file uses the MSVC compiler, so Visual Studio or the [Visual Studio build tools](https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2022) must be installed. See [here](https://learn.microsoft.com/en-us/cpp/build/building-on-the-command-line?view=msvc-170#developer_command_prompt_shortcuts) for more info.
 
@@ -52,7 +50,7 @@ Nothing to see yet
 - [ ] Linux (X11) context
 - [ ] WebAssembly (Emscripten) context
 - [ ] Sixel context
-- [ ] Live coding (~~Mac~~, Windows, Linux)
+- [X] ~~Live coding (Mac, Windows, Linux)~~
 - [X] ~~Add bitmap.h to pp internally~~
 - [ ] Fix bitmap API to fit with rest of the library
 - [ ] Bindings (Ruby, Lua)

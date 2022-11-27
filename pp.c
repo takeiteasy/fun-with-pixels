@@ -54,7 +54,8 @@ bool ppBegin(int w, int h, const char *title, ppFlags flags) {
     ppInternal.random.p1 = 0;
     ppInternal.random.p2 = 10;
 
-    return ppBeginNative(w, h, title, flags);
+    ppInternal.initialized = ppInternal.running = ppBeginNative(w, h, title, flags);
+    return ppInternal.initialized;
 }
 
 #define X(NAME, ARGS) \
@@ -1769,7 +1770,19 @@ bool GenBitmapFBMNoise(Bitmap *b, int w, int h, int offsetX, int offsetY, float 
     return true;
 }
 
-#if defined(PP_LIVE)
+#if defined(PP_LIVE) && !defined(PP_LIVE_LIBRARY)
+#if defined(PP_WINDOWS)
+#include <Windows.h>
+#include <io.h>
+#define F_OK    0
+#define access _access
+#include "getopt.h"
+#ifndef _MSC_VER
+#pragma comment(lib, "Psapi.lib")
+#endif
+#include "dlfcn.h"
+FILETIME writeTime;
+#else
 #include <getopt.h>
 #define _BSD_SOURCE // usleep()
 #include <stdio.h>
@@ -1777,11 +1790,12 @@ bool GenBitmapFBMNoise(Bitmap *b, int w, int h, int offsetX, int offsetY, float 
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dlfcn.h>
+static ino_t handleID;
+#endif
 
 static void *handle = NULL;
-static ino_t handleID;
 static ppState *state = NULL;
-static ppLiveApp *app = NULL;
+static ppApp *app = NULL;
 static struct {
     int width;
     int height;
@@ -1814,37 +1828,48 @@ static void usage(void) {
     puts("\t-u/--usage\tDisplay this message");
 }
 
-static struct ppInputManager {
-    struct {
-        bool buttons[8];
-        struct {
-            int x, y;
-        } Position;
-        struct {
-            float x, y;
-        } Scroll;
-    } Mouse, MousePrev;
-    struct {
-        bool keys[KEY_TICK];
-    } Keyboard, KeyboardPrev;
-    ppMod modifier, modifierPrev;
-    struct {
-        bool focused, closed;
-        struct {
-            int width, height;
-        } Size;
-    } Window, WindowPrev;
-} ppInput;
+#if defined(PP_WINDOWS)
+static FILETIME Win32GetLastWriteTime(char* path) {
+    FILETIME time;
+    WIN32_FILE_ATTRIBUTE_DATA data;
+
+    if (GetFileAttributesEx(path, GetFileExInfoStandard, &data))
+        time = data.ftLastWriteTime;
+
+    return time;
+}
+#endif
 
 static bool ShouldReloadLibrary(void) {
+#if defined(PP_WINDOWS)
+    FILETIME newTime = Win32GetLastWriteTime(Args.path);
+    bool result = CompareFileTime(&newTime, &writeTime);
+    if (result)
+        writeTime = newTime;
+    return result;
+#else
     struct stat attr;
     bool result = !stat(Args.path, &attr) && handleID != attr.st_ino;
     if (result)
         handleID = attr.st_ino;
     return result;
+#endif
 }
 
-static bool LoadLibrary(const char *path) {
+#if defined(PP_WINDOWS)
+char *RemoveExt(char* path) {
+    char *ret = malloc(strlen(path) + 1);
+    if (!ret)
+        return NULL;
+    strcpy(ret, path);
+    char *ext = strrchr(ret, '.');
+    if (ext)
+        *ext = '\0';
+    return ret;
+}
+#endif
+
+static bool ReloadLibrary(const char *path) {
     if (!ShouldReloadLibrary())
         return true;
 
@@ -1854,7 +1879,19 @@ static bool LoadLibrary(const char *path) {
         dlclose(handle);
     }
 
+#if defined(PP_WINDOWS)
+    size_t newPathSize = strlen(path) + 4;
+    char *newPath = malloc(sizeof(char) * newPathSize);
+    char *noExt = RemoveExt(path);
+    sprintf(newPath, "%s.tmp.dll", noExt);
+    CopyFile(path, newPath, 0);
+    handle = dlopen(newPath, RTLD_NOW);
+    free(newPath);
+    free(noExt);
+    if (!handle)
+#else
     if (!(handle = dlopen(path, RTLD_NOW)))
+#endif
         goto BAIL;
     if (!(app = dlsym(handle, "pp")))
         goto BAIL;
@@ -1871,136 +1908,12 @@ BAIL:
     if (handle)
         dlclose(handle);
     handle = NULL;
+#if defined(PP_WINDOWS)
+    memset(&writeTime, 0, sizeof(FILETIME));
+#else
     handleID = 0;
+#endif
     return false;
-}
-
-void ppInputKeyboard(void *userdata, ppKey key, ppMod modifier, bool isDown) {
-    ppInput.Keyboard.keys[(int)key] = isDown;
-    ppInput.modifier = modifier;
-}
-
-void ppInputMouseButton(void *userdata, int button, ppMod modifier, bool isDown) {
-    ppInput.Mouse.buttons[button - 1] = isDown;
-    ppInput.modifier = modifier;
-}
-
-void ppInputMouseMove(void *userdata, int x, int y, float dx, float dy) {
-    ppInput.Mouse.Position.x = x;
-    ppInput.Mouse.Position.y = y;
-}
-
-void ppInputMouseScroll(void *userdata, float dx, float dy, ppMod modifier) {
-    ppInput.Mouse.Scroll.x = dx;
-    ppInput.Mouse.Scroll.y = dy;
-    ppInput.modifier = modifier;
-}
-
-void ppInputFocus(void *userdata, bool isFocused) {
-    ppInput.Window.focused = isFocused;
-}
-
-void ppInputResized(void *userdata, int w, int h) {
-    ppInput.Window.Size.width  = w;
-    ppInput.Window.Size.height = h;
-}
-
-void ppInputClosed(void *userdata) {
-    ppInput.Window.closed = true;
-}
-
-static void ppInitInput(void) {
-    memset(&ppInput.Keyboard, 0, sizeof(ppInput.Keyboard));
-    memset(&ppInput.KeyboardPrev, 0, sizeof(ppInput.Keyboard));
-    memset(&ppInput.Mouse, 0, sizeof(ppInput.Mouse));
-    memset(&ppInput.MousePrev, 0, sizeof(ppInput.Mouse));
-    memset(&ppInput.Window, 0, sizeof(ppInput.Window));
-
-#define X(NAME, ARGS) ppInput##NAME,
-    ppCallbacks(PP_CALLBACKS NULL);
-#undef X
-}
-
-static void ppUpdateInput(void) {
-    memcpy(&ppInput.KeyboardPrev, &ppInput.Keyboard, sizeof(ppInput.Keyboard));
-    memcpy(&ppInput.MousePrev, &ppInput.Mouse, sizeof(ppInput.Mouse));
-    memset(&ppInput.Mouse.Scroll, 0, sizeof(ppInput.Mouse.Scroll));
-    memcpy(&ppInput.WindowPrev, &ppInput.Window, sizeof(ppInput.Window));
-}
-
-bool ppIsKeyDown(uint8_t key) {
-    return ppInput.Keyboard.keys[key];
-}
-
-bool ppIsKeyUp(uint8_t key) {
-    return !ppInput.Keyboard.keys[key];
-}
-
-bool ppWasKeyPressed(uint8_t key) {
-    return ppInput.KeyboardPrev.keys[key] && !ppInput.Keyboard.keys[key];
-}
-
-bool ppAreKeysDown(int n, ...) {
-    va_list keys;
-    va_start(keys, n);
-    bool ret = true;
-    for (int i = 0, k = va_arg(keys, int); i < n; ++i, k = va_arg(keys, int))
-        if (!ppInput.Keyboard.keys[k]) {
-            ret = false;
-            break;
-        }
-    va_end(keys);
-    return ret;
-}
-
-bool ppAnyKeysDown(int n, ...) {
-    va_list keys;
-    va_start(keys, n);
-    bool ret = false;
-    for (int i = 0, k = va_arg(keys, int); i < n; ++i, k = va_arg(keys, int))
-        if (ppInput.Keyboard.keys[k]) {
-            ret = true;
-            break;
-        }
-    va_end(keys);
-    return ret;
-}
-
-bool ppIsButtonDown(int button) {
-    return ppInput.Mouse.buttons[button - 1];
-}
-
-bool ppIsButtonUp(int button) {
-    return !ppInput.Mouse.buttons[button - 1];
-}
-
-bool ppWasButtonPressed(int button) {
-    return ppInput.MousePrev.buttons[button - 1] && !ppInput.Mouse.buttons[button - 1];
-}
-
-void ppScroll(float *x, float *y) {
-    if (x)
-        *x = ppInput.Mouse.Scroll.x;
-    if (y)
-        *y = ppInput.Mouse.Scroll.y;
-}
-
-void ppMousePosition(int *x, int *y) {
-    if (x)
-        *x = ppInput.Mouse.Position.x;
-    if (y)
-        *y = ppInput.Mouse.Position.y;
-}
-
-void ppMouseDelta(int *x, int *y) {
-    if (x)
-        *x = ppInput.Mouse.Position.x - ppInput.MousePrev.Position.x;
-    if (y)
-        *y = ppInput.Mouse.Position.y - ppInput.MousePrev.Position.y;
-}
-
-bool ppModifier(uint32_t modifier) {
-    return ppInput.modifier == modifier;
 }
 
 int main(int argc, char *argv[]) {
@@ -2049,13 +1962,16 @@ int main(int argc, char *argv[]) {
         usage();
         return EXIT_FAILURE;
     } else {
+#if !defined(PP_WINDOWS)
         if (Args.path[0] != '.' || Args.path[1] != '/') {
             char *tmp = malloc(strlen(Args.path) + 2 * sizeof(char));
             sprintf(tmp, "./%s", Args.path);
             Args.path = tmp;
         } else
             Args.path = strdup(Args.path);
+#endif
     }
+
     if (access(Args.path, F_OK)) {
         printf("ERROR: No file found at path \"%s\"\n", Args.path);
         return EXIT_FAILURE;
@@ -2068,10 +1984,9 @@ int main(int argc, char *argv[]) {
     if (!Args.clearColor)
         Args.clearColor = Black;
     ppBegin(Args.width, Args.height, Args.title ? Args.title : "pp", Args.flags);
-    ppInitInput();
     InitBitmap(&pbo, Args.width, Args.height);
 
-    if (!LoadLibrary(Args.path))
+    if (!ReloadLibrary(Args.path))
         return EXIT_FAILURE;
 
     double lastTime = ppTime();
@@ -2080,19 +1995,20 @@ int main(int argc, char *argv[]) {
         double delta = now - lastTime;
         lastTime = now;
 
-        if (!LoadLibrary(Args.path))
+        if (!ReloadLibrary(Args.path))
             break;
         if (!app->tick(state, &pbo, delta))
             break;
         ppFlush(&pbo);
-        ppUpdateInput();
     }
 
     app->deinit(state);
     if (handle)
         dlclose(handle);
     DestroyBitmap(&pbo);
+#if !defined(PP_WINDOWS)
     free(Args.path);
+#endif
     ppEnd();
     return EXIT_SUCCESS;
 }
@@ -2960,7 +2876,7 @@ static bool ppBeginNative(int w, int h, const char *title, ppFlags flags) {
             rect.bottom += (rect.bottom - height);
             rect.top = 0;
         }
-    } else if (flags & ~ppFullscreen) {
+    } else {
         rect.right = w;
         rect.bottom = h;
 

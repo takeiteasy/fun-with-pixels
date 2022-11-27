@@ -64,13 +64,6 @@ typedef enum bool { false = 0, true = !false } bool;
 #define PP_LINUX
 #endif
 
-#if defined(PP_LIVE)
-#define PP_NO_EXPORT
-#if defined(PP_EMSCRIPTEN)
-#error Live reload is not supported for Emscripten
-#endif
-#endif
-
 #if defined(PP_WINDOWS) && !defined(PP_NO_EXPORT)
 #define EXPORT __declspec(dllexport)
 #else
@@ -798,7 +791,7 @@ EXPORT bool GenBitmapWhiteNoise(Bitmap *b, int w, int h, float factor);
  */
 EXPORT bool GenBitmapFBMNoise(Bitmap *b, int w, int h, int offsetX, int offsetY, float scale, float lacunarity, float gain, int octaves);
 
-#if defined(PP_LIVE)
+#if defined(PP_LIVE) || defined(PP_LIVE_LIBRARY)
 typedef struct ppState ppState;
 
 typedef struct {
@@ -807,111 +800,11 @@ typedef struct {
     void(*reload)(ppState*);
     void(*unload)(ppState*);
     bool(*tick)(ppState*, Bitmap*, double);
-} ppLiveApp;
+} ppApp;
 
-extern const ppLiveApp pp;
-
-#include <stdarg.h>
-
-/*!
- * @function ppIsKeyDown
- * @abstract Check if a key is down
- * @param key Keyboard key
- * @return Returns true if key is down
- * @discussion PP_LIVE only
- */
-bool ppIsKeyDown(uint8_t key);
-/*!
- * @function ppIsKeyUp
- * @abstract Check if a key is up
- * @param key Keyboard key
- * @return Returns true if key is up
- * @discussion PP_LIVE only
- */
-bool ppIsKeyUp(uint8_t key);
-/*!
- * @function ppWasKeyPressed
- * @abstract Check if a key was just released
- * @param key Keyboard key
- * @return Returns true if key was released this frame
- * @discussion PP_LIVE only
- */
-bool ppWasKeyPressed(uint8_t key);
-/*!
- * @function ppAreKeysDown
- * @abstract Check if multiple keys are all down
- * @param n Number of keys
- * @param ... Keyboard keys
- * @return Returns true is ALL keys are down
- * @discussion PP_LIVE only
- */
-bool ppAreKeysDown(int n, ...);
-/*!
- * @function ppAnyKeysDown
- * @abstract Check if any keys are down
- * @param n Number of keys
- * @param ... Keyboard keys
- * @return Returns true if any of the keys are down, false if none of the keys are pressed
- * @discussion PP_LIVE only
- */
-bool ppAnyKeysDown(int n, ...);
-/*!
- * @function ppIsButtonDown
- * @abstract Check if mouse button is down
- * @param button Mouse button
- * @return Returns true if mouse button is down
- * @discussion PP_LIVE only
- */
-bool ppIsButtonDown(int button);
-/*!
- * @function ppIsButtonUp
- * @abstract Check if mouse button is up
- * @param button Mouse button
- * @return Returns true if mouse button is up
- * @discussion PP_LIVE only
- */
-bool ppIsButtonUp(int button);
-/*!
- * @function ppWasButtonPressed
- * @abstract Check if a button was just released
- * @param button Mouse button
- * @return Returns true if button was released this frame
- * @discussion PP_LIVE only
- */
-bool ppWasButtonPressed(int button);
-/*!
- * @function ppScroll
- * @abstract Get scroll wheel delta
- * @param x Returns X scroll value
- * @param y Returns Y scroll value
- * @discussion PP_LIVE only
- */
-void ppScroll(float *x, float *y);
-/*!
- * @function ppMousePosition
- * @abstract Get cursor position
- * @param x Returns X scroll value
- * @param y Returns Y scroll value
- * @discussion PP_LIVE only
- */
-void ppMousePosition(int *x, int *y);
-/*!
- * @function ppMouseDelta
- * @abstract Get mouse movement delta
- * @param x Returns X scroll value
- * @param y Returns Y scroll value
- * @discussion PP_LIVE only
- */
-void ppMouseDelta(int *x, int *y);
-/*!
- * @function ppModifier
- * @abstract Check if modifier flags match
- * @param modifier Flags to check
- * @return Returns true if flags match
- * @discussion PP_LIVE only
- */
-bool ppModifier(uint32_t modifier);
-
+#ifndef _MSC_VER
+extern const ppApp pp;
+#endif
 #endif
 
 #if defined(__cplusplus)
