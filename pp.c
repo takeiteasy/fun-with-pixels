@@ -3099,6 +3099,7 @@ static struct {
     Atom delete;
     GC gc;
     XImage *img, *scaler;
+    double timestamp;
 } ppLinuxInternal = {0};
 
 struct Hints {
@@ -3116,6 +3117,10 @@ static bool ppBeginNative(int w, int h, const char *title, ppFlags flags) {
     ppLinuxInternal.screen = DefaultScreen(ppLinuxInternal.display);
     ppLinuxInternal.scaler = NULL;
     ppLinuxInternal.resized.buf = NULL;
+
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    ppLinuxInternal.timestamp = (double)tv.tv_sec + (tv.tv_usec / 1000000.0);
 
     int screen_w = DisplayWidth(ppLinuxInternal.display, ppLinuxInternal.screen);
     int screen_h = DisplayHeight(ppLinuxInternal.display, ppLinuxInternal.screen);
@@ -3279,7 +3284,12 @@ void ppEnd(void) {
 }
 
 double ppTime(void) {
-    return 0.f;
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    double now = (double)tv.tv_sec + (tv.tv_usec / 1000000.0);
+    double elapsed = now - ppLinuxInternal.timestamp;
+    ppLinuxInternal.timestamp = now;
+    return elapsed;
 }
 #else
 #error This operating system is unsupported by pp! Sorry!
