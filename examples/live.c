@@ -25,7 +25,7 @@ static void deinit(ppState *state) {
 
 // Called whenever the app is modified and reloaded
 static void reload(ppState *state) {
-    state->clearColor = RGB(ppRandomInt(256), ppRandomInt(256), ppRandomInt(256));
+    state->clearColor = RGB(rand() % 256, rand() % 256, rand() % 256);
 }
 
 // Called just before the app is reloaded
@@ -36,7 +36,7 @@ static void unload(ppState *state) {
 static bool tick(ppState *state, Bitmap *pbo, double delta) {
     FillBitmap(pbo, state->clearColor);
     DrawString(pbo, "Rebuild to change the background color!", 1, 1, White);
-    DrawRect(pbo, 50, 50, 50, 50, White, true);
+    DrawRect(pbo, 50, 50, 50, 50, Red, true);
     return true;
 }
 

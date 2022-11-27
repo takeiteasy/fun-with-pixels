@@ -46,6 +46,9 @@ typedef enum bool { false = 0, true = !false } bool;
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
+#include <stdint.h>
+#include <limits.h>
+#include <assert.h>
 #include <time.h>
 #define _USE_MATH_DEFINES
 #include <math.h>

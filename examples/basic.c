@@ -49,19 +49,12 @@ int main(int argc, const char *argv[]) {
     Bitmap pbo;
     InitBitmap(&pbo, WIDTH, HEIGHT);
     
-    // ppTime returns elapsed time of program (high-res timer)
-    double lastTime = ppTime();
     // ppPoll collects all window events and will return true while window is open
     while (ppPoll()) {
-        // Measure delta time between frames
-        double now = ppTime();
-        double delta = now - lastTime;
-        lastTime = now;
-        
         // Fill framebuffer bitmap solid red
         FillBitmap(&pbo, Red);
         // Draw a string to framebuffer using in-built debug font
-        DrawStringFormat(&pbo, 0, 0, White, "Frame Delta: %f", delta);
+        DrawStringFormat(&pbo, 0, 0, White, "Frame Delta: %f", ppTime());
         // Draw a blue rectangle to framebuffer
         DrawRect(&pbo, 50, 50, 50, 50, Blue, true);
         // Draw framebuffer to screen
