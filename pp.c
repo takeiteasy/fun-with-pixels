@@ -41,11 +41,7 @@ static struct {
     Bitmap *pbo;
 } ppInternal = {0};
 
-static bool ppBeginNative(int w, int h, const char *title, ppFlags flags);
-bool ppBegin(int w, int h, const char *title, ppFlags flags) {
-    if (ppInternal.initialized)
-        return false;
-
+static void InitRandom(void) {
     unsigned int seed = (unsigned int)clock();
     for (unsigned int i = 0; i < 17; i++) {
         seed = seed * 2891336453 + 1;
@@ -53,7 +49,14 @@ bool ppBegin(int w, int h, const char *title, ppFlags flags) {
     }
     ppInternal.random.p1 = 0;
     ppInternal.random.p2 = 10;
+}
 
+#if !defined(PP_LIVE_LIBRARY)
+static bool ppBeginNative(int w, int h, const char *title, ppFlags flags);
+bool ppBegin(int w, int h, const char *title, ppFlags flags) {
+    if (ppInternal.initialized)
+        return false;
+    InitRandom();
     ppInternal.initialized = ppInternal.running = ppBeginNative(w, h, title, flags);
     return ppInternal.initialized;
 }
@@ -87,12 +90,17 @@ void ppUserdata(void *userdata) {
 bool ppRunning() {
     return ppInternal.running;
 }
+#endif
 
 static unsigned int rotl(unsigned int n, unsigned int r) {
     return (n << r) | (n >> (32 - r));
 }
 
 unsigned int ppRandomBits(void) {
+#if defined(PP_LIVE_LIBRARY)
+    if (!ppInternal.random.p1 && !ppInternal.random.p2)
+        InitRandom();
+#endif
     unsigned int result = ppInternal.random.buffer[ppInternal.random.p1] = rotl(ppInternal.random.buffer[ppInternal.random.p2], 13) + rotl(ppInternal.random.buffer[ppInternal.random.p1], 9);
 
     if (--ppInternal.random.p1 < 0)
@@ -2009,6 +2017,7 @@ int main(int argc, char *argv[]) {
 }
 #endif
 
+#if !defined(PP_LIVE_LIBRARY)
 #if defined(PP_SIXEL)
 #error Sixel is not yet implemented!
 #elif defined(PP_EMSCRIPTEN)
@@ -3536,4 +3545,5 @@ double ppTime(void) {
 }
 #else
 #error This operating system is unsupported by pp! Sorry!
+#endif
 #endif

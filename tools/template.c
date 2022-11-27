@@ -28,6 +28,7 @@
 #include "pp.h"
 {{src/ppCommon.c}}
 
+#if !defined(PP_LIVE_LIBRARY)
 #if defined(PP_SIXEL)
 {{src/ppSixel.c}}
 #elif defined(PP_EMSCRIPTEN)
@@ -40,4 +41,5 @@
 {{src/ppLinux.c}}
 #else
 #error This operating system is unsupported by pp! Sorry!
+#endif
 #endif

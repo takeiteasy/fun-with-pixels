@@ -25,7 +25,7 @@ static void deinit(ppState *state) {
 
 // Called whenever the app is modified and reloaded
 static void reload(ppState *state) {
-    state->clearColor = RGB(rand() % 256, rand() % 256, rand() % 256);
+    state->clearColor = RGB(ppRandomInt(256), ppRandomInt(256), ppRandomInt(256));
 }
 
 // Called just before the app is reloaded

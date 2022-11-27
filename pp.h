@@ -147,6 +147,7 @@ typedef enum {
     X(Focus,        (void*, bool))                   \
     X(Closed,       (void*))
 
+#if !defined(PP_LIVE_LIBRARY)
 /*!
  * @function ppBegin
  * @abstract pp initialization function
@@ -218,6 +219,7 @@ EXPORT bool ppRunning(void);
  * @return Elapsed program time in milliseconds
  */
 EXPORT double ppTime(void);
+#endif
 
 EXPORT unsigned int ppRandomBits(void);
 EXPORT float ppRandomFloat(void);
