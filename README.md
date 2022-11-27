@@ -40,7 +40,9 @@ To build the live-reload app, run ```make all``` or ```make run```. This will bu
 
 ## Gallery
 
-Nothing to see yet
+<p align="center">
+    <img src="https://github.com/takeiteasy/pp/blob/master/live.png?raw=true">
+</p>
 
 ## TODO
 
@@ -51,7 +53,8 @@ Nothing to see yet
 - [ ] WebAssembly (Emscripten) context (WIP)
 - [X] ~~Live coding (Mac, Windows, Linux)~~
 - [X] ~~Add bitmap.h to pp internally~~
-- [ ] Fix bitmap API to fit with rest of the library
+- [ ] Input handling for live editing
+- [ ] Update bitmap API
 - [ ] Bindings (Ruby, Lua)
 
 ## License
