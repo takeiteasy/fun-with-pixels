@@ -2683,7 +2683,7 @@ static uint32_t convertMacMod(NSUInteger modifierFlags) {
     if (modifierFlags & NSEventModifierFlagCommand)
         mods |= KEY_MOD_SUPER;
     if (modifierFlags & NSEventModifierFlagCapsLock)
-        mods |= KEY_MOD_CAPS;
+        mods |= KEY_MOD_CAPS_LOCK;
     return mods;
 }
 
@@ -2802,6 +2802,7 @@ static struct {
     HDC hdc;
     BITMAPINFO *bmp;
     TRACKMOUSEEVENT tme;
+    bool tmeRefresh;
     int width, height;
     int cursorLastX, cursorLastY;
     LARGE_INTEGER timestamp;
@@ -2811,17 +2812,17 @@ static int WindowsModState(void) {
     int mods = 0;
 
     if (GetKeyState(VK_SHIFT) & 0x8000)
-        mods |= KB_MOD_SHIFT;
+        mods |= KEY_MOD_SHIFT;
     if (GetKeyState(VK_CONTROL) & 0x8000)
-        mods |= KB_MOD_CONTROL;
+        mods |= KEY_MOD_CONTROL;
     if (GetKeyState(VK_MENU) & 0x8000)
-        mods |= KB_MOD_ALT;
+        mods |= KEY_MOD_ALT;
     if ((GetKeyState(VK_LWIN) | GetKeyState(VK_RWIN)) & 0x8000)
-        mods |= KB_MOD_SUPER;
+        mods |= KEY_MOD_SUPER;
     if (GetKeyState(VK_CAPITAL) & 1)
-        mods |= KB_MOD_CAPS_LOCK;
+        mods |= KEY_MOD_CAPS_LOCK;
     if (GetKeyState(VK_NUMLOCK) & 1)
-        mods |= KB_MOD_NUM_LOCK;
+        mods |= KEY_MOD_NUM_LOCK;
 
     return mods;
 }
@@ -2906,7 +2907,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
             ppCallCallback(MouseScroll, -((SHORT)HIWORD(wParam) / (float)WHEEL_DELTA), 0., WindowsModState());
             break;
         case WM_MOUSEMOVE: {
-            if (ppWinInternal.tme) {
+            if (ppWinInternal.tmeRefresh) {
                 ppWinInternal.tme.cbSize = sizeof(ppWinInternal.tme);
                 ppWinInternal.tme.hwndTrack = ppWinInternal.hwnd;
                 ppWinInternal.tme.dwFlags = TME_HOVER | TME_LEAVE;
@@ -2915,11 +2916,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
             }
             int cx = ((int)(short)LOWORD(lParam));
             int cy = ((int)(short)HIWORD(lParam));
-            CBCALL(mouse_move_callback, cx, cy, cx - ppWinInternal.cursorLastX, cy - ppWinInternal.cursorLastY);
+            ppCallCallback(MouseMove, cx, cy, cx - ppWinInternal.cursorLastX, cy - ppWinInternal.cursorLastY);
             ppWinInternal.cursorLastX = cx;
             ppWinInternal.cursorLastY = cy;
             break;
         }
+        case WM_MOUSEHOVER:
+            ppWinInternal.tmeRefresh = true;
+            break;
+        case WM_MOUSELEAVE:
+            ppWinInternal.tmeRefresh = false;
+            break;
         case WM_SETFOCUS:
             ppCallCallback(Focus, true);
             break;
@@ -3069,8 +3076,8 @@ double ppTime(void) {
     LARGE_INTEGER cnt, freq;
     QueryPerformanceCounter(&cnt);
     QueryPerformanceFrequency(&freq);
-    ULONGLONG diff = cnt.QuadPart - prev.QuadPart;
-    prev = cnt;
+    ULONGLONG diff = cnt.QuadPart - ppWinInternal.timestamp.QuadPart;
+    ppWinInternal.timestamp = cnt;
     return (double)(diff / (double)freq.QuadPart);
 }
 #elif defined(PP_LINUX)

@@ -122,17 +122,17 @@ typedef enum {
  * @constant KEY_MOD_CONTROL Control key
  * @constant KEY_MOD_ALT Alt key
  * @constant KEY_MOD_SUPER 'Super' key (Windows key)
- * @constant KEY_MOD_CAPS Caps-lock key
- * @constant KEY_MOD_LOCK Num-lock key
+ * @constant KEY_MOD_CAPS_LOCK Caps-lock key
+ * @constant KEY_MOD_NUM_LOCK Num-lock key
  * @discussion Modifier flags will be combined, so use bitwise operators for checks, e.g. flags & KEY_MOD_SHIFT
  */
 typedef enum {
-    KEY_MOD_SHIFT   = 1 << 0,
-    KEY_MOD_CONTROL = 1 << 1,
-    KEY_MOD_ALT     = 1 << 2,
-    KEY_MOD_SUPER   = 1 << 3,
-    KEY_MOD_CAPS    = 1 << 4,
-    KEY_MOD_LOCK    = 1 << 5
+    KEY_MOD_SHIFT     = 1 << 0,
+    KEY_MOD_CONTROL   = 1 << 1,
+    KEY_MOD_ALT       = 1 << 2,
+    KEY_MOD_SUPER     = 1 << 3,
+    KEY_MOD_CAPS_LOCK = 1 << 4,
+    KEY_MOD_NUM_LOCK  = 1 << 5
 } ppMod;
 
 #define PP_CALLBACKS                                 \
