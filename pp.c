@@ -2754,7 +2754,7 @@ void ppEnd(void) {
 double ppTime(void) {
     uint64_t now = mach_absolute_time();
     double elapsed = (double)(now - ppMacInternal.timestamp) * ppMacInternal.info.numer / (ppMacInternal.info.denom * 1000000000.0);
-    timestamp = now;
+    ppMacInternal.timestamp = now;
     return elapsed;
 }
 #elif defined(PP_WINDOWS)
@@ -3081,7 +3081,154 @@ double ppTime(void) {
     return (double)(diff / (double)freq.QuadPart);
 }
 #elif defined(PP_LINUX)
-#error Linux is not yet implemented!
+#include <X11/X.h>
+#include <X11/Xlib.h>
+#include <X11/Xlocale.h>
+#include <X11/XKBlib.h>
+#include <X11/Xutil.h>
+#include <X11/keysymdef.h>
+#include <X11/keysym.h>
+#include <X11/Xatom.h>
+
+static struct {
+    Display *display;
+    Window root, window;
+    int screen;
+    int width, height;
+    Atom delete;
+    GC gc;
+    XImage *img;
+} ppLinuxInternal = {0};
+
+struct Hints {
+    unsigned long flags;
+    unsigned long functions;
+    unsigned long decorations;
+    long input_mode;
+    unsigned long status;
+};
+
+static bool ppBeginNative(int w, int h, const char *title, ppFlags flags) {
+    if (!(ppLinuxInternal.display = XOpenDisplay(NULL)))
+        return false;
+    ppLinuxInternal.root   = DefaultRootWindow(ppLinuxInternal.display);
+    ppLinuxInternal.screen = DefaultScreen(ppLinuxInternal.display);
+
+    int screen_w = DisplayWidth(ppLinuxInternal.display, ppLinuxInternal.screen);
+    int screen_h = DisplayHeight(ppLinuxInternal.display, ppLinuxInternal.screen);
+
+    if (flags & ppFullscreen)
+        flags = ppFullscreen | ppBorderless;
+
+    int x = 0, y = 0;
+    if (flags & ppFullscreen || flags & ppFullscreenDesktop) {
+        w = screen_w;
+        h = screen_h;
+    } else {
+        x = screen_w / 2 - w / 2;
+        y = screen_h / 2 - h / 2;
+    }
+
+    Visual *visual = DefaultVisual(ppLinuxInternal.display, ppLinuxInternal.screen);
+    int format_c = 0;
+    XPixmapFormatValues* formats = XListPixmapFormats(ppLinuxInternal.display, &format_c);
+    int depth = DefaultDepth(ppLinuxInternal.display, ppLinuxInternal.screen);
+    int depth_c;
+    for (int i = 0; i < format_c; ++i)
+        if (depth == formats[i].depth) {
+            depth_c = formats[i].bits_per_pixel;
+            break;
+        }
+    XFree(formats);
+    if (depth_c != 32)
+        return false;
+
+    XSetWindowAttributes swa;
+    swa.override_redirect = True;
+    swa.border_pixel = BlackPixel(ppLinuxInternal.display, ppLinuxInternal.screen);
+    swa.background_pixel = BlackPixel(ppLinuxInternal.display, ppLinuxInternal.screen);
+    swa.backing_store = NotUseful;
+    if (!(ppLinuxInternal.window = XCreateWindow(ppLinuxInternal.display, ppLinuxInternal.root, x, y, w, h, 0, depth, InputOutput, visual, CWBackPixel | CWBorderPixel | CWBackingStore, &swa)))
+        return false;
+    ppLinuxInternal.width = w;
+    ppLinuxInternal.height = h;
+
+    ppLinuxInternal.delete = XInternAtom(ppLinuxInternal.display, "WM_DELETE_WINDOW", False);
+    XSetWMProtocols(ppLinuxInternal.display, ppLinuxInternal.window, &ppLinuxInternal.delete, 1);
+
+    XSelectInput(ppLinuxInternal.display, ppLinuxInternal.window, StructureNotifyMask | KeyPressMask | KeyReleaseMask | PointerMotionMask | ButtonPressMask | ButtonReleaseMask | ExposureMask | FocusChangeMask | EnterWindowMask | LeaveWindowMask);
+    XStoreName(ppLinuxInternal.display, ppLinuxInternal.window, title);
+
+    if (flags & ppFullscreen) {
+        Atom p = XInternAtom(ppLinuxInternal.display, "_NET_WM_STATE_FULLSCREEN", True);
+        XChangeProperty(ppLinuxInternal.display, ppLinuxInternal.window, XInternAtom(ppLinuxInternal.display, "_NET_WM_STATE", True), XA_ATOM, 32, PropModeReplace, (unsigned char*)&p, 1);
+    }
+    if (flags & ppBorderless) {
+        struct Hints hints;
+        hints.flags = 2;
+        hints.decorations = 0;
+        Atom p = XInternAtom(ppLinuxInternal.display, "_MOTIF_WM_HINTS", True);
+        XChangeProperty(ppLinuxInternal.display, ppLinuxInternal.window, p, p, 32, PropModeReplace, (unsigned char*)&hints, 5);
+    }
+
+    if (flags & ppAlwaysOnTop) {
+        Atom p = XInternAtom(ppLinuxInternal.display, "_NET_WM_STATE_ABOVE", False);
+        XChangeProperty(ppLinuxInternal.display, ppLinuxInternal.window, XInternAtom(ppLinuxInternal.display, "_NET_WM_STATE", False), XA_ATOM, 32, PropModeReplace, (unsigned char *)&p, 1);
+    }
+
+    XSizeHints hints;
+    hints.flags = PPosition | PMinSize | PMaxSize;
+    hints.x = 0;
+    hints.y = 0;
+    if (flags & ppResizable) {
+        hints.min_width = 0;
+        hints.min_height = 0;
+        hints.max_width = screen_w;
+        hints.max_height = screen_h;
+    } else {
+        hints.min_width = w;
+        hints.min_height = h;
+        hints.max_width = w;
+        hints.max_height = h;
+    }
+    XSetWMNormalHints(ppLinuxInternal.display, ppLinuxInternal.window, &hints);
+    XClearWindow(ppLinuxInternal.display, ppLinuxInternal.window);
+    XMapRaised(ppLinuxInternal.display, ppLinuxInternal.window);
+    XFlush(ppLinuxInternal.display);
+    ppLinuxInternal.gc = DefaultGC(ppLinuxInternal.display, ppLinuxInternal.screen);
+    ppLinuxInternal.img = XCreateImage(ppLinuxInternal.display, CopyFromParent, depth, ZPixmap, 0, NULL, w, h, 32, w * 4);
+
+    ppInternal.initialized = ppInternal.running = true;
+    return true;
+}
+
+bool ppPoll(void) {
+    XEvent e;
+    while (XPending(ppLinuxInternal.display)) {
+        XNextEvent(ppLinuxInternal.display, &e);
+    }
+    return ppInternal.running;
+}
+
+void ppFlush(Bitmap *bitmap) {
+    if (!bitmap || !bitmap->buf || !bitmap->w || !bitmap->h) {
+        ppInternal.pbo = NULL;
+        return;
+    }
+    ppInternal.pbo = bitmap;
+    ppLinuxInternal.img->data = (char*)ppInternal.pbo->buf;
+    XPutImage(ppLinuxInternal.display, ppLinuxInternal.window, ppLinuxInternal.gc, ppLinuxInternal.img, 0, 0, 0, 0, ppLinuxInternal.width, ppLinuxInternal.height);
+    XFlush(ppLinuxInternal.display);
+}
+
+void ppEnd(void) {
+    if (!ppInternal.initialized)
+        return;
+}
+
+double ppTime(void) {
+    return 0.f;
+}
 #else
 #error This operating system is unsupported by pp! Sorry!
 #endif
