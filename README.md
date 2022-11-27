@@ -46,7 +46,7 @@ Nothing to see yet
 
 - [X] ~~Documentation~~
 - [X] ~~Mac context~~
-- [ ] Windows context (WIP)
+- [X] ~~Windows context~~
 - [ ] Linux (X11) context
 - [ ] WebAssembly (Emscripten) context
 - [ ] Sixel context

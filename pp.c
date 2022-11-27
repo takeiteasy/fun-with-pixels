@@ -2181,6 +2181,7 @@ typedef enum {
 static struct {
     id window;
     mach_timebase_info_data_t info;
+    uint64_t timestamp;
     bool mouseInWindow;
 } ppMacInternal = {0};
 
@@ -2233,6 +2234,7 @@ static void drawRect(id self, SEL _self, CGRect rect) {
 
 static bool ppBeginNative(int w, int h, const char *title, ppFlags flags) {
     mach_timebase_info(&ppMacInternal.info);
+    ppMacInternal.timestamp = mach_absolute_time();
 
     AutoreleasePool({
         ObjC(id)(class(NSApplication), sel(sharedApplication));
@@ -2750,7 +2752,10 @@ void ppEnd(void) {
 }
 
 double ppTime(void) {
-    return (mach_absolute_time() * ppMacInternal.info.numer) / (ppMacInternal.info.denom  * 1000000000.0);
+    uint64_t now = mach_absolute_time();
+    double elapsed = (double)(now - ppMacInternal.timestamp) * ppMacInternal.info.numer / (ppMacInternal.info.denom * 1000000000.0);
+    timestamp = now;
+    return elapsed;
 }
 #elif defined(PP_WINDOWS)
 #define NOMINMAX
@@ -2798,7 +2803,28 @@ static struct {
     BITMAPINFO *bmp;
     TRACKMOUSEEVENT tme;
     int width, height;
+    int cursorLastX, cursorLastY;
+    LARGE_INTEGER timestamp;
 } ppWinInternal = {0};
+
+static int WindowsModState(void) {
+    int mods = 0;
+
+    if (GetKeyState(VK_SHIFT) & 0x8000)
+        mods |= KB_MOD_SHIFT;
+    if (GetKeyState(VK_CONTROL) & 0x8000)
+        mods |= KB_MOD_CONTROL;
+    if (GetKeyState(VK_MENU) & 0x8000)
+        mods |= KB_MOD_ALT;
+    if ((GetKeyState(VK_LWIN) | GetKeyState(VK_RWIN)) & 0x8000)
+        mods |= KB_MOD_SUPER;
+    if (GetKeyState(VK_CAPITAL) & 1)
+        mods |= KB_MOD_CAPS_LOCK;
+    if (GetKeyState(VK_NUMLOCK) & 1)
+        mods |= KB_MOD_NUM_LOCK;
+
+    return mods;
+}
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
     if (!ppInternal.running || !ppInternal.initialized)
@@ -2824,6 +2850,82 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
             ppWinInternal.height = HIWORD(lParam);
             ppCallCallback(Resized, ppWinInternal.width, ppWinInternal.height);
             break;
+        case WM_MENUCHAR:
+            // Disable beep on Alt+Enter
+            if (LOWORD(wParam) == VK_RETURN)
+                return MNC_CLOSE << 16;
+            return DefWindowProcW(hWnd, message, wParam, lParam);
+        case WM_KEYDOWN:
+        case WM_SYSKEYDOWN:
+        case WM_KEYUP:
+        case WM_SYSKEYUP:
+            ppCallCallback(Keyboard, wParam, WindowsModState(), !((lParam >> 31) & 1));
+            break;
+        case WM_LBUTTONUP:
+        case WM_RBUTTONUP:
+        case WM_MBUTTONUP:
+        case WM_XBUTTONUP:
+        case WM_LBUTTONDOWN:
+        case WM_LBUTTONDBLCLK:
+        case WM_RBUTTONDOWN:
+        case WM_RBUTTONDBLCLK:
+        case WM_MBUTTONDOWN:
+        case WM_MBUTTONDBLCLK:
+        case WM_XBUTTONDOWN:
+        case WM_XBUTTONDBLCLK: {
+            int button = 0;
+            bool action = false;
+            switch (message) {
+                case WM_LBUTTONDOWN:
+                    action = true;
+                case WM_LBUTTONUP:
+                    button = 1;
+                    break;
+                case WM_RBUTTONDOWN:
+                    action = true;
+                case WM_RBUTTONUP:
+                    button = 2;
+                    break;
+                case WM_MBUTTONDOWN:
+                    action = true;
+                case WM_MBUTTONUP:
+                    button = 3;
+                    break;
+                default:
+                    button = (GET_XBUTTON_WPARAM(wParam) == XBUTTON1 ? 5 : 6);
+                    if (message == WM_XBUTTONDOWN)
+                        action = 1;
+            }
+            ppCallCallback(MouseButton, button, WindowsModState(), action);
+            break;
+        }
+        case WM_MOUSEWHEEL:
+            ppCallCallback(MouseScroll, 0.f, (SHORT)HIWORD(wParam) / (float)WHEEL_DELTA, WindowsModState());
+            break;
+        case WM_MOUSEHWHEEL:
+            ppCallCallback(MouseScroll, -((SHORT)HIWORD(wParam) / (float)WHEEL_DELTA), 0., WindowsModState());
+            break;
+        case WM_MOUSEMOVE: {
+            if (ppWinInternal.tme) {
+                ppWinInternal.tme.cbSize = sizeof(ppWinInternal.tme);
+                ppWinInternal.tme.hwndTrack = ppWinInternal.hwnd;
+                ppWinInternal.tme.dwFlags = TME_HOVER | TME_LEAVE;
+                ppWinInternal.tme.dwHoverTime = 1;
+                TrackMouseEvent(&ppWinInternal.tme);
+            }
+            int cx = ((int)(short)LOWORD(lParam));
+            int cy = ((int)(short)HIWORD(lParam));
+            CBCALL(mouse_move_callback, cx, cy, cx - ppWinInternal.cursorLastX, cy - ppWinInternal.cursorLastY);
+            ppWinInternal.cursorLastX = cx;
+            ppWinInternal.cursorLastY = cy;
+            break;
+        }
+        case WM_SETFOCUS:
+            ppCallCallback(Focus, true);
+            break;
+        case WM_KILLFOCUS:
+            ppCallCallback(Focus, false);
+            break;
         default:
             goto DEFAULT_PROC;
     }
@@ -2834,6 +2936,8 @@ DEFAULT_PROC:
 }
 
 static bool ppBeginNative(int w, int h, const char *title, ppFlags flags) {
+    QueryPerformanceCounter(&ppWinInternal.timestamp);
+
     RECT rect = {0};
     long windowFlags = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
     if (flags & ppFullscreen) {
@@ -2962,7 +3066,12 @@ void ppEnd(void) {
 }
 
 double ppTime(void) {
-    return .0;
+    LARGE_INTEGER cnt, freq;
+    QueryPerformanceCounter(&cnt);
+    QueryPerformanceFrequency(&freq);
+    ULONGLONG diff = cnt.QuadPart - prev.QuadPart;
+    prev = cnt;
+    return (double)(diff / (double)freq.QuadPart);
 }
 #elif defined(PP_LINUX)
 #error Linux is not yet implemented!
