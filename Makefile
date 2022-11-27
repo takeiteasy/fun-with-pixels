@@ -46,6 +46,8 @@ kill:
 
 web:
 	emcc pp.c examples/basic.c -I. -o build/pp.html
+
+webrun: web
 	emrun build/pp.html
 
-.PHONY: default all run game live library rebuild kill web
+.PHONY: default all run game live library rebuild kill web webrun

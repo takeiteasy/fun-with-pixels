@@ -50,7 +50,7 @@ To build the live-reload app, run ```make all``` or ```make run```. This will bu
 - [X] ~~Mac context~~
 - [X] ~~Windows context~~
 - [X] ~~Linux (X11) context~~
-- [ ] WebAssembly (Emscripten) context (WIP)
+- [X] ~~WebAssembly (Emscripten) context~~
 - [X] ~~Live coding (Mac, Windows, Linux)~~
 - [X] ~~Add bitmap.h to pp internally~~
 - [ ] Input handling for live editing
