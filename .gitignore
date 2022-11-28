@@ -2,9 +2,4 @@ build/
 *.xcodeproj
 .DS_Store
 *.plist
-live/*.dylib
-live/*.so
-live/*.dll
-live/pp
-live/*.exe
-src/
+*.obj

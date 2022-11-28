@@ -63,7 +63,7 @@ static bool event(ppState *state, ppEvent *e) {
 static bool tick(ppState *state, Bitmap *pbo, double delta) {
     FillBitmap(pbo, state->clearColor);
     DrawString(pbo, "Rebuild to change the background color!", 1, 1, White);
-    DrawRect(pbo, 50, 50, 50, 50, Red, true);
+    DrawRect(pbo, 50, 50, 50, 50, Green, true);
     return true;
 }
 

@@ -11,13 +11,25 @@ settings:
 
 targets:
   pp:
-    type: application
+    type: tool
     platform: macOS
     info:
       path: Info.plist
     sources:
-        - path: examples
         - path: pp.c
         - path: pp.h
     dependencies:
         - sdk: Cocoa.framework
+    settings:
+        OTHER_CFLAGS: [-DPP_LIVE]
+  lib:
+    type: library.dynamic
+    platform: macOS
+    sources:
+        - path: examples/live.c
+        - path: pp.c
+        - path: pp.h
+    dependencies:
+        - sdk: Cocoa.framework
+    settings:
+        OTHER_CFLAGS: [-DPP_LIVE_LIBRARY]

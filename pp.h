@@ -221,12 +221,47 @@ EXPORT bool ppRunning(void);
 EXPORT double ppTime(void);
 #endif
 
+/*!
+ * @function ppRandomBits
+ * @return Random unsigned int
+ */
 EXPORT unsigned int ppRandomBits(void);
+/*!
+ * @function ppRandomFloat
+ * @return Random float
+ */
 EXPORT float ppRandomFloat(void);
+/*!
+ * @function ppRandomDouble
+ * @return Random double
+ */
 EXPORT double ppRandomDouble(void);
+/*!
+ * @function ppRandomInt
+ * @param max Max value
+ * @return Return a random unsigned int between 0 and max
+ */
 EXPORT unsigned int ppRandomInt(int max);
+/*!
+ * @function ppRandomFloatRange
+ * @param min Minimum float
+ * @param max Maximum float
+ * @return Random float between min and max
+ */
 EXPORT float ppRandomFloatRange(float min, float max);
+/*!
+ * @function ppRandomDoubleRange
+ * @param min Minimum double
+ * @param max Maximum double
+ * @return Random double between min and max
+ */
 EXPORT double ppRandomDoubleRange(double min, double max);
+/*!
+ * @function ppRandomIntRange
+ * @param min Minimum int
+ * @param max Maximum int
+ * @return Random int between min and max
+ */
 EXPORT unsigned int ppRandomIntRange(int min, int max);
 
 /*!
@@ -797,15 +832,27 @@ EXPORT bool GenBitmapWhiteNoise(Bitmap *b, int w, int h, float factor);
 EXPORT bool GenBitmapFBMNoise(Bitmap *b, int w, int h, int offsetX, int offsetY, float scale, float lacunarity, float gain, int octaves);
 
 #if defined(PP_LIVE) || defined(PP_LIVE_LIBRARY)
+/*!
+ * @typedef ppState
+ * @abstract Live state for PP_LIVE
+ */
 typedef struct ppState ppState;
 
+/*!
+ * @enum ppEventType
+ * @abstract Event types for PP_LIVE event callback
+ */
 typedef enum {
 #define X(NAME, ARGS) NAME##Event,
     PP_CALLBACKS
 #undef X
 } ppEventType;
 
-typedef struct ppEvent {
+/*!
+ * @typedef ppEvent
+ * @abstract Event type for PP_LIVE event callback
+ */
+typedef struct {
     struct {
         int button;
         bool isdown;
@@ -829,9 +876,12 @@ typedef struct ppEvent {
         } Size;
     } Window;
     ppEventType type;
-    struct ppEvent *next;
 } ppEvent;
 
+/*!
+ * @typedef ppApp
+ * @abstract PP_LIVE app descriptor for callbacks
+ */
 typedef struct {
     ppState*(*init)(void);
     void(*deinit)(ppState*);
