@@ -53,9 +53,8 @@ To build the live-reload app, run ```make all``` or ```make run```. This will bu
 - [X] ~~WebAssembly (Emscripten) context~~
 - [X] ~~Live coding (Mac, Windows, Linux)~~
 - [X] ~~Add bitmap.h to pp internally~~
-- [ ] Input handling for live editing
+- [X] ~~Input handling for live editing~~
 - [ ] Update bitmap API
-- [ ] Bindings (Ruby, Lua)
 
 ## License
 ```

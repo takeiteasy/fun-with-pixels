@@ -1924,6 +1924,95 @@ BAIL:
     return false;
 }
 
+#define ppInputCallback(E)      \
+    if (app->event)             \
+        app->event(state, &(E)) \
+
+static void ppInputKeyboard(void *userdata, ppKey key, ppMod modifier, bool isDown) {
+    ppEvent e = {
+        .type = KeyboardEvent,
+        .Keyboard = {
+            .key = key,
+            .isdown = isDown
+        },
+        .modifier = modifier
+    };
+    ppInputCallback(e);
+}
+
+static void ppInputMouseButton(void *userdata, int button, ppMod modifier, bool isDown) {
+    ppEvent e = {
+        .type = MouseButtonEvent,
+        .Mouse = {
+            .button = button,
+            .isdown = isDown
+        },
+        .modifier = modifier
+    };
+    ppInputCallback(e);
+}
+
+static void ppInputMouseMove(void *userdata, int x, int y, float dx, float dy) {
+    ppEvent e = {
+        .type = MouseMoveEvent,
+        .Mouse = {
+            .Position = {
+                .x = x,
+                .y = y,
+                .dx = dx,
+                .dy = dy
+            }
+        }
+    };
+    ppInputCallback(e);
+}
+
+static void ppInputMouseScroll(void *userdata, float dx, float dy, ppMod modifier) {
+    ppEvent e = {
+        .type = MouseScrollEvent,
+        .Mouse = {
+            .Scroll = {
+                .dx = dx,
+                .dy = dy
+            }
+        }
+    };
+    ppInputCallback(e);
+}
+
+static void ppInputFocus(void *userdata, bool isFocused) {
+    ppEvent e = {
+        .type = FocusEvent,
+        .Window = {
+            .focused = isFocused
+        }
+    };
+    ppInputCallback(e);
+}
+
+static void ppInputResized(void *userdata, int w, int h) {
+    ppEvent e = {
+        .type = ResizedEvent,
+        .Window = {
+            .Size = {
+                .width = w,
+                .height = h
+            }
+        }
+    };
+    ppInputCallback(e);
+}
+
+static void ppInputClosed(void *userdata) {
+    ppEvent e = {
+        .type = ClosedEvent,
+        .Window = {
+            .closed = true
+        }
+    };
+    ppInputCallback(e);
+}
+
 int main(int argc, char *argv[]) {
     extern char* optarg;
     extern int optopt;
@@ -1996,6 +2085,10 @@ int main(int argc, char *argv[]) {
 
     if (!ReloadLibrary(Args.path))
         return EXIT_FAILURE;
+
+#define X(NAME, _) ppInput##NAME,
+    ppCallbacks(PP_CALLBACKS NULL);
+#undef X
 
     while (ppPoll()) {
         if (!ReloadLibrary(Args.path))

@@ -799,11 +799,45 @@ EXPORT bool GenBitmapFBMNoise(Bitmap *b, int w, int h, int offsetX, int offsetY,
 #if defined(PP_LIVE) || defined(PP_LIVE_LIBRARY)
 typedef struct ppState ppState;
 
+typedef enum {
+#define X(NAME, ARGS) NAME##Event,
+    PP_CALLBACKS
+#undef X
+} ppEventType;
+
+typedef struct ppEvent {
+    struct {
+        int button;
+        bool isdown;
+        struct {
+            int x, y;
+            float dx, dy;
+        } Position;
+        struct {
+            float dx, dy;
+        } Scroll;
+    } Mouse;
+    struct {
+        ppKey key;
+        bool isdown;
+    } Keyboard;
+    ppMod modifier;
+    struct {
+        bool focused, closed;
+        struct {
+            int width, height;
+        } Size;
+    } Window;
+    ppEventType type;
+    struct ppEvent *next;
+} ppEvent;
+
 typedef struct {
     ppState*(*init)(void);
     void(*deinit)(ppState*);
     void(*reload)(ppState*);
     void(*unload)(ppState*);
+    bool(*event)(ppState*, ppEvent*);
     bool(*tick)(ppState*, Bitmap*, double);
 } ppApp;
 
