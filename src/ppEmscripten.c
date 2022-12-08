@@ -121,7 +121,7 @@ static bool ppBeginNative(int w, int h, const char *title, ppFlags flags) {
     emscripten_set_focusin_callback(EMSCRIPTEN_EVENT_TARGET_WINDOW, 0, 1, focusevent_callback);
     emscripten_set_focusout_callback(EMSCRIPTEN_EVENT_TARGET_WINDOW, 0, 1, focusevent_callback);
     
-    ppInternal.initialized = ppInternal.running = true;
+    ppInternal.running = true;
     return true;
 }
 

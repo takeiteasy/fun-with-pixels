@@ -151,7 +151,7 @@ static bool ppBeginNative(int w, int h, const char *title, ppFlags flags) {
     ppLinuxInternal.gc = DefaultGC(ppLinuxInternal.display, ppLinuxInternal.screen);
     ppLinuxInternal.img = XCreateImage(ppLinuxInternal.display, CopyFromParent, ppLinuxInternal.depth, ZPixmap, 0, NULL, w, h, 32, w * 4);
     
-    ppInternal.initialized = ppInternal.running = true;
+    ppInternal.running = true;
     return true;
 }
 
@@ -460,7 +460,7 @@ void ppFlush(Bitmap *bitmap) {
 }
 
 void ppEnd(void) {
-    if (!ppInternal.initialized)
+    if (!ppInternal.running)
         return;
     if (ppLinuxInternal.img) {
         ppLinuxInternal.img->data = NULL;

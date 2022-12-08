@@ -52,11 +52,11 @@ static void InitRandom(void) {
 #if !defined(PP_LIVE_LIBRARY)
 static bool ppBeginNative(int w, int h, const char *title, ppFlags flags);
 bool ppBegin(int w, int h, const char *title, ppFlags flags) {
-    if (ppInternal.initialized)
+    if (ppInternal.running)
         return false;
     InitRandom();
-    ppInternal.initialized = ppInternal.running = ppBeginNative(w, h, title, flags);
-    return ppInternal.initialized;
+    ppInternal.running = ppBeginNative(w, h, title, flags);
+    return ppInternal.running;
 }
 
 #define X(NAME, ARGS) \

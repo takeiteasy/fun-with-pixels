@@ -54,11 +54,11 @@ static void InitRandom(void) {
 #if !defined(PP_LIVE_LIBRARY)
 static bool ppBeginNative(int w, int h, const char *title, ppFlags flags);
 bool ppBegin(int w, int h, const char *title, ppFlags flags) {
-    if (ppInternal.initialized)
+    if (ppInternal.running)
         return false;
     InitRandom();
-    ppInternal.initialized = ppInternal.running = ppBeginNative(w, h, title, flags);
-    return ppInternal.initialized;
+    ppInternal.running = ppBeginNative(w, h, title, flags);
+    return ppInternal.running;
 }
 
 #define X(NAME, ARGS) \
@@ -2209,7 +2209,7 @@ static bool ppBeginNative(int w, int h, const char *title, ppFlags flags) {
     emscripten_set_focusin_callback(EMSCRIPTEN_EVENT_TARGET_WINDOW, 0, 1, focusevent_callback);
     emscripten_set_focusout_callback(EMSCRIPTEN_EVENT_TARGET_WINDOW, 0, 1, focusevent_callback);
 
-    ppInternal.initialized = ppInternal.running = true;
+    ppInternal.running = true;
     return true;
 }
 
@@ -2579,7 +2579,7 @@ static bool ppBeginNative(int w, int h, const char *title, ppFlags flags) {
         ObjC(void, BOOL)(NSApp, sel(activateIgnoringOtherApps:), YES);
     });
 
-    ppInternal.initialized = ppInternal.running = true;
+    ppInternal.running = true;
     return true;
 }
 
@@ -2927,7 +2927,7 @@ static uint32_t ConvertMacMod(NSUInteger modifierFlags) {
 }
 
 bool ppPoll(void) {
-    if (!ppInternal.running || !ppInternal.initialized)
+    if (!ppInternal.running)
         return false;
 
     AutoreleasePool({
@@ -2982,10 +2982,9 @@ void ppFlush(Bitmap *bitmap) {
 }
 
 void ppEnd(void) {
-    if (!ppInternal.initialized)
+    if (!ppInternal.running)
         return;
-    if (ppInternal.running)
-        ObjC(void)(ppMacInternal.window, sel(close));
+    ObjC(void)(ppMacInternal.window, sel(close));
     ObjC_Release(ppMacInternal.window);
     ObjC(void, id)(NSApp, sel(terminate:), nil);
 }
@@ -3066,8 +3065,156 @@ static int WindowsModState(void) {
     return mods;
 }
 
+static int ConvertWindowsKey(int key) {
+    if (key >= 'A' && key <= 'Z')
+        return key;
+    if (key >= '0' && key <= '9')
+        return key;
+    switch (key) {
+        case VK_BACK:
+            return KEY_BACKSPACE;
+        case VK_TAB:
+            return KEY_TAB;
+        case VK_RETURN:
+            return KEY_RETURN;
+        case VK_SHIFT:
+            return KEY_SHIFT;
+        case VK_CONTROL:
+            return KEY_CONTROL;
+        case VK_MENU:
+            return KEY_ALT;
+        case VK_PAUSE:
+            return KEY_PAUSE;
+        case VK_CAPITAL:
+            return KEY_CAPSLOCK;
+        case VK_ESCAPE:
+            return KEY_ESCAPE;
+        case VK_SPACE:
+            return KEY_SPACE;
+        case VK_PRIOR:
+            return KEY_PAGEUP;
+        case VK_NEXT:
+            return KEY_PAGEDN;
+        case VK_END:
+            return KEY_END;
+        case VK_HOME:
+            return KEY_HOME;
+        case VK_LEFT:
+            return KEY_LEFT;
+        case VK_UP:
+            return KEY_UP;
+        case VK_RIGHT:
+            return KEY_RIGHT;
+        case VK_DOWN:
+            return KEY_DOWN;
+        case VK_INSERT:
+            return KEY_INSERT;
+        case VK_DELETE:
+            return KEY_DELETE;
+        case VK_LWIN:
+            return KEY_LWIN;
+        case VK_RWIN:
+            return KEY_RWIN;
+        case VK_NUMPAD0:
+            return KEY_PAD0;
+        case VK_NUMPAD1:
+            return KEY_PAD1;
+        case VK_NUMPAD2:
+            return KEY_PAD2;
+        case VK_NUMPAD3:
+            return KEY_PAD3;
+        case VK_NUMPAD4:
+            return KEY_PAD4;
+        case VK_NUMPAD5:
+            return KEY_PAD5;
+        case VK_NUMPAD6:
+            return KEY_PAD6;
+        case VK_NUMPAD7:
+            return KEY_PAD7;
+        case VK_NUMPAD8:
+            return KEY_PAD8;
+        case VK_NUMPAD9:
+            return KEY_PAD9;
+        case VK_MULTIPLY:
+            return KEY_PADMUL;
+        case VK_ADD:
+            return KEY_PADADD;
+        case VK_SEPARATOR:
+            return KEY_PADENTER;
+        case VK_SUBTRACT:
+            return KEY_PADSUB;
+        case VK_DECIMAL:
+            return KEY_PADDOT;
+        case VK_DIVIDE:
+            return KEY_PADDIV;
+        case VK_F1:
+            return KEY_F1;
+        case VK_F2:
+            return KEY_F2;
+        case VK_F3:
+            return KEY_F3;
+        case VK_F4:
+            return KEY_F4;
+        case VK_F5:
+            return KEY_F5;
+        case VK_F6:
+            return KEY_F6;
+        case VK_F7:
+            return KEY_F7;
+        case VK_F8:
+            return KEY_F8;
+        case VK_F9:
+            return KEY_F9;
+        case VK_F10:
+            return KEY_F10;
+        case VK_F11:
+            return KEY_F11;
+        case VK_F12:
+            return KEY_F12;
+        case VK_NUMLOCK:
+            return KEY_NUMLOCK;
+        case VK_SCROLL:
+            return KEY_SCROLL;
+        case VK_LSHIFT:
+            return KEY_LSHIFT;
+        case VK_RSHIFT:
+            return KEY_RSHIFT;
+        case VK_LCONTROL:
+            return KEY_LCONTROL;
+        case VK_RCONTROL:
+            return KEY_RCONTROL;
+        case VK_LMENU:
+            return KEY_LALT;
+        case VK_RMENU:
+            return KEY_RALT;
+        case VK_OEM_1:
+            return KEY_SEMICOLON;
+        case VK_OEM_PLUS:
+            return KEY_EQUALS;
+        case VK_OEM_COMMA:
+            return KEY_COMMA;
+        case VK_OEM_MINUS:
+            return KEY_MINUS;
+        case VK_OEM_PERIOD:
+            return KEY_DOT;
+        case VK_OEM_2:
+            return KEY_SLASH;
+        case VK_OEM_3:
+            return KEY_BACKTICK;
+        case VK_OEM_4:
+            return KEY_LSQUARE;
+        case VK_OEM_5:
+            return KEY_BACKSLASH;
+        case VK_OEM_6:
+            return KEY_RSQUARE;
+        case VK_OEM_7:
+            return KEY_TICK;
+    }
+    return 0;
+}
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
-    if (!ppInternal.running || !ppInternal.initialized)
+    if (!ppInternal.running)
         goto DEFAULT_PROC;
 
     switch (message) {
@@ -3099,7 +3246,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
         case WM_SYSKEYDOWN:
         case WM_KEYUP:
         case WM_SYSKEYUP:
-            ppCallCallback(Keyboard, wParam, WindowsModState(), !((lParam >> 31) & 1));
+            ppCallCallback(Keyboard, ConvertWindowsKey(wParam), WindowsModState(), !((lParam >> 31) & 1));
             break;
         case WM_LBUTTONUP:
         case WM_RBUTTONUP:
@@ -3263,7 +3410,7 @@ static bool ppBeginNative(int w, int h, const char *title, ppFlags flags) {
     size_t bmpSz = sizeof(BITMAPINFOHEADER) + sizeof(RGBQUAD) * 3;
     if (!(ppWinInternal.bmp = malloc(bmpSz)))
         return false;
-    memset(ppWinInternal.bmp, 0, bmpSz);
+    ZeroMemory(ppWinInternal.bmp, bmpSz);
     ppWinInternal.bmp->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
     ppWinInternal.bmp->bmiHeader.biPlanes = 1;
     ppWinInternal.bmp->bmiHeader.biBitCount = 32;
@@ -3280,7 +3427,7 @@ static bool ppBeginNative(int w, int h, const char *title, ppFlags flags) {
     ppWinInternal.tme.dwHoverTime = HOVER_DEFAULT;
     TrackMouseEvent(&ppWinInternal.tme);
 
-    ppInternal.initialized = ppInternal.running = true;
+    ppInternal.running = true;
     return true;
 }
 
@@ -3304,7 +3451,7 @@ void ppFlush(Bitmap *bitmap) {
 }
 
 void ppEnd(void) {
-    if (!ppInternal.initialized)
+    if (!ppInternal.running)
         return;
     free(ppWinInternal.bmp);
     ReleaseDC(ppWinInternal.hwnd, ppWinInternal.hdc);
@@ -3447,7 +3594,7 @@ static bool ppBeginNative(int w, int h, const char *title, ppFlags flags) {
     ppLinuxInternal.gc = DefaultGC(ppLinuxInternal.display, ppLinuxInternal.screen);
     ppLinuxInternal.img = XCreateImage(ppLinuxInternal.display, CopyFromParent, ppLinuxInternal.depth, ZPixmap, 0, NULL, w, h, 32, w * 4);
 
-    ppInternal.initialized = ppInternal.running = true;
+    ppInternal.running = true;
     return true;
 }
 
@@ -3756,7 +3903,7 @@ void ppFlush(Bitmap *bitmap) {
 }
 
 void ppEnd(void) {
-    if (!ppInternal.initialized)
+    if (!ppInternal.running)
         return;
     if (ppLinuxInternal.img) {
         ppLinuxInternal.img->data = NULL;

@@ -341,7 +341,7 @@ static bool ppBeginNative(int w, int h, const char *title, ppFlags flags) {
         ObjC(void, BOOL)(NSApp, sel(activateIgnoringOtherApps:), YES);
     });
     
-    ppInternal.initialized = ppInternal.running = true;
+    ppInternal.running = true;
     return true;
 }
 
@@ -689,7 +689,7 @@ static uint32_t ConvertMacMod(NSUInteger modifierFlags) {
 }
 
 bool ppPoll(void) {
-    if (!ppInternal.running || !ppInternal.initialized)
+    if (!ppInternal.running)
         return false;
     
     AutoreleasePool({
@@ -744,10 +744,9 @@ void ppFlush(Bitmap *bitmap) {
 }
 
 void ppEnd(void) {
-    if (!ppInternal.initialized)
+    if (!ppInternal.running)
         return;
-    if (ppInternal.running)
-        ObjC(void)(ppMacInternal.window, sel(close));
+    ObjC(void)(ppMacInternal.window, sel(close));
     ObjC_Release(ppMacInternal.window);
     ObjC(void, id)(NSApp, sel(terminate:), nil);
 }
