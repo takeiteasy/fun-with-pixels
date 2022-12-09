@@ -2999,14 +2999,16 @@ double ppTime(void) {
 #define NOMINMAX
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
-#include <shellapi.h>
 
 #if defined(_MSC_VER)
-#pragma comment(lib, "shell32")
 #pragma comment(lib, "user32")
 #pragma comment(lib, "gdi32")
 
 #if !defined(_DLL)
+#include <shellapi.h>
+#pragma comment(lib, "shell32")
+#include <stdlib.h>
+
 extern int main(int argc, const char *argv[]);
 
 #ifdef UNICODE

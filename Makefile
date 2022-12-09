@@ -23,11 +23,7 @@ default: game
 all: run
 
 generate: $(SOURCES)
-	mkdir build/ || true
 	ruby tools/generate.rb
-	headerdoc2html -udpb pp.h -o docs/
-	gatherheaderdoc docs
-	mv docs/masterTOC.html docs/index.html
 
 library:
 	$(CC) -shared -fpic $(LIBS) pp.c -o build/libpp.$(LIBEXT)
