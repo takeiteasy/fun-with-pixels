@@ -78,6 +78,78 @@ bool ppRunning() {
     return ppInternal.running;
 }
 
+int RGBA(unsigned char r, unsigned char g, unsigned char b, unsigned char a) {
+    return ((unsigned int)a << 24) | ((unsigned int)r << 16) | ((unsigned int)g << 8) | b;
+}
+
+int RGB(unsigned char r, unsigned char g, unsigned char b) {
+    return RGBA(r, g, b, 255);
+}
+
+int RGBA1(unsigned char c, unsigned char a) {
+    return RGBA(c, c, c, a);
+}
+
+int RGB1(unsigned char c) {
+    return RGB(c, c, c);
+}
+
+unsigned char Rgba(int c) {
+    return (unsigned char)((c >> 16) & 0xFF);
+}
+
+unsigned char rGba(int c) {
+    return (unsigned char)((c >>  8) & 0xFF);
+}
+
+unsigned char rgBa(int c) {
+    return (unsigned char)(c & 0xFF);
+}
+
+unsigned char rgbA(int c) {
+    return (unsigned char)((c >> 24) & 0xFF);
+}
+
+int rGBA(int c, unsigned char r) {
+    return (c & ~0x00FF0000) | (r << 16);
+}
+
+int RgBA(int c, unsigned char g) {
+    return (c & ~0x0000FF00) | (g << 8);
+}
+
+int RGbA(int c, unsigned char b) {
+    return (c & ~0x000000FF) | b;
+}
+
+int RGBa(int c, unsigned char a) {
+    return (c & ~0x00FF0000) | (a << 24);
+}
+
+bool InitBitmap(Bitmap *b, unsigned int w, unsigned int h) {
+    b->w = w;
+    b->h = h;
+    size_t sz = w * h * sizeof(unsigned int) + 1;
+    b->buf = malloc(sz);
+    memset(b->buf, 0, sz);
+    return true;
+}
+
+void DestroyBitmap(Bitmap *b) {
+    if (b->buf)
+        free(b->buf);
+    memset(b, 0, sizeof(Bitmap));
+}
+
+void PSet(Bitmap *b, int x, int y, int col) {
+    if (x >= 0 && y >= 0 && x < b->w && y < b->h)
+        b->buf[y * b->w + x] = col;
+}
+
+int PGet(Bitmap *b, int x, int y) {
+    return (x >= 0 && y >= 0 && x < b->w && y < b->h) ? b->buf[y * b->w + x] : 0;
+}
+
 #if defined(PP_EMSCRIPTEN)
 #include "ppEmscripten.c"
 #elif defined(PP_MAC)

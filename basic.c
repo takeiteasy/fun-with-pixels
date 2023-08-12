@@ -33,7 +33,13 @@ void onClosed(void *userdata) {
     printf("Close Event: Window is now closing\n");
 }
 
+static Bitmap screen;
+
 static void loop(void) {
+    for (int x = 0; x < WIDTH; x++)
+        for (int y = 0; y < HEIGHT; y++)
+            PSet(&screen, x, y, RGBA(255, 0, 0, 255));
+    ppFlush(&screen);
 }
 
 int main(int argc, const char *argv[]) {
@@ -41,6 +47,8 @@ int main(int argc, const char *argv[]) {
 #define X(NAME, ARGS) on##NAME,
     ppCallbacks(PP_CALLBACKS NULL);
 #undef X
+    
+    InitBitmap(&screen, WIDTH, HEIGHT);
     
 #if defined(PP_EMSCRIPTEN)
     emscripten_set_main_loop(loop, 0, 1);
