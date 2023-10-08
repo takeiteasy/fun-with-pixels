@@ -23,11 +23,13 @@
  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
+#include "pp.c"
 #include <objc/objc.h>
 #include <objc/runtime.h>
 #include <objc/message.h>
 #include <objc/NSObjCRuntime.h>
-#include <mach/mach_time.h>
+#include <limits.h>
+#include <math.h>
 
 // maybe this is available somewhere in objc runtime?
 #if __LP64__ || (TARGET_OS_EMBEDDED && !TARGET_OS_IPHONE) || TARGET_OS_WIN32 || NS_BUILD_32_LIKE_64
@@ -140,13 +142,13 @@ typedef enum {
     objc_allocateClassPair((Class)objc_getClass(__STRINGIFY(SUPER)), __STRINGIFY(NAME), 0)
 #define ObjC_AddMethod(CLASS, SEL, IMPL, SIGNATURE)                  \
     if (!class_addMethod(CLASS, sel(SEL), (IMP)(IMPL), (SIGNATURE))) \
-        assert(false)
+        assert(0)
 #define ObjC_AddIVar(CLASS, NAME, SIZE, SIGNATURE)                                   \
     if (!class_addIvar(CLASS, __STRINGIFY(NAME), SIZE, rint(log2(SIZE)), SIGNATURE)) \
-        assert(false)
+        assert(0)
 #define ObjC_AddProtocol(CLASS, PROTOCOL)                           \
     if (!class_addProtocol(CLASS, protocol(__STRINGIFY(PROTOCOL)))) \
-        assert(false);
+        assert(0);
 #define ObjC_SubClass(NAME) objc_registerClassPair(NAME)
 
 #if defined(__OBJC__) && __has_feature(objc_arc) && !defined(OBJC_NO_ARC)
@@ -180,20 +182,18 @@ typedef enum {
 
 static struct {
     id window;
-    mach_timebase_info_data_t info;
-    uint64_t timestamp;
-    bool mouseInWindow;
+    int mouseInWindow;
 } ppMacInternal = {0};
 
 static NSUInteger applicationShouldTerminate(id self, SEL _sel, id sender) {
-    ppInternal.running = false;
+    ppInternal.running = 0;
     return 0;
 }
 
 static void windowWillClose(id self, SEL _sel, id notification) {
     if (ppInternal.ClosedCallback)
         ppInternal.ClosedCallback(ppInternal.userdata);
-    ppInternal.running = false;
+    ppInternal.running = 0;
 }
 
 static BOOL windowShouldClose(id self, SEL _sel, id sender) {
@@ -202,11 +202,11 @@ static BOOL windowShouldClose(id self, SEL _sel, id sender) {
 }
 
 static void windowDidBecomeKey(id self, SEL _sel, id notification) {
-    ppCallCallback(Focus, true);
+    ppCallCallback(Focus, 1);
 }
 
 static void windowDidResignKey(id self, SEL _sel, id notification) {
-    ppCallCallback(Focus, false);
+    ppCallCallback(Focus, 0);
 }
 
 static void windowDidResize(id self, SEL _sel, id notification) {
@@ -215,21 +215,20 @@ static void windowDidResize(id self, SEL _sel, id notification) {
 }
 
 static void mouseEntered(id self, SEL _sel, id event) {
-    ppMacInternal.mouseInWindow = true;
+    ppMacInternal.mouseInWindow = 1;
 }
 
 static void mouseExited(id self, SEL _sel, id event) {
-    ppMacInternal.mouseInWindow = false;
+    ppMacInternal.mouseInWindow = 0;
 }
 
 static void drawRect(id self, SEL _self, CGRect rect) {
-    if (!ppInternal.pbo)
+    if (!ppInternal.data || !ppInternal.w || !ppInternal.h)
         return;
-
     CGContextRef ctx = (CGContextRef)ObjC(id)(ObjC(id)(class(NSGraphicsContext), sel(currentContext)), sel(CGContext));
     CGColorSpaceRef s = CGColorSpaceCreateDeviceRGB();
-    CGDataProviderRef p = CGDataProviderCreateWithData(NULL, ppInternal.pbo->buf, ppInternal.pbo->w * ppInternal.pbo->h * 4, NULL);
-    CGImageRef img = CGImageCreate(ppInternal.pbo->w, ppInternal.pbo->h, 8, 32, ppInternal.pbo->w * 4, s, kCGImageAlphaNoneSkipFirst | kCGBitmapByteOrder32Little, p, NULL, 0, kCGRenderingIntentDefault);
+    CGDataProviderRef p = CGDataProviderCreateWithData(NULL, ppInternal.data, ppInternal.w * ppInternal.h * 4, NULL);
+    CGImageRef img = CGImageCreate(ppInternal.w, ppInternal.h, 8, 32, ppInternal.w * 4, s, kCGImageAlphaNoneSkipFirst | kCGBitmapByteOrder32Little, p, NULL, 0, kCGRenderingIntentDefault);
     CGRect wh = ObjC_Struct(CGRect)(self, sel(frame));
     CGContextDrawImage(ctx, CGRectMake(0, 0, wh.size.width, wh.size.height), img);
     CGColorSpaceRelease(s);
@@ -237,10 +236,11 @@ static void drawRect(id self, SEL _self, CGRect rect) {
     CGImageRelease(img);
 }
 
-static bool ppBeginNative(int w, int h, const char *title, ppFlags flags) {
-    mach_timebase_info(&ppMacInternal.info);
-    ppMacInternal.timestamp = mach_absolute_time();
-
+int ppBeginNative(int w, int h, const char *title, ppFlags flags) {
+    ppInternal.data = NULL;
+    ppInternal.w = 0;
+    ppInternal.h = 0;
+    
     AutoreleasePool({
         ObjC(id)(class(NSApplication), sel(sharedApplication));
         ObjC(void, NSInteger)(NSApp, sel(setActivationPolicy:), NSApplicationActivationPolicyRegular);
@@ -338,8 +338,7 @@ static bool ppBeginNative(int w, int h, const char *title, ppFlags flags) {
         ObjC(void, BOOL)(NSApp, sel(activateIgnoringOtherApps:), YES);
     });
 
-    ppInternal.running = true;
-    return true;
+    return 1;
 }
 
 // from Carbon HIToolbox/Events.h
@@ -685,9 +684,9 @@ static uint32_t ConvertMacMod(NSUInteger modifierFlags) {
     return mods;
 }
 
-bool ppPoll(void) {
+int ppPollNative(void) {
     if (!ppInternal.running)
-        return false;
+        return 0;
 
     AutoreleasePool({
         id distantPast = ObjC(id)(class(NSDate), sel(distantPast));
@@ -730,26 +729,17 @@ bool ppPoll(void) {
     return ppInternal.running;
 }
 
-void ppFlush(Bitmap *bitmap) {
-    if (!bitmap || !bitmap->buf || !bitmap->w || !bitmap->h) {
-        ppInternal.pbo = NULL;
-        return;
-    }
-    ppInternal.pbo = bitmap;
+void ppFlushNative(int *data, int w, int h) {
+    assert(data && w && h);
+    ppInternal.data = data;
+    ppInternal.w = w;
+    ppInternal.h = h;
     ObjC(void, BOOL)(ObjC(id)(ppMacInternal.window, sel(contentView)), sel(setNeedsDisplay:), YES);
 }
 
-void ppEnd(void) {
-    if (!ppInternal.running)
-        return;
+void ppEndNative(void) {
+    assert(ppInternal.running);
     ObjC(void)(ppMacInternal.window, sel(close));
     ObjC_Release(ppMacInternal.window);
     ObjC(void, id)(NSApp, sel(terminate:), nil);
-}
-
-double ppTime(void) {
-    uint64_t now = mach_absolute_time();
-    double elapsed = (double)(now - ppMacInternal.timestamp) * ppMacInternal.info.numer / (ppMacInternal.info.denom * 1000000000.0);
-    ppMacInternal.timestamp = now;
-    return elapsed;
 }

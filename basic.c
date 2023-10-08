@@ -1,15 +1,16 @@
 // basic.c - A simple example of how to use pp
 #include "pp.h"
+#if defined(PP_EMSCRIPTEN)
+#include <emscripten.h>
+#endif
+#include <stdio.h>
+#include <stdlib.h>
 
-#define WIDTH 640
-#define HEIGHT 480
-
-// Window event callbacks, I think the names are self-explanatory
-void onKeyboard(void *userdata, ppKey key, ppMod modifier, bool isDown) {
+void onKeyboard(void *userdata, int key, int modifier, int isDown) {
     printf("Keyboard Event: Key %d is now %s\n", (int)key, isDown ? "down" : "up");
 }
 
-void onMouseButton(void *userdata, int button, ppMod modifier, bool isDown) {
+void onMouseButton(void *userdata, int button, int modifier, int isDown) {
     printf("Mouse Button Event: Button %d is now %s\n", button, isDown ? "down" : "up");
 }
 
@@ -17,11 +18,11 @@ void onMouseMove(void *userdata, int x, int y, float dx, float dy) {
     printf("Mouse Move Event: Position (%d, %d) by (%f, %f)\n", x, y, dx, dy);
 }
 
-void onMouseScroll(void *userdata, float dx, float dy, ppMod modifier) {
+void onMouseScroll(void *userdata, float dx, float dy, int modifier) {
     printf("Mouse Scroll Event: Scroll delta (%f, %f)\n", dx, dy);
 }
 
-void onFocus(void *userdata, bool isFocused) {
+void onFocus(void *userdata, int isFocused) {
     printf("Focus Event: Window is now %s\n", isFocused ? "focused" : "unfocused");
 }
 
@@ -33,22 +34,22 @@ void onClosed(void *userdata) {
     printf("Close Event: Window is now closing\n");
 }
 
-static Bitmap screen;
+static int *test = NULL;
 
 static void loop(void) {
-    for (int x = 0; x < WIDTH; x++)
-        for (int y = 0; y < HEIGHT; y++)
-            PSet(&screen, x, y, RGBA(255, 0, 0, 255));
-    ppFlush(&screen);
+    ppFlush(test, 640, 480);
 }
 
 int main(int argc, const char *argv[]) {
-    ppBegin(WIDTH, HEIGHT, "pp", ppResizable);
+    ppBegin(640, 480, "pp", ppResizable);
 #define X(NAME, ARGS) on##NAME,
     ppCallbacks(PP_CALLBACKS NULL);
 #undef X
     
-    InitBitmap(&screen, WIDTH, HEIGHT);
+    test = (int*)malloc(sizeof(int) * 640 * 480);
+    for (int x = 0; x < 640; x++)
+        for (int y = 0; y < 480; y++)
+            test[y * 640 + x] = 0xFFFF0000;
     
 #if defined(PP_EMSCRIPTEN)
     emscripten_set_main_loop(loop, 0, 1);
@@ -57,6 +58,7 @@ int main(int argc, const char *argv[]) {
         loop();
 #endif
     
+    free(test);
     ppEnd();
     return 0;
 }

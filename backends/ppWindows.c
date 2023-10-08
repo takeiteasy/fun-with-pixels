@@ -23,6 +23,7 @@
  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
+#include "pp.c"
 #define NOMINMAX
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -31,45 +32,13 @@
 #pragma comment(lib, "user32")
 #pragma comment(lib, "gdi32")
 
-#if !defined(_DLL)
-#include <shellapi.h>
-#pragma comment(lib, "shell32")
-#include <stdlib.h>
-
-extern int main(int argc, const char *argv[]);
-
-#ifdef UNICODE
-int CALLBACK wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
-#else
-int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
-#endif
-{
-    int n, argc;
-    LPWSTR *wargv = CommandLineToArgvW(GetCommandLineW(), &argc);
-    char **argv = calloc(argc + 1, sizeof(int));
-
-    (void)hInstance;
-    (void)hPrevInstance;
-    (void)lpCmdLine;
-    (void)nCmdShow;
-
-    for (n = 0; n < argc; n++) {
-        int len = WideCharToMultiByte(CP_UTF8, 0, wargv[n], -1, 0, 0, NULL, NULL);
-        argv[n] = malloc(len);
-        WideCharToMultiByte(CP_UTF8, 0, wargv[n], -1, argv[n], len, NULL, NULL);
-    }
-    return main(argc, argv);
-}
-#endif
-#endif
-
 static struct {
     WNDCLASS wnd;
     HWND hwnd;
     HDC hdc;
     BITMAPINFO *bmp;
     TRACKMOUSEEVENT tme;
-    bool tmeRefresh;
+    int tmeRefresh;
     int width, height;
     int cursorLastX, cursorLastY;
     LARGE_INTEGER timestamp;
@@ -250,16 +219,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
         case WM_PAINT:
             if (!ppInternal.pbo)
                 goto DEFAULT_PROC;
-            ppWinInternal.bmp->bmiHeader.biWidth = ppInternal.pbo->w;
-            ppWinInternal.bmp->bmiHeader.biHeight = -ppInternal.pbo->h;
-            StretchDIBits(ppWinInternal.hdc, 0, 0, ppWinInternal.width, ppWinInternal.height, 0, 0, ppInternal.pbo->w, ppInternal.pbo->h, ppInternal.pbo->buf, ppWinInternal.bmp, DIB_RGB_COLORS, SRCCOPY);
+            ppWinInternal.bmp->bmiHeader.biWidth = ppInternal.w;
+            ppWinInternal.bmp->bmiHeader.biHeight = -ppInternal.h;
+            StretchDIBits(ppWinInternal.hdc, 0, 0, ppWinInternal.width, ppWinInternal.height, 0, 0, ppInternal.w, ppInternal.h, ppInternal.data, ppWinInternal.bmp, DIB_RGB_COLORS, SRCCOPY);
             ValidateRect(hWnd, NULL);
             break;
         case WM_DESTROY:
         case WM_CLOSE:
             if (ppInternal.ClosedCallback)
                 ppInternal.ClosedCallback(ppInternal.userdata);
-            ppInternal.running = false;
+            ppInternal.running = 0;
             break;
         case WM_SIZE:
             ppWinInternal.width = LOWORD(lParam);
@@ -290,20 +259,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
         case WM_XBUTTONDOWN:
         case WM_XBUTTONDBLCLK: {
             int button = 0;
-            bool action = false;
+            int action = 0;
             switch (message) {
                 case WM_LBUTTONDOWN:
-                    action = true;
+                    action = 1;
                 case WM_LBUTTONUP:
                     button = 1;
                     break;
                 case WM_RBUTTONDOWN:
-                    action = true;
+                    action = 1;
                 case WM_RBUTTONUP:
                     button = 2;
                     break;
                 case WM_MBUTTONDOWN:
-                    action = true;
+                    action = 1;
                 case WM_MBUTTONUP:
                     button = 3;
                     break;
@@ -337,27 +306,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
             break;
         }
         case WM_MOUSEHOVER:
-            ppWinInternal.tmeRefresh = true;
+            ppWinInternal.tmeRefresh = 1;
             break;
         case WM_MOUSELEAVE:
-            ppWinInternal.tmeRefresh = false;
+            ppWinInternal.tmeRefresh = 0;
             break;
         case WM_SETFOCUS:
-            ppCallCallback(Focus, true);
+            ppCallCallback(Focus, 1);
             break;
         case WM_KILLFOCUS:
-            ppCallCallback(Focus, false);
+            ppCallCallback(Focus, 0);
             break;
         default:
             goto DEFAULT_PROC;
     }
 
-    return FALSE;
+    return 0;
 DEFAULT_PROC:
     return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
-static bool ppBeginNative(int w, int h, const char *title, ppFlags flags) {
+int ppBeginNative(int w, int h, const char *title, ppFlags flags) {
     QueryPerformanceCounter(&ppWinInternal.timestamp);
     
     RECT rect = {0};
@@ -421,14 +390,14 @@ static bool ppBeginNative(int w, int h, const char *title, ppFlags flags) {
     ppWinInternal.wnd.hCursor = LoadCursor(0, IDC_ARROW);
     ppWinInternal.wnd.lpszClassName = title;
     if (!RegisterClass(&ppWinInternal.wnd))
-        return false;
+        return 0;
     
     ppWinInternal.width = rect.right;
     ppWinInternal.height = rect.bottom;
     if (!(ppWinInternal.hwnd = CreateWindowEx(0, title, title, windowFlags, rect.left, rect.top, rect.right, rect.bottom, 0, 0, 0, 0)))
-        return false;
+        return 0;
     if (!(ppWinInternal.hdc = GetDC(ppWinInternal.hwnd)))
-        return false;
+        return 0;
 
     if (flags & ppAlwaysOnTop)
         SetWindowPos(ppWinInternal.hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
@@ -438,7 +407,7 @@ static bool ppBeginNative(int w, int h, const char *title, ppFlags flags) {
 
     size_t bmpSz = sizeof(BITMAPINFOHEADER) + sizeof(RGBQUAD) * 3;
     if (!(ppWinInternal.bmp = malloc(bmpSz)))
-        return false;
+        return 0;
     ZeroMemory(ppWinInternal.bmp, bmpSz);
     ppWinInternal.bmp->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
     ppWinInternal.bmp->bmiHeader.biPlanes = 1;
@@ -456,11 +425,10 @@ static bool ppBeginNative(int w, int h, const char *title, ppFlags flags) {
     ppWinInternal.tme.dwHoverTime = HOVER_DEFAULT;
     TrackMouseEvent(&ppWinInternal.tme);
 
-    ppInternal.running = true;
-    return true;
+    return 1;
 }
 
-bool ppPoll(void) {
+int ppPollNative(void) {
     static MSG msg;
     if (PeekMessage(&msg, ppWinInternal.hwnd, 0, 0, PM_REMOVE)) {
         TranslateMessage(&msg);
@@ -469,29 +437,19 @@ bool ppPoll(void) {
     return ppInternal.running;
 }
 
-void ppFlush(Bitmap *bitmap) {
-    if (!bitmap || !bitmap->buf || !bitmap->w || !bitmap->h) {
-        ppInternal.pbo = NULL;
-        return;
-    }
-    ppInternal.pbo = bitmap;
-    InvalidateRect(ppWinInternal.hwnd, NULL, TRUE);
+void ppFlushNative(int *data, int w, int h) {
+    assert(data && w && h);
+    ppInternal.data = data;
+    ppInternal.w = w;
+    ppInternal.h = h;
+    InvalidateRect(ppWinInternal.hwnd, NULL, 1);
     SendMessage(ppWinInternal.hwnd, WM_PAINT, 0, 0);
 }
 
-void ppEnd(void) {
-    if (!ppInternal.running)
-        return;
+void ppEndNative(void) {
+    assert(ppInternal.running);
     free(ppWinInternal.bmp);
     ReleaseDC(ppWinInternal.hwnd, ppWinInternal.hdc);
     DestroyWindow(ppWinInternal.hwnd);
 }
 
-double ppTime(void) {
-    LARGE_INTEGER cnt, freq;
-    QueryPerformanceCounter(&cnt);
-    QueryPerformanceFrequency(&freq);
-    ULONGLONG diff = cnt.QuadPart - ppWinInternal.timestamp.QuadPart;
-    ppWinInternal.timestamp = cnt;
-    return (double)(diff / (double)freq.QuadPart);
-}
