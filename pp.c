@@ -42,6 +42,9 @@ void ppEndNative(void);
 
 int ppBegin(int w, int h, const char *title, ppFlags flags) {
     assert(!ppInternal.running);
+    ppInternal.data = NULL;
+    ppInternal.w = 0;
+    ppInternal.h = 0;
     ppInternal.running = ppBeginNative(w, h, title, flags);
     return ppInternal.running;
 }

@@ -43,7 +43,6 @@ static struct {
     Atom delete;
     GC gc;
     XImage *img, *scaler;
-    double timestamp;
     int cursorLastX, cursorLastY;
 } ppLinuxInternal = {0};
 

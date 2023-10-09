@@ -41,7 +41,6 @@ static struct {
     int tmeRefresh;
     int width, height;
     int cursorLastX, cursorLastY;
-    LARGE_INTEGER timestamp;
 } ppWinInternal = {0};
 
 static int WindowsModState(void) {
@@ -327,8 +326,6 @@ DEFAULT_PROC:
 }
 
 int ppBeginNative(int w, int h, const char *title, ppFlags flags) {
-    QueryPerformanceCounter(&ppWinInternal.timestamp);
-    
     RECT rect = {0};
     long windowFlags = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
     if (flags & ppFullscreen) {

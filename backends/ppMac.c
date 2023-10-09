@@ -237,10 +237,6 @@ static void drawRect(id self, SEL _self, CGRect rect) {
 }
 
 int ppBeginNative(int w, int h, const char *title, ppFlags flags) {
-    ppInternal.data = NULL;
-    ppInternal.w = 0;
-    ppInternal.h = 0;
-    
     AutoreleasePool({
         ObjC(id)(class(NSApplication), sel(sharedApplication));
         ObjC(void, NSInteger)(NSApp, sel(setActivationPolicy:), NSApplicationActivationPolicyRegular);
