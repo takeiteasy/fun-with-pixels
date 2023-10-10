@@ -121,8 +121,10 @@ EXPORT int ppPoll(void);
 /*!
  * @function ppFlush
  * @abstract Draw bitmap to the window
- * @param bitmap Bitmap object to be drawn
- * @discussion This should be called every frame. Otherwise the window will be blank!
+ * @param data Image data (should be formated a 32bit integer ARGB)
+ * @param w Image data width
+ * @param h Image data height
+ * @discussion This should be called every frame
  */
 EXPORT void ppFlush(int *data, int w, int h);
 /*!
@@ -235,7 +237,7 @@ void ppUserdata(void *userdata) {
     ppInternal.userdata = userdata;
 }
 
-int ppRunning() {
+int ppRunning(void) {
     return ppInternal.running;
 }
 #endif
