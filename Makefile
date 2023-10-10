@@ -2,27 +2,32 @@ ifeq ($(OS),Windows_NT)
 	LIBEXT=dll
 	PROGEXT=.exe
 	CFLAGS=-lgdi32
+	SRC=ppWindows
 else
 	UNAME:=$(shell uname -s)
 	PROGEXT=
 	ifeq ($(UNAME),Darwin)
 		LIBEXT=dylib
 		CFLAGS=-framework Cocoa
+		SRC=ppMac
 	else ifeq ($(UNAME),Linux)
 		LIBEXT=so
 		CFLAGS=-lX11 -lm
+		SRC=ppLinux
 	else
 		$(error OS not supported by this Makefile)
 	endif
 endif
 
-default: library
-	$(CC) -Lbuild -lpp basic.c -o build/pp
+.PHONY: default all library web
+
+default:
+	$(CC) -Isrc src/$(SRC).c examples/basic.c $(CFLAGS) -o build/$(SRC)$(PROGEXT)
 
 library:
-	$(CC) $(CFLAGS) -Ibackends pp.c -shared -fpic -o build/libpp.$(LIBEXT)
+	$(CC) -shared -fpic -Isrc src/$(SRC).c examples/basic.c $(CFLAGS) -o build/$(SRC).$(LIBEXT)
 
 web:
-	emcc -Ibackends basic.c pp.c -o build/pp.html
+	emcc -DPP_EMSCRIPTEN -Isrc src/ppEmscripten.c examples/basic.c -o build/pp.html
 
-.PHONY: default all library web
+all: default library web

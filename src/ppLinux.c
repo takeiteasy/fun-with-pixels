@@ -23,7 +23,8 @@
  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#include "pp.c"
+#define PP_IMPLEMENTATION
+#include "pp.h"
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #include <X11/Xlocale.h>

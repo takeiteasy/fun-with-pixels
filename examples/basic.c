@@ -34,7 +34,7 @@ void onClosed(void *userdata) {
     printf("Close Event: Window is now closing\n");
 }
 
-static int *test = NULL;
+static int test[640 * 480];
 
 static void loop(void) {
     ppFlush(test, 640, 480);
@@ -46,10 +46,9 @@ int main(int argc, const char *argv[]) {
     ppCallbacks(PP_CALLBACKS NULL);
 #undef X
     
-    test = (int*)malloc(sizeof(int) * 640 * 480);
     for (int x = 0; x < 640; x++)
         for (int y = 0; y < 480; y++)
-            test[y * 640 + x] = 0xFFFF0000;
+            test[y * 640 + x] = x ^ y;
     
 #if defined(PP_EMSCRIPTEN)
     emscripten_set_main_loop(loop, 0, 1);
@@ -58,7 +57,6 @@ int main(int argc, const char *argv[]) {
         loop();
 #endif
     
-    free(test);
     ppEnd();
     return 0;
 }

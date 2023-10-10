@@ -170,3 +170,72 @@ EXPORT int ppRunning(void);
 }
 #endif
 #endif // pp_h
+
+#if defined(PP_IMPLEMENTATION)
+#include <assert.h>
+
+static struct {
+#define X(NAME, ARGS) void(*NAME##Callback)ARGS;
+    PP_CALLBACKS
+#undef X
+    void *userdata;
+    int running;
+    int *data, w, h;
+} ppInternal = {0};
+
+int ppBeginNative(int w, int h, const char *title, ppFlags flags);
+int ppPollNative(void);
+void ppFlushNative(int *data, int w, int h);
+void ppEndNative(void);
+
+int ppBegin(int w, int h, const char *title, ppFlags flags) {
+    assert(!ppInternal.running);
+    ppInternal.data = (void*)0;
+    ppInternal.w = 0;
+    ppInternal.h = 0;
+    ppInternal.running = ppBeginNative(w, h, title, flags);
+    return ppInternal.running;
+}
+
+int ppPoll(void) {
+    return ppPollNative();
+}
+
+void ppFlush(int *data, int w, int h) {
+    ppFlushNative(data, w, h);
+}
+
+void ppEnd(void) {
+    ppEndNative();
+}
+
+#define X(NAME, ARGS) \
+    void(*NAME##Callback)ARGS,
+void ppCallbacks(PP_CALLBACKS void* userdata) {
+#undef X
+#define X(NAME, ARGS) \
+    ppInternal.NAME##Callback = NAME##Callback;
+    PP_CALLBACKS
+#undef X
+    ppInternal.userdata = userdata;
+}
+
+#define X(NAME, ARGS)                                    \
+    void pp##NAME##Callback(void(*NAME##Callback)ARGS) { \
+        ppInternal.NAME##Callback = NAME##Callback;      \
+    }
+PP_CALLBACKS
+#undef X
+
+#define ppCallCallback(CB, ...)  \
+    if (ppInternal.CB##Callback) \
+        ppInternal.CB##Callback(ppInternal.userdata, __VA_ARGS__)
+
+void ppUserdata(void *userdata) {
+    ppInternal.userdata = userdata;
+}
+
+int ppRunning() {
+    return ppInternal.running;
+}
+#endif
