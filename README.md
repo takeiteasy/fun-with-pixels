@@ -8,6 +8,8 @@ Platforms:
 * Linux
 * WebAssembly (via [emscripten](https://github.com/emscripten-core/emscripten))
 
+**NOTE:** Image buffers should be arrays of 32-bit integers with ARGB formatting.
+
 ## Example
 ```c
 #include "pp"
