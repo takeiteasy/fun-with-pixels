@@ -29,6 +29,10 @@
 extern "C" {
 #endif
 
+#if defined(_WIN32) || defined(_WIN64) || defined(__WIN32__) || defined(__WINDOWS__)
+#define PP_WINDOWS
+#endif
+
 #if defined(PP_WINDOWS) && !defined(PP_NO_EXPORT)
 #define EXPORT __declspec(dllexport)
 #else

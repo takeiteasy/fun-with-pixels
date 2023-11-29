@@ -25,7 +25,7 @@ default:
 	$(CC) -Isrc src/$(SRC).c examples/basic.c $(CFLAGS) -o build/$(SRC)$(PROGEXT)
 
 library:
-	$(CC) -shared -fpic -Isrc src/$(SRC).c examples/basic.c $(CFLAGS) -o build/$(SRC).$(LIBEXT)
+	$(CC) -shared -fpic -Isrc src/$(SRC).c examples/basic.c $(CFLAGS) -o build/lib$(SRC).$(LIBEXT)
 
 web:
 	emcc -DPP_EMSCRIPTEN -Isrc src/ppEmscripten.c examples/basic.c -o build/pp.html
