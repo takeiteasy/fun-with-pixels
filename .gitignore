@@ -3,3 +3,4 @@ build/
 .DS_Store
 *.plist
 *.obj
+docs.sh
