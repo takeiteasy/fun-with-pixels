@@ -54,7 +54,7 @@ int main(int argc, const char *argv[]) {
 
 The Makefile has three options; ```default``` will build example/basic.c, ```library``` will build a dynamic library and ```web``` will also build example/basic.c, except compiled to wasm.
 
-It's also very easy to use in your own project. Simply copy (or fork) ```pp.c``` and ```pp.h``` from the ```src``` directory. If you are on windows you will need to link ```-lgdi32```. If you're on Linux you must link ```-lX11 -lm``` and on MacOS ```-framework Cocoa```.
+It's also very easy to use in your own project. Simply copy (or fork) ```pp[platform].c``` and ```pp.h``` from the ```src``` directory. If you are on windows you will need to link ```-lgdi32```. If you're on Linux you must link ```-lX11 -lm``` and on MacOS ```-framework Cocoa```.
 
 ## License
 ```
