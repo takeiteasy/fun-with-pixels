@@ -1,68 +1,88 @@
-# pp
+# fwp
 
-_pp_ **[ˈpiːpiː]** or "_Pixel Playground_" is a small enviroment for quick experimentation with software rendering. Very simple API, build on top of my own [bitmap](https://github.com/takeiteasy/headers/blob/master/bitmap.h) library. See [here](https://takeiteasy.github.io/pp/) for documentation. Includes a live coding option built in, see [building](https://github.com/takeiteasy/pp#building) for more info.
+> [!WARNING]
+> Work in progress, see [TODO](#todo) section. Everything works, but features need adding.
 
-<p align="center">
-     <img src="https://github.com/takeiteasy/pp/blob/master/live.gif?raw=true">
-</p>
+__Fun With Pixels__ is a cross-platform hot-reloading software-rendering enviroment for C, designed for quick experiments and testing. Edit your C code, rebuild and see the changes in real-time!
 
-## Examples
+If you would like to try it out, see the [setting up](#setting-up) section. Also included is a utility library _pb_ that can function independently from the _fwp_ program. If you're interested in that, see the [pb](#pb) section.
 
-### Live
+![Preview](/preview.gif)
+
+## Usage
+
+```
+usage: fwp -p [path] [options]
+
+  -w/--width     Window width [default: 640]
+  -h/--height    Window height [default: 480]
+  -t/--title     Window title [default: "fwp"]
+  -r/--resizable Enable resizable window
+  -a/--top       Enable window always on top
+  -p/--path      Path the dynamic library [required]
+  -u/--usage     Display this message
+```
+
+## Setting up
+
+To achieve hot-reloading in C, all the code that is to be reloaded is built as a dynamic library. The symbols are loaded from the library and updated by the _fwp_ executable; which remains running.
+
+To make it easy, the user's code is put into a `scene`. Below is a barebones example of how to setup a scene. Look at the example and read the comments.
 
 ```c
-#include "pp.h"
-#include <stdlib.h>
+// Firstly include the fwp header, which contains everything we need
+#include "fwp.h"
+#include <stdlib.h> // malloc
 
-struct ppState {
-    int clearColor;
+// A fwpState should be defined in each scene. This structure can contain whatever variables and types you want, but it must be defined like this. Do not typedef the struct definition, as it is already typedef'd in fwp.h
+struct fwpState {
+    pbColor clearColor;
 };
 
-// Called once at the beginning of runtime
-static ppState* init(void) {
-    ppState *state = malloc(sizeof(ppState));
-    if (!state)
-        return NULL;
-    state->clearColor = Black;
+static fwpState* init(void) {
+    // Called once when the program first starts
+    // You must always create an instance of your fwpState definition
+    // It must be allocated on the stack, not the heap
+    // This object will be be used to keep track of things between reloads
+    fwpState *state = malloc(sizeof(fwpState));
+    state->clearColor = RGB(255, 0, 0);
+    // Return your fwpState so fwp can keep track of it
     return state;
 }
 
-// Called once at the end of runtime
-static void deinit(ppState *state) {
-    if (!state)
-        return;
-    free(state);
+static void deinit(fwpState *state) {
+    // Only called when the program is exiting
+    if (state)
+        free(state);
 }
 
-// Called whenever the app is modified and reloaded
-static void reload(ppState *state) {
-    state->clearColor = RGB(ppRandomInt(256), ppRandomInt(256), ppRandomInt(256));
+static void reload(fwpState *state) {
+    // Called when the dynamic has been updated + reloaded
+    // Here we change the `clearColor` field in our state to blue
+    // If you rebuild the library, the screen will chang from red
+    // to blue! Magic!
+    state->clearColor = RGB(0, 0, 255);
 }
 
-// Called just before the app is reloaded
-static void unload(ppState *state) {
+static void unload(fwpState *state) {
+    // Called when dynamic library has been unloaded
 }
 
-static bool event(ppState *state, ppEvent *e) {
-    switch (e->type) {
-        case KeyboardEvent:
-            printf("EVENT: Keyboard key %d is now %s\n", e->Keyboard.key, e->Keyboard.isdown ? "pressed" : "released");
-            break;
-    }
-    return true;
+static int event(fwpState *state, pbEvent *e) {
+    // Called on window event
+    return 1;
 }
 
-// Called every frame
-static bool tick(ppState *state, Bitmap *pbo, double delta) {
-    FillBitmap(pbo, state->clearColor);
-    DrawString(pbo, "Rebuild to change the background color!", 1, 1, White);
-    DrawRect(pbo, 50, 50, 50, 50, Red, true);
-    return true;
+static int tick(fwpState *state, pbImage *pbo, double delta) {
+    // Called every frame, this is your update callback
+    pbImageFill(pbo, state->clearColor);
+    return 1;
 }
 
-// App descriptor to direct callbacks
-// Must be called "pp" as that is the symbol that is looked up
-EXPORT const ppApp pp = {
+// So fwp knows where your callbacks are a `scene` definition must be made
+// The definition should be always be called scene. If the name changes fwp
+// won't know where to look!
+EXPORT const fwpScene scene = {
     .init = init,
     .deinit = deinit,
     .reload = reload,
@@ -70,49 +90,73 @@ EXPORT const ppApp pp = {
     .event = event,
     .tick = tick
 };
-
 ```
 
-### Library
+Now you have your scene file, you will have to build it as a dynamic library. Make sure to link the necessary files. Below is an example of building on MacOS, please see the Makefile to see how to build on your platform.
+
+```
+clang -shared -fpic [scene file].c src/pb_cocoa.c src/rng.c -framework Cocoa -o scene.dylib
+```
+
+Now you have your dynamic library, you can run:
+
+```
+fwp -p scene.dylib
+```
+
+Provided you haven't changed the example, the window should appear and display a red background. If you now rebuild the scene with the same command as before, the screen will change to blue! That's about it really.
+
+## pb
+
+If you're interested in using _pb_ as a standalone library, it's very easy. It will be a similar process to before.
+
+_pb_ currently supports 4 different backends; Windows (Win32api), MacOS (Cocoa), \*nix (X11) and WASM (Emscripten). Each backend has a different system library or dependency that you will need to link. Feel free to request or submit a pull request for other backends.
 
 ```c
-#include "pp.h"
+#include "pb.h"
 
 int main(int argc, const char *argv[]) {
-    // Create window
-    ppBegin(640, 480, "pp", ppResizable);
-    // Create bitmap for framebuffer
-    Bitmap pbo;
-    InitBitmap(&pbo, 320, 240);
-    // Loop until window is closed
-    while (ppPoll()) {
-        // Clear bitmap
-        FillBitmap(&pbo, Black);
-        // Draw bitmap to window
-        ppFlush(&pbo);
+    // Initalize a new window titled "hello!"
+    pbBegin(640, 480, "hello!", 0);
+    // Create an image for the framebuffer
+    pbImage *fb = pbImageNew(640, 480);
+    // Loop while the window is open + poll events
+    while (pbPoll()) {
+        // Fill the image buffer red
+        pbImageFill(fb, RGB(255, 0, 0));
+        // Flush the image to the window's framebuffer
+        pbFlush(fb);
     }
     // Clean up
-    DestroyBitmap(&pbo);
-    ppEnd();
+    pbEnd();
     return 0;
 }
 ```
 
-## Building
+And to build the executable:
 
-The easiest way is to drop ```pp.c``` and ```pp.h``` into your project and add the appropriate flags (Mac: ```-framework Cocoa```, Windows: ```-lgdi32``` and Linux: ```-lX11```). Or, run ```make library``` to build a dynamic library.
+```
+clang -Ideps -Isrc [source file].c src/pb_cocoa.c -framework Cocoa -o [your executable]
+```
 
-To build the live-reload app, run ```make all``` or ```make run```. This will build an executable and library in the ```build``` folder and then run the app. Edit ```examples/live.c```, and run ```make``` or ```make game```, and the program will automatically reload the changes. On Windows, run ```build.bat``` to build the live-reload app, and "rebuild.bat" to rebuild the library.
+## TODO
 
-**NOTE**: The batch file uses the MSVC compiler, so Visual Studio or the [Visual Studio build tools](https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2022) must be installed. See [here](https://learn.microsoft.com/en-us/cpp/build/building-on-the-command-line?view=msvc-170#developer_command_prompt_shortcuts) for more info.
+- [ ] Documentation + some examples
+- [ ] Image loading + saving (stb_image.h + stb_image_write.h + qoi.h)
+- [ ] ANSI escape parser for text rendering
+- [ ] GIF support (gif_load.h + msf_gif.h)
+- [ ] TTF loading + rendering (stb_truetype.h)
 
-## Credits
+## Dependencies
 
-- .png loading and saving -- [erkkah/tigr](https://github.com/erkkah/tigr/) [UNLICENSE]
-- Built-in debug font -- [dhepper/font8x8](https://github.com/dhepper/font8x8/blob/master/font8x8_basic.h) [Public Domain]
-- win32/getopt.h for live editor -- [skandhurkat/Getopt-for-Visual-Studio](https://github.com/skandhurkat/Getopt-for-Visual-Studio) [GNU GPLv3]
-- win32/dlfcn.[ch] for live editor -- [dlfcn-win32/dlfcn-win32](https://github.com/dlfcn-win32/dlfcn-win32) [MIT]
-- Inspired by [this](https://nullprogram.com/blog/2014/12/23/) -- [skeeto/interactive-c-demo](https://github.com/skeeto/interactive-c-demo) [UNLICENSE]
+- [nothings/stb](https://github.com/nothings/stb) [MIT/UNLICENSE]
+- [phoboslab/qoi](https://github.com/phoboslab/qoi) [MIT]
+- [notnullnotvoid/msf_gif](https://github.com/notnullnotvoid/msf_gif) [MIT/Public Domain]
+- [hidefromkgb/gif_load](https://github.com/hidefromkgb/gif_load/) [Public Domain]
+- [dhepper/font8x8](https://github.com/dhepper/font8x8/blob/master/font8x8_basic.h) [Public Domain]
+- [skandhurkat/Getopt-for-Visual-Studio](https://github.com/skandhurkat/Getopt-for-Visual-Studio) [GNU GPLv3]
+- [dlfcn-win32/dlfcn-win32](https://github.com/dlfcn-win32/dlfcn-win32) [MIT]
+- Inspired by this [blog post](https://nullprogram.com/blog/2014/12/23/) by [skeeto](https://github.com/skeeto/interactive-c-demo) [UNLICENSE]
 
 ## License
 ```

@@ -1,7 +1,6 @@
 /*
  * dlfcn-win32
  * Copyright (c) 2007 Ramiro Polla
- * Copyright (c) 2015 Tiancheng "Timothy" Gu
  *
  * dlfcn-win32 is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -15,9 +14,55 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with dlfcn-win32; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#ifndef DLFCN_H
+#define DLFCN_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifdef SHARED
+#   define DLFCN_WIN32_EXPORTS
+#endif
+
+#if defined(DLFCN_WIN32_EXPORTS)
+#   define DLFCN_EXPORT __declspec(dllexport)
+#else
+#   define DLFCN_EXPORT
+#endif
+
+/* POSIX says these are implementation-defined.
+ * To simplify use with Windows API, we treat them the same way.
+ */
+
+#define RTLD_LAZY   0
+#define RTLD_NOW    0
+
+#define RTLD_GLOBAL (1 << 1)
+#define RTLD_LOCAL  (1 << 2)
+
+/* These two were added in The Open Group Base Specifications Issue 6.
+ * Note: All other RTLD_* flags in any dlfcn.h are not standard compliant.
+ */
+
+#define RTLD_DEFAULT    0
+#define RTLD_NEXT       0
+
+DLFCN_EXPORT void *dlopen ( const char *file, int mode );
+DLFCN_EXPORT int   dlclose(void *handle);
+DLFCN_EXPORT void *dlsym(void *handle, const char *name);
+DLFCN_EXPORT char *dlerror(void);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* DLFCN_H */
+
+#if defined(DLFCN_IMPLEMENTATION)
 #ifdef _DEBUG
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
@@ -27,11 +72,6 @@
 #include <windows.h>
 #include <psapi.h>
 #include <stdio.h>
-
-#ifdef SHARED
-#define DLFCN_WIN32_EXPORTS
-#endif
-#include "dlfcn.h"
 
 /* Note:
  * MSDN says these functions are not thread-safe. We make no efforts to have
@@ -220,8 +260,8 @@ void *dlopen( const char *file, int mode )
 
 
         /* GetModuleHandle( NULL ) only returns the current program file. So
-	 * if we want to get ALL loaded module including those in linked DLLs,
-	 * we have to use EnumProcessModules( ).
+     * if we want to get ALL loaded module including those in linked DLLs,
+     * we have to use EnumProcessModules( ).
          */
         if( EnumProcessModules( hCurrentProc, hAddtnlMods,
                                 sizeof( hAddtnlMods ), &cbNeeded ) != 0 )
@@ -256,7 +296,7 @@ void *dlopen( const char *file, int mode )
          * to UNIX's search paths (start with system folders instead of current
          * folder).
          */
-        hModule = LoadLibraryEx( (LPSTR) lpFileName, NULL, 
+        hModule = LoadLibraryEx( (LPSTR) lpFileName, NULL,
                                  LOAD_WITH_ALTERED_SEARCH_PATH );
 
         /* If the object was loaded with RTLD_GLOBAL, add it to list of global
@@ -398,7 +438,7 @@ BOOL WINAPI DllMain( HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved )
 {
     (void) hinstDLL;
     /*
-     * https://msdn.microsoft.com/en-us/library/windows/desktop/ms682583(v=vs.85).aspx 
+     * https://msdn.microsoft.com/en-us/library/windows/desktop/ms682583(v=vs.85).aspx
      *
      *     When handling DLL_PROCESS_DETACH, a DLL should free resources such as heap
      *     memory only if the DLL is being unloaded dynamically (the lpReserved
@@ -411,4 +451,5 @@ BOOL WINAPI DllMain( HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved )
     }
     return TRUE;
 }
+#endif
 #endif
