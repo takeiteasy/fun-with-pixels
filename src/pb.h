@@ -32,6 +32,7 @@ extern "C" {
 #include <stdint.h>
 #include <stddef.h>
 #include <stdarg.h>
+#include <math.h>
 
 #if defined(_WIN32) || defined(_WIN64)
 #define FWP_PB_WINDOWS

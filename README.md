@@ -1,7 +1,7 @@
 # fwp
 
 > [!WARNING]
-> Work in progress, see TODO section. Everything works, but features need adding.
+> Work in progress, see [TODO](#todo) section. Everything works, but features need adding.
 
 __Fun With Pixels__ is a cross-platform hot-reloading software-rendering enviroment for C, designed for quick experiments and testing. Edit your C code, rebuild and see the changes in real-time!
 
@@ -32,7 +32,6 @@ To make it easy, the user's code is put into a `scene`. Below is a barebones exa
 ```c
 // Firstly include the fwp header, which contains everything we need
 #include "fwp.h"
-#include <stdio.h> // printf
 #include <stdlib.h> // malloc
 
 // A fwpState should be defined in each scene. This structure can contain whatever variables and types you want, but it must be defined like this. Do not typedef the struct definition, as it is already typedef'd in fwp.h
@@ -76,7 +75,7 @@ static int event(fwpState *state, pbEvent *e) {
 
 static int tick(fwpState *state, pbImage *pbo, double delta) {
     // Called every frame, this is your update callback
-    pbImageFill(pbo, RGB(255, 0, 0));
+    pbImageFill(pbo, state->clearColor);
     return 1;
 }
 
@@ -124,9 +123,9 @@ int main(int argc, const char *argv[]) {
     // Loop while the window is open + poll events
     while (pbPoll()) {
         // Fill the image buffer red
-        pbImageFill(test, RGB(255, 0, 0));
+        pbImageFill(fb, RGB(255, 0, 0));
         // Flush the image to the window's framebuffer
-        pbFlush(test);
+        pbFlush(fb);
     }
     // Clean up
     pbEnd();
@@ -140,12 +139,13 @@ And to build the executable:
 clang -Ideps -Isrc [source file].c src/pb_cocoa.c -framework Cocoa -o [your executable]
 ```
 
-## TODO + Planned features
+## TODO
 
+- [ ] Documentation + some examples
 - [ ] Image loading + saving (stb_image.h + stb_image_write.h + qoi.h)
+- [ ] ANSI escape parser for text rendering
 - [ ] GIF support (gif_load.h + msf_gif.h)
 - [ ] TTF loading + rendering (stb_truetype.h)
-- [ ] ANSI escape parser for text rendering
 
 ## Dependencies
 
