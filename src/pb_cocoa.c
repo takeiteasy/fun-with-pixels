@@ -212,6 +212,8 @@ static void windowDidResignKey(id self, SEL _sel, id notification) {
 
 static void windowDidResize(id self, SEL _sel, id notification) {
     CGRect frame = ObjC(CGRect)(ObjC(id)(pbMacInternal.window, sel(contentView)), sel(frame));
+    pbInternal.windowWidth = frame.size.width;
+    pbInternal.windowHeight = frame.size.height;
     pbCallCallback(Resized, frame.size.width, frame.size.height);
 }
 
@@ -239,6 +241,9 @@ static void drawRect(id self, SEL _self, CGRect rect) {
 
 int pbBeginNative(int w, int h, const char *title, pbFlags flags) {
     AutoreleasePool({
+        pbInternal.windowWidth = w;
+        pbInternal.windowHeight = h;
+        
         ObjC(id)(class(NSApplication), sel(sharedApplication));
         ObjC(void, NSInteger)(NSApp, sel(setActivationPolicy:), NSApplicationActivationPolicyRegular);
 
@@ -740,4 +745,16 @@ void pbEndNative(void) {
     ObjC(void)(pbMacInternal.window, sel(close));
     ObjC_Release(pbMacInternal.window);
     ObjC(void, id)(NSApp, sel(terminate:), nil);
+}
+
+void pbSetWindowSizeNative(unsigned int w, unsigned int h) {
+    NSRect frame = {{0, 0}, {w, h}};
+    ObjC(void, NSRect, BOOL, BOOL)(pbMacInternal.window, sel(setFrame:frameRect:display:animate:), frame, YES, YES);
+}
+
+void pbSetWindowTitleNative(const char *title) {
+    AutoreleasePool({
+        id titleStr = ObjC(id, const char*)(class(NSString), sel(stringWithUTF8String:), title);
+        ObjC(void, id)(pbMacInternal.window, sel(setTitle:), titleStr);
+    });
 }

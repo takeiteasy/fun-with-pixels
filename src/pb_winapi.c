@@ -221,7 +221,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
                 goto DEFAULT_PROC;
             pbWinInternal.bmp->bmiHeader.biWidth = pbInternal.w;
             pbWinInternal.bmp->bmiHeader.biHeight = -pbInternal.h;
-            StretchDIBits(pbWinInternal.hdc, 0, 0, pbWinInternal.width, pbWinInternal.height, 0, 0, pbInternal.w, pbInternal.h, pbInternal.data, pbWinInternal.bmp, DIB_RGB_COLORS, SRCCOPY);
+            StretchDIBits(pbWinInternal.hdc, 0, 0, pbInternal.windowWidth, pbInternal.windowHeight, 0, 0, pbInternal.w, pbInternal.h, pbInternal.data, pbWinInternal.bmp, DIB_RGB_COLORS, SRCCOPY);
             ValidateRect(hWnd, NULL);
             break;
         case WM_DESTROY:
@@ -231,9 +231,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
             pbInternal.running = 0;
             break;
         case WM_SIZE:
-            pbWinInternal.width = LOWORD(lParam);
-            pbWinInternal.height = HIWORD(lParam);
-            pbCallCallback(Resized, pbWinInternal.width, pbWinInternal.height);
+            pbInternal.windowWidth = LOWORD(lParam);
+            pbInternal.windowHeight = HIWORD(lParam);
+            pbCallCallback(Resized, pbInternal.windowWidth, pbInternal.windowHeight);
             break;
         case WM_MENUCHAR:
             // Disable beep on Alt+Enter
@@ -390,8 +390,8 @@ int pbBeginNative(int w, int h, const char *title, pbFlags flags) {
     if (!RegisterClass(&pbWinInternal.wnd))
         return 0;
     
-    pbWinInternal.width = rect.right;
-    pbWinInternal.height = rect.bottom;
+    pbInternal.windowWidth = rect.right;
+    pbInternal.windowHeight = rect.bottom;
     if (!(pbWinInternal.hwnd = CreateWindowEx(0, title, title, windowFlags, rect.left, rect.top, rect.right, rect.bottom, 0, 0, 0, 0)))
         return 0;
     if (!(pbWinInternal.hdc = GetDC(pbWinInternal.hwnd)))
@@ -452,3 +452,12 @@ void pbEndNative(void) {
     DestroyWindow(pbWinInternal.hwnd);
 }
 
+void pbSetWindowSizeNative(unsigned int w, unsigned int h) {
+    pbInternal.windowWidth = w;
+    pbInternal.windowHeight = h;
+    SetWindowPos(pbWinInternal.hwnd, HWND_TOP, 0, 0, w, h, SWP_SHOWWINDOW | SWP_FRAMECHANGED);
+}
+
+void pbSetWindowTitleNative(const char *title) {
+    SetWindowText(state.hwnd, title);
+}

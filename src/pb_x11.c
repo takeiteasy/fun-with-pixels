@@ -99,8 +99,8 @@ int pbBeginNative(int w, int h, const char *title, pbFlags flags) {
     swa.backing_store = NotUseful;
     if (!(pbLinuxInternal.window = XCreateWindow(pbLinuxInternal.display, pbLinuxInternal.root, x, y, w, h, 0, pbLinuxInternal.depth, InputOutput, visual, CWBackPixel | CWBorderPixel | CWBackingStore, &swa)))
         return 0;
-    pbLinuxInternal.width = w;
-    pbLinuxInternal.height = h;
+    pbInternal.windowWidth = w;
+    pbInternal.windowHeight = h;
     
     pbLinuxInternal.delete = XInternAtom(pbLinuxInternal.display, "WM_DELETE_WINDOW", False);
     XSetWMProtocols(pbLinuxInternal.display, pbLinuxInternal.window, &pbLinuxInternal.delete, 1);
@@ -403,11 +403,11 @@ int pbPollNative(void) {
             case ConfigureNotify: {
                 int w = e.xconfigure.width;
                 int h = e.xconfigure.height;
-                if (pbLinuxInternal.width == w && pbLinuxInternal.height == h)
+                if (pbInternal.windowWidth == w && pbInternal.windowHeight == h)
                     break;
                 pbCallCallback(Resized, w, h);
-                pbLinuxInternal.width = w;
-                pbLinuxInternal.height = h;
+                pbInternal.windowWidth = w;
+                pbInternal.windowHeight = h;
                 
                 if (pbLinuxInternal.scaler) {
                     pbLinuxInternal.scaler->data = NULL;
@@ -451,22 +451,22 @@ static int* scale(int *data, int w, int h, int nw, int nh) {
 void pbFlushNative(pbImage *buffer) {
     if (!buffer || !buffer->buffer || !buffer->width || !buffer->height)
         return;
-    if (pbLinuxInternal.width != buffer->width || pbLinuxInternal.height != buffer->height) {
+    if (pbInternal.windowWidth != buffer->width || pbInternal.windowHeight != buffer->height) {
         if (pbLinuxInternal.scaler) {
             pbLinuxInternal.scaler->data = NULL;
             XDestroyImage(pbLinuxInternal.scaler);
             pbLinuxInternal.scaler = NULL;
         }
-        pbLinuxInternal.scaler = XCreateImage(pbLinuxInternal.display, CopyFromParent, pbLinuxInternal.depth, ZPixmap, 0, NULL, pbLinuxInternal.width, pbLinuxInternal.height, 32, pbLinuxInternal.width * 4);
+        pbLinuxInternal.scaler = XCreateImage(pbLinuxInternal.display, CopyFromParent, pbLinuxInternal.depth, ZPixmap, 0, NULL, pbInternal.windowWidth, pbInternal.windowHeight, 32, pbInternal.windowWidth * 4);
         
         if (pbLinuxInternal.buffer)
             free(pbLinuxInternal.buffer);
-        pbLinuxInternal.buffer = scale(buffer->data, buffer->width, buffer->height, pbLinuxInternal.width, pbLinuxInternal.height);
+        pbLinuxInternal.buffer = scale(buffer->data, buffer->width, buffer->height, pbInternal.windowWidth, pbInternal.windowHeight);
         pbLinuxInternal.scaler->data = (char*)pbLinuxInternal.buffer;
-        XPutImage(pbLinuxInternal.display, pbLinuxInternal.window, pbLinuxInternal.gc, pbLinuxInternal.scaler, 0, 0, 0, 0, pbLinuxInternal.width, pbLinuxInternal.height);
+        XPutImage(pbLinuxInternal.display, pbLinuxInternal.window, pbLinuxInternal.gc, pbLinuxInternal.scaler, 0, 0, 0, 0, pbInternal.windowWidth, pbInternal.windowHeight);
     } else {
         pbLinuxInternal.img->data = (char*)buffer->buffer;
-        XPutImage(pbLinuxInternal.display, pbLinuxInternal.window, pbLinuxInternal.gc, pbLinuxInternal.img, 0, 0, 0, 0, pbLinuxInternal.width, pbLinuxInternal.height);
+        XPutImage(pbLinuxInternal.display, pbLinuxInternal.window, pbLinuxInternal.gc, pbLinuxInternal.img, 0, 0, 0, 0, pbInternal.windowWidth, pbInternal.windowHeight);
     }
     XFlush(pbLinuxInternal.display);
 }
@@ -483,4 +483,15 @@ void pbEndNative(void) {
     XDestroyImage(pbLinuxInternal.img);
     XDestroyWindow(pbLinuxInternal.display, pbLinuxInternal.window);
     XCloseDisplay(pbLinuxInternal.display);
+}
+
+void pbSetWindowSizeNative(unsigned int w, unsigned int h) {
+    pbInternal.windowWidth = w;
+    pbInternal.windowHeight = h;
+    XResizeWindow(pbLinuxInternal.display, pbLinuxInternal.window, w, h);
+}
+
+void pbSetWindowTitleNative(const char *title) {
+    Atom nameAtom = XInternAtom(pbLinuxInternal.display, "WM_NAME", 0);
+    XChangeProperty(pbLinuxInternal.display, pbLinuxInternal.window, nameAtom, XA_STRING, 8, PropModeReplace, title, strlen(title));
 }

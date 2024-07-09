@@ -82,6 +82,8 @@ static EM_BOOL uievent_callback(int type, const EmscriptenUiEvent* e, void* user
     pbEmccInternal.screenW = e->documentBodyClientWidth;
     pbEmccInternal.screenH = e->documentBodyClientHeight;
     emscripten_get_element_css_size(canvas, (double*)&pbEmccInternal.canvasW, (double*)&pbEmccInternal.canvasH);
+    pbInternal.windowWidth = pbEmccInternal.canvasW;
+    pbInternal.windowHeight = pbEmccInternal.canvasH;
     pbCallCallback(Resized, pbEmccInternal.screenW, pbEmccInternal.screenH);
     return 1;
 }
@@ -97,6 +99,10 @@ static const char* beforeunload_callback(int eventType, const void *reserved, vo
 
 int pbBeginNative(int w, int h, const char *title, pbFlags flags) {
     emscripten_set_canvas_element_size(canvas, w, h);
+    if (title)
+        emscripten_set_window_title(title);
+    pbInternal.windowWidth = w;
+    pbInternal.windowHeight = h;
     
     emscripten_set_keypress_callback(EMSCRIPTEN_EVENT_TARGET_WINDOW, 0, 1, key_callback);
     emscripten_set_keydown_callback(EMSCRIPTEN_EVENT_TARGET_WINDOW, 0, 1, key_callback);
@@ -161,4 +167,14 @@ void pbFlushNative(pbImage *buffer) {
 
 void pbEndNative(void) {
     // Nothing to do here
+}
+
+void pbSetWindowSizeNative(unsigned int w, unsigned int h) {
+    pbInternal.windowWidth = pbEmccInternal.canvasW = w;
+    pbInternal.windowHeight = pbEmccInternal.canvasH = h;
+    emscripten_set_element_css_size(canvas, (double)w, (double)h);
+}
+
+void pbSetWindowTitleNative(const char *title) {
+    emscripten_set_window_title(title);
 }

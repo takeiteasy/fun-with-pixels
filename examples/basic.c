@@ -7,7 +7,7 @@ struct fwpState {
     pbColor clearColor;
 };
 
-static fwpState* init(void) {
+static fwpState* init(pbImage *framebuffer) {
     // Called once when the program first starts
     // You must always create an instance of your fwpState definition
     // It must be allocated on the stack, not the heap

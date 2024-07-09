@@ -67,17 +67,13 @@ typedef struct {
 } pbEvent;
 
 typedef struct {
-    fwpState*(*init)(void);
+    fwpState*(*init)(pbImage*);
     void(*deinit)(fwpState*);
     void(*reload)(fwpState*);
     void(*unload)(fwpState*);
     int(*event)(fwpState*, pbEvent*);
     int(*tick)(fwpState*, pbImage*, double);
 } fwpScene;
-
-#ifndef _MSC_VER
-extern const fwpScene scene;
-#endif
 
 #if defined(__cplusplus)
 }

@@ -275,10 +275,15 @@ typedef enum {
     X(Focus,        (void*, int))                    \
     X(Closed,       (void*))
 
-EXPORT int pbBegin(int w, int h, const char *title, pbFlags flags);
+EXPORT int pbBegin(unsigned int w, unsigned int h, const char *title, pbFlags flags);
 EXPORT int pbPoll(void);
 EXPORT void pbFlush(pbImage *buffer);
 EXPORT void pbEnd(void);
+
+EXPORT void pbSetWindowTitle(const char *title);
+EXPORT void pbWindowSize(unsigned int *w, unsigned int *h);
+EXPORT void pbSetWindowSize(unsigned int w, unsigned int h);
+EXPORT void pbCursorPosition(int *x, int *y);
 
 #define X(NAME, ARGS) \
     void(*NAME##Callback)ARGS,
@@ -868,14 +873,20 @@ static struct {
     void *userdata;
     int running;
     int *data, w, h;
+    unsigned int windowWidth;
+    unsigned int windowHeight;
+    int cursorX;
+    int cursorY;
 } pbInternal = {0};
 
 int pbBeginNative(int w, int h, const char *title, pbFlags flags);
 int pbPollNative(void);
 void pbFlushNative(pbImage *buffer);
 void pbEndNative(void);
+void pbSetWindowSizeNative(unsigned int w, unsigned int h);
+void pbSetWindowTitleNative(const char *title);
 
-int pbBegin(int w, int h, const char *title, pbFlags flags) {
+int pbBegin(unsigned int w, unsigned int h, const char *title, pbFlags flags) {
     assert(!pbInternal.running);
     pbInternal.data = (void*)0;
     pbInternal.w = 0;
@@ -894,6 +905,28 @@ void pbFlush(pbImage *buffer) {
 
 void pbEnd(void) {
     pbEndNative();
+}
+
+void pbSetWindowTitle(const char *title) {
+    pbSetWindowTitleNative(title);
+}
+
+void pbWindowSize(unsigned int *w, unsigned int *h) {
+    if (w)
+        *w = pbInternal.windowWidth;
+    if (h)
+        *h = pbInternal.windowHeight;
+}
+
+void pbSetWindowSize(unsigned int w, unsigned int h) {
+    pbSetWindowSizeNative(w, h);
+}
+
+void pbCursorPosition(int *x, int *y) {
+    if (x)
+        *x = pbInternal.cursorX;
+    if (y)
+        *y = pbInternal.cursorY;
 }
 
 #define X(NAME, ARGS) \

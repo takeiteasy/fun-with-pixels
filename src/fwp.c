@@ -174,7 +174,7 @@ static int ReloadLibrary(const char *path) {
     if (!(state.scene = dlsym(state.handle, "scene")))
         goto BAIL;
     if (!state.state) {
-        if (!(state.state = state.scene->init()))
+        if (!(state.state = state.scene->init(state.buffer)))
             goto BAIL;
     } else {
         if (state.scene->reload)
