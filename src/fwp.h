@@ -32,29 +32,20 @@ extern "C" {
 #include "pb.h"
 #include "rng.h"
 
-#ifdef FWP_COMMAND_LINE
 typedef struct fwpState fwpState;
 
-/*!
- * @enum fwpEventType
- * @abstract Event types for PP_LIVE event callback
- */
 typedef enum {
 #define X(NAME, ARGS) NAME##Event,
     FWP_PB_CALLBACKS
 #undef X
 } pbEventType;
 
-/*!
- * @typedef fwpEvent
- * @abstract Event type for window events
- */
 typedef struct {
     struct {
         int button;
         int isdown;
         struct {
-            int x, y;
+            unsigned int x, y;
             float dx, dy;
         } position;
         struct {
@@ -75,10 +66,6 @@ typedef struct {
     pbEventType type;
 } pbEvent;
 
-/*!
- * @typedef fwpApp
- * @abstract PP_LIVE app descriptor for callbacks
- */
 typedef struct {
     fwpState*(*init)(void);
     void(*deinit)(fwpState*);
@@ -91,7 +78,6 @@ typedef struct {
 #ifndef _MSC_VER
 extern const fwpScene scene;
 #endif
-#endif // FWP_COMMAND_LINE
 
 #if defined(__cplusplus)
 }

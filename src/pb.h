@@ -43,49 +43,193 @@ extern "C" {
 #define EXPORT
 #endif
 
-typedef int32_t color_t;
+typedef int32_t pbColor;
 
-EXPORT color_t RGBA(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
-EXPORT color_t RGB(uint8_t r, uint8_t g, uint8_t b);
-EXPORT color_t RGBA1(uint8_t c, uint8_t a);
-EXPORT color_t RGB1(uint8_t c);
+typedef enum {
+    IndianRed = -3318692,
+    LightCoral = -1015680,
+    Salmon = -360334,
+    DarkSalmon = -1468806,
+    LightSalmon = -24454,
+    Crimson = -2354116,
+    Red = -65536,
+    FireBrick = -5103070,
+    DarkRed = -7667712,
+    Pink = -16181,
+    LightPink = -18751,
+    HotPink = -38476,
+    DeepPink = -60269,
+    MediumVioletRed = -3730043,
+    PaleVioletRed = -2396013,
+    Coral = -32944,
+    Tomato = -40121,
+    OrangeRed = -47872,
+    DarkOrange = -29696,
+    Orange = -23296,
+    Gold = -10496,
+    Yellow = -256,
+    LightYellow = -32,
+    LemonChiffon = -1331,
+    LightGoldenrodYellow = -329006,
+    PapayaWhip = -4139,
+    Moccasin = -6987,
+    PeachPuff = -9543,
+    PaleGoldenrod = -1120086,
+    Khaki = -989556,
+    DarkKhaki = -4343957,
+    Lavender = -1644806,
+    Thistle = -2572328,
+    Plum = -2252579,
+    Violet = -1146130,
+    Orchid = -2461482,
+    Fuchsia = -65281,
+    Magenta = -65281,
+    MediumOrchid = -4565549,
+    MediumPurple = -7114533,
+    RebeccaPurple = -10079335,
+    BlueViolet = -7722014,
+    DarkViolet = -7077677,
+    DarkOrchid = -6737204,
+    DarkMagenta = -7667573,
+    Purple = -8388480,
+    Indigo = -11861886,
+    SlateBlue = -9807155,
+    DarkSlateBlue = -12042869,
+    MediumSlateBlue = -8689426,
+    GreenYellow = -5374161,
+    Chartreuse = -8388864,
+    LawnGreen = -8586240,
+    Lime = -16711936,
+    LimeGreen = -13447886,
+    PaleGreen = -6751336,
+    LightGreen = -7278960,
+    MediumSpringGreen = -16713062,
+    SpringGreen = -16711809,
+    MediumSeaGreen = -12799119,
+    SeaGreen = -13726889,
+    ForestGreen = -14513374,
+    Green = -16744448,
+    DarkGreen = -16751616,
+    YellowGreen = -6632142,
+    OliveDrab = -9728477,
+    Olive = -8355840,
+    DarkOliveGreen = -11179217,
+    MediumAquamarine = -10039894,
+    DarkSeaGreen = -7357301,
+    LightSeaGreen = -14634326,
+    DarkCyan = -16741493,
+    Teal = -16744320,
+    Aqua = -16711681,
+    Cyan = -16711681,
+    LightCyan = -2031617,
+    PaleTurquoise = -5247250,
+    Aquamarine = -8388652,
+    Turquoise = -12525360,
+    MediumTurquoise = -12004916,
+    DarkTurquoise = -16724271,
+    CadetBlue = -10510688,
+    SteelBlue = -12156236,
+    LightSteelBlue = -5192482,
+    PowderBlue = -5185306,
+    LightBlue = -5383962,
+    SkyBlue = -7876885,
+    LightSkyBlue = -7876870,
+    DeepSkyBlue = -16728065,
+    DodgerBlue = -14774017,
+    CornflowerBlue = -10185235,
+    RoyalBlue = -12490271,
+    Blue = -16776961,
+    MediumBlue = -16777011,
+    DarkBlue = -16777077,
+    Navy = -16777088,
+    MidnightBlue = -15132304,
+    Cornsilk = -1828,
+    BlanchedAlmond = -5171,
+    Bisque = -6972,
+    NavajoWhite = -8531,
+    Wheat = -663885,
+    BurlyWood = -2180985,
+    Tan = -2968436,
+    RosyBrown = -4419697,
+    SandyBrown = -744352,
+    Goldenrod = -2448096,
+    DarkGoldenrod = -4684277,
+    Peru = -3308225,
+    Chocolate = -2987746,
+    SaddleBrown = -7650029,
+    Sienna = -6270419,
+    Brown = -5952982,
+    Maroon = -8388608,
+    White = -1,
+    Snow = -1286,
+    HoneyDew = -983056,
+    MintCream = -655366,
+    Azure = -983041,
+    AliceBlue = -984833,
+    GhostWhite = -460545,
+    WhiteSmoke = -657931,
+    SeaShell = -2578,
+    Beige = -657956,
+    OldLace = -133658,
+    FloralWhite = -1296,
+    Ivory = -16,
+    AntiqueWhite = -332841,
+    Linen = -331546,
+    LavenderBlush = -3851,
+    MistyRose = -6943,
+    Gainsboro = -2302756,
+    LightGray = -2894893,
+    Silver = -4144960,
+    DarkGray = -5658199,
+    Gray = -8355712,
+    DimGray = -9868951,
+    LightSlateGray = -8943463,
+    SlateGray = -9404272,
+    DarkSlateGray = -13676721,
+    Black = -16777216,
+} pbBuiltinColor;
 
-EXPORT uint8_t Rgba(color_t c);
-EXPORT uint8_t rGba(color_t c);
-EXPORT uint8_t rgBa(color_t c);
-EXPORT uint8_t rgbA(color_t c);
+EXPORT pbColor RGBA(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
+EXPORT pbColor RGB(uint8_t r, uint8_t g, uint8_t b);
+EXPORT pbColor RGBA1(uint8_t c, uint8_t a);
+EXPORT pbColor RGB1(uint8_t c);
 
-EXPORT color_t rGBA(color_t c, uint8_t r);
-EXPORT color_t RgBA(color_t c, uint8_t g);
-EXPORT color_t RGbA(color_t c, uint8_t b);
-EXPORT color_t RGBa(color_t c, uint8_t a);
+EXPORT uint8_t Rgba(pbColor c);
+EXPORT uint8_t rGba(pbColor c);
+EXPORT uint8_t rgBa(pbColor c);
+EXPORT uint8_t rgbA(pbColor c);
+
+EXPORT pbColor rGBA(pbColor c, uint8_t r);
+EXPORT pbColor RgBA(pbColor c, uint8_t g);
+EXPORT pbColor RGbA(pbColor c, uint8_t b);
+EXPORT pbColor RGBa(pbColor c, uint8_t a);
 
 typedef struct {
     unsigned int width, height;
-    color_t *buffer;
+    pbColor *buffer;
 } pbImage;
 
 EXPORT pbImage* pbImageNew(unsigned int w, unsigned int h);
 EXPORT void pbImageFree(pbImage *img);
 
-EXPORT void pbImageFill(pbImage *img, color_t col);
-EXPORT void pbImageFlood(pbImage *img, int x, int y, color_t col);
-EXPORT void pbImagePSet(pbImage *img, int x, int y, color_t col);
-EXPORT color_t pbImagePGet(pbImage *img, int x, int y);
+EXPORT void pbImageFill(pbImage *img, pbColor col);
+EXPORT void pbImageFlood(pbImage *img, int x, int y, pbColor col);
+EXPORT void pbImagePSet(pbImage *img, int x, int y, pbColor col);
+EXPORT pbColor pbImagePGet(pbImage *img, int x, int y);
 EXPORT void pbImagePaste(pbImage *dst, pbImage *src, int x, int y);
 EXPORT void pbImagePartialPaste(pbImage *dst, pbImage *src, int x, int y, int rx, int ry, int rw, int rh);
 EXPORT pbImage* pbImageDupe(pbImage *src);
-EXPORT void pbImagePassThru(pbImage *img, color_t(*fn)(int x, int y, color_t col));
+EXPORT void pbImagePassThru(pbImage *img, pbColor(*fn)(int x, int y, pbColor col));
 EXPORT pbImage* pbImageResize(pbImage *src, int nw, int nh);
 EXPORT pbImage* pbImageRotate(pbImage *src, float angle);
-EXPORT void pbImageDrawLine(pbImage *img, int x0, int y0, int x1, int y1, color_t col);
-EXPORT void pbImageDrawCircle(pbImage *img, int xc, int yc, int r, color_t col, int fill);
-EXPORT void pbImageDrawRectangle(pbImage *img, int x, int y, int w, int h, color_t col, int fill);
-EXPORT void pbImageDrawTriangle(pbImage *img, int x0, int y0, int x1, int y1, int x2, int y2, color_t col, int fill);
+EXPORT void pbImageDrawLine(pbImage *img, int x0, int y0, int x1, int y1, pbColor col);
+EXPORT void pbImageDrawCircle(pbImage *img, int xc, int yc, int r, pbColor col, int fill);
+EXPORT void pbImageDrawRectangle(pbImage *img, int x, int y, int w, int h, pbColor col, int fill);
+EXPORT void pbImageDrawTriangle(pbImage *img, int x0, int y0, int x1, int y1, int x2, int y2, pbColor col, int fill);
 
-EXPORT void pbImageDrawCharacter(pbImage *img, char c, int x, int y, color_t col);
-EXPORT void pbImageDrawString(pbImage *img, const char *str, int x, int y, color_t col);
-EXPORT void pbImageDrawStringFormat(pbImage *img, int x, int y, color_t col, const char *fmt, ...);
+EXPORT void pbImageDrawCharacter(pbImage *img, char c, int x, int y, pbColor col);
+EXPORT void pbImageDrawString(pbImage *img, const char *str, int x, int y, pbColor col);
+EXPORT void pbImageDrawStringFormat(pbImage *img, int x, int y, pbColor col, const char *fmt, ...);
 
 EXPORT pbImage* pbImageLoadFromPath(const char *path);
 EXPORT pbImage* pbImageLoadFromMemory(const void *data, size_t length);
@@ -156,58 +300,53 @@ EXPORT int pbRunning(void);
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdarg.h>
 #include <string.h>
-#define _USE_MATH_DEFINES
-#include <math.h>
-#include <setjmp.h>
-#include <errno.h>
 
-color_t RGBA(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
+pbColor RGBA(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
     return ((uint8_t)a << 24) | ((uint8_t)r << 16) | ((uint8_t)g << 8) | b;
 }
 
-color_t RGB(uint8_t r, uint8_t g, uint8_t b) {
+pbColor RGB(uint8_t r, uint8_t g, uint8_t b) {
     return RGBA(r, g, b, 255);
 }
 
-color_t RGBA1(uint8_t c, uint8_t a) {
+pbColor RGBA1(uint8_t c, uint8_t a) {
     return RGBA(c, c, c, a);
 }
 
-color_t RGB1(uint8_t c) {
+pbColor RGB1(uint8_t c) {
     return RGB(c, c, c);
 }
 
-uint8_t Rgba(color_t c) {
+uint8_t Rgba(pbColor c) {
     return (uint8_t)((c >> 16) & 0xFF);
 }
 
-uint8_t rGba(color_t c) {
+uint8_t rGba(pbColor c) {
     return (uint8_t)((c >>  8) & 0xFF);
 }
 
-uint8_t rgBa(color_t c) {
+uint8_t rgBa(pbColor c) {
     return (uint8_t)(c & 0xFF);
 }
 
-uint8_t rgbA(color_t c) {
+uint8_t rgbA(pbColor c) {
     return (uint8_t)((c >> 24) & 0xFF);
 }
 
-color_t rGBA(color_t c, uint8_t r) {
+pbColor rGBA(pbColor c, uint8_t r) {
     return (c & ~0x00FF0000) | (r << 16);
 }
 
-color_t RgBA(color_t c, uint8_t g) {
+pbColor RgBA(pbColor c, uint8_t g) {
     return (c & ~0x0000FF00) | (g << 8);
 }
 
-color_t RGbA(color_t c, uint8_t b) {
+pbColor RGbA(pbColor c, uint8_t b) {
     return (c & ~0x000000FF) | b;
 }
 
-color_t RGBa(color_t c, uint8_t a) {
+pbColor RGBa(pbColor c, uint8_t a) {
     return (c & ~0x00FF0000) | (a << 24);
 }
 
@@ -227,12 +366,12 @@ void pbImageFree(pbImage *img) {
     }
 }
 
-void pbImageFill(pbImage *img, color_t col) {
+void pbImageFill(pbImage *img, pbColor col) {
     for (int i = 0; i < img->width * img->height; ++i)
         img->buffer[i] = col;
 }
 
-static inline void flood_fn(pbImage *img, int x, int y, color_t new, color_t old) {
+static inline void flood_fn(pbImage *img, int x, int y, pbColor new, pbColor old) {
     if (new == old || pbImagePGet(img, x, y) != old)
         return;
     
@@ -277,7 +416,7 @@ static inline void flood_fn(pbImage *img, int x, int y, color_t new, color_t old
     }
 }
 
-void pbImageFlood(pbImage *img, int x, int y, color_t col) {
+void pbImageFlood(pbImage *img, int x, int y, pbColor col) {
     if (x < 0 || y < 0 || x >= img->width || y >= img->height)
         return;
     flood_fn(img, x, y, col, pbImagePGet(img, x, y));
@@ -285,7 +424,7 @@ void pbImageFlood(pbImage *img, int x, int y, color_t col) {
 
 #define BLEND(c0, c1, a0, a1) (c0 * a0 / 255) + (c1 * a1 * (255 - a0) / 65025)
 
-static int Blend(color_t _a, color_t _b) {
+static int Blend(pbColor _a, pbColor _b) {
     int a   = rgbA(_a);
     int b   = rgbA(_b);
     return !a ? 0xFF000000 : a >= 255 ? RGBa(a, 255) : RGBA(BLEND(Rgba(_a), Rgba(_b), a, b),
@@ -294,7 +433,7 @@ static int Blend(color_t _a, color_t _b) {
                                                             a + (b * (255 - a) >> 8));
 }
 
-void pbImagePSet(pbImage *img, int x, int y, color_t col) {
+void pbImagePSet(pbImage *img, int x, int y, pbColor col) {
     if (x >= 0 && y >= 0 && x < img->width && y < img->height) {
         int a = rgbA(col);
         img->buffer[y * img->width + x] = a == 255 ? col : a == 0 ? 0 : Blend(pbImagePGet(img, x, y), col);
@@ -329,7 +468,7 @@ pbImage* pbImageDupe(pbImage *src) {
     return result;
 }
 
-void pbImagePassThru(pbImage *img, color_t(*fn)(int x, int y, color_t col)) {
+void pbImagePassThru(pbImage *img, pbColor(*fn)(int x, int y, pbColor col)) {
     int x, y;
     for (x = 0; x < img->width; ++x)
         for (y = 0; y < img->height; ++y)
@@ -392,7 +531,7 @@ pbImage* pbImageRotate(pbImage *src, float angle) {
     return result;
 }
 
-static inline void vline(pbImage *img, int x, int y0, int y1, color_t col) {
+static inline void vline(pbImage *img, int x, int y0, int y1, pbColor col) {
     if (y1 < y0) {
         y0 += y1;
         y1  = y0 - y1;
@@ -411,7 +550,7 @@ static inline void vline(pbImage *img, int x, int y0, int y1, color_t col) {
         pbImagePSet(img, x, y, col);
 }
 
-static inline void hline(pbImage *img, int y, int x0, int x1, color_t col) {
+static inline void hline(pbImage *img, int y, int x0, int x1, pbColor col) {
     if (x1 < x0) {
         x0 += x1;
         x1  = x0 - x1;
@@ -430,7 +569,7 @@ static inline void hline(pbImage *img, int y, int x0, int x1, color_t col) {
         pbImagePSet(img, x, y, col);
 }
 
-void pbImageDrawLine(pbImage *img, int x0, int y0, int x1, int y1, color_t col) {
+void pbImageDrawLine(pbImage *img, int x0, int y0, int x1, int y1, pbColor col) {
     if (x0 == x1)
         vline(img, x0, y0, y1, col);
     if (y0 == y1)
@@ -446,7 +585,7 @@ void pbImageDrawLine(pbImage *img, int x0, int y0, int x1, int y1, color_t col) 
     }
 }
 
-void pbImageDrawCircle(pbImage *img, int xc, int yc, int r, color_t col, int fill) {
+void pbImageDrawCircle(pbImage *img, int xc, int yc, int r, pbColor col, int fill) {
     int x = -r, y = 0, err = 2 - 2 * r; /* II. Quadrant */
     do {
         pbImagePSet(img, xc - x, yc + y, col);    /*   I. Quadrant */
@@ -467,7 +606,7 @@ void pbImageDrawCircle(pbImage *img, int xc, int yc, int r, color_t col, int fil
     } while (x < 0);
 }
 
-void pbImageDrawRectangle(pbImage *img, int x, int y, int w, int h, color_t col, int fill) {
+void pbImageDrawRectangle(pbImage *img, int x, int y, int w, int h, pbColor col, int fill) {
     if (x < 0) {
         w += x;
         x  = 0;
@@ -506,7 +645,7 @@ void pbImageDrawRectangle(pbImage *img, int x, int y, int w, int h, color_t col,
         b = temp;     \
     } while (0)
 
-void pbImageDrawTriangle(pbImage *img, int x0, int y0, int x1, int y1, int x2, int y2, color_t col, int fill) {
+void pbImageDrawTriangle(pbImage *img, int x0, int y0, int x1, int y1, int x2, int y2, pbColor col, int fill) {
     if (y0 ==  y1 && y0 ==  y2)
         return;
     if (fill) {
@@ -689,14 +828,14 @@ static char font8x8_basic[128][8] = {
     {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}  // U+007F
 };
 
-void pbImageDrawCharacter(pbImage *img, char c, int x, int y, color_t col) {
+void pbImageDrawCharacter(pbImage *img, char c, int x, int y, pbColor col) {
     char *bitmap = font8x8_basic[(int)c];
     for (int i = 0; i < 8; i++)
         for (int j = 0; j < 8; j++)
             pbImagePSet(img, x + i, y + j, bitmap[j] & 1 << i ? col : 0xFF000000);
 }
 
-void pbImageDrawString(pbImage *img, const char *str, int x, int y, color_t col) {
+void pbImageDrawString(pbImage *img, const char *str, int x, int y, pbColor col) {
     int nx = x, ny = y;
     for (int i = 0; i < strlen(str); ++i) {
         if (str[i] == '\n') {
@@ -709,7 +848,7 @@ void pbImageDrawString(pbImage *img, const char *str, int x, int y, color_t col)
     }
 }
 
-void pbImageDrawStringFormat(pbImage *img, int x, int y, color_t col, const char *fmt, ...) {
+void pbImageDrawStringFormat(pbImage *img, int x, int y, pbColor col, const char *fmt, ...) {
     va_list args;
     va_start(args, fmt);
     size_t size = _vscprintf(fmt, args) + 1;

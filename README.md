@@ -1,62 +1,162 @@
-# pp
+# fwp
 
-_pp_ **[ˈpiːpiː]** or "_Pixel Playground_" is a small minimal cross-platform software-rendering window + context. Click [here](https://takeiteasy.github.io/pp/) for documentation.
+> [!WARNING]
+> Work in progress, see TODO section. Everything works, but features need adding.
 
-Platforms:
-* Windows
-* MacOS
-* Linux
-* WebAssembly (via [emscripten](https://github.com/emscripten-core/emscripten))
+__Fun With Pixels__ is a cross-platform hot-reloading software-rendering enviroment for C, designed for quick experiments and testing. Edit your C code, rebuild and see the changes in real-time!
 
-**NOTE:** Image buffers should be arrays of 32-bit integers with ARGB formatting.
+If you would like to try it out, see the [setting up](#setting-up) section. Also included is a utility library _pb_ that can function independently from the _fwp_ program. If you're interested in that, see the [pb](#pb) section.
 
-## Example
-```c
-#include "pp"
+![Preview](/preview.gif)
 
-// Window event callbacks
-void onKeyboard(void *userdata, int key, int modifier, int isDown);
-void onMouseButton(void *userdata, int button, int modifier, int isDown);
-void onMouseMove(void *userdata, int x, int y, float dx, float dy);
-void onMouseScroll(void *userdata, float dx, float dy, int modifier);
-void onFocus(void *userdata, int isFocused);
-void onResized(void *userdata, int w, int h);
-void onClosed(void *userdata);
-
-// Buffer to store image data
-static int test[640 * 480];
-
-int main(int argc, const char *argv[]) {
-    // Initialize pp and create 640x480 window titled "pp"
-    ppBegin(640, 480, "pp", ppResizable);
-    // Set window event callbacks ...
-    // ppKeyboardCallback(onKeyboard);
-    
-    // Create a simple xor pattern in the image buffer
-    for (int x = 0; x < 640; x++)
-        for (int y = 0; y < 480; y++)
-            test[y * 640 + x] = x ^ y;
-    
-    // Keep window open and poll events (must poll every frame)
-    while (ppPoll()) {
-        // do something here ...
-        
-        // Flush the buffer to the window
-        ppFlush(test, 640, 480);
-    }
-    
-    // Always clean your pp
-    ppEnd();
-    return 0;
-}
+## Usage
 
 ```
+usage: fwp -p [path] [options]
 
-## Building
+  -w/--width     Window width [default: 640]
+  -h/--height    Window height [default: 480]
+  -t/--title     Window title [default: "fwp"]
+  -r/--resizable Enable resizable window
+  -a/--top       Enable window always on top
+  -p/--path      Path the dynamic library [required]
+  -u/--usage     Display this message
+```
 
-The Makefile has three options; ```default``` will build example/basic.c, ```library``` will build a dynamic library and ```web``` will also build example/basic.c, except compiled to wasm.
+## Setting up
 
-It's also very easy to use in your own project. Simply copy (or fork) ```pp[platform].c``` and ```pp.h``` from the ```src``` directory. If you are on windows you will need to link ```-lgdi32```. If you're on Linux you must link ```-lX11 -lm``` and on MacOS ```-framework Cocoa```.
+To achieve hot-reloading in C, all the code that is to be reloaded is built as a dynamic library. The symbols are loaded from the library and updated by the _fwp_ executable; which remains running.
+
+To make it easy, the user's code is put into a `scene`. Below is a barebones example of how to setup a scene. Look at the example and read the comments.
+
+```c
+// Firstly include the fwp header, which contains everything we need
+#include "fwp.h"
+#include <stdio.h> // printf
+#include <stdlib.h> // malloc
+
+// A fwpState should be defined in each scene. This structure can contain whatever variables and types you want, but it must be defined like this. Do not typedef the struct definition, as it is already typedef'd in fwp.h
+struct fwpState {
+    pbColor clearColor;
+};
+
+static fwpState* init(void) {
+    // Called once when the program first starts
+    // You must always create an instance of your fwpState definition
+    // It must be allocated on the stack, not the heap
+    // This object will be be used to keep track of things between reloads
+    fwpState *state = malloc(sizeof(fwpState));
+    state->clearColor = RGB(255, 0, 0);
+    // Return your fwpState so fwp can keep track of it
+    return state;
+}
+
+static void deinit(fwpState *state) {
+    // Only called when the program is exiting
+    if (state)
+        free(state);
+}
+
+static void reload(fwpState *state) {
+    // Called when the dynamic has been updated + reloaded
+    // Here we change the `clearColor` field in our state to blue
+    // If you rebuild the library, the screen will chang from red
+    // to blue! Magic!
+    state->clearColor = RGB(0, 0, 255);
+}
+
+static void unload(fwpState *state) {
+    // Called when dynamic library has been unloaded
+}
+
+static int event(fwpState *state, pbEvent *e) {
+    // Called on window event
+    return 1;
+}
+
+static int tick(fwpState *state, pbImage *pbo, double delta) {
+    // Called every frame, this is your update callback
+    pbImageFill(pbo, RGB(255, 0, 0));
+    return 1;
+}
+
+// So fwp knows where your callbacks are a `scene` definition must be made
+// The definition should be always be called scene. If the name changes fwp
+// won't know where to look!
+EXPORT const fwpScene scene = {
+    .init = init,
+    .deinit = deinit,
+    .reload = reload,
+    .unload = unload,
+    .event = event,
+    .tick = tick
+};
+```
+
+Now you have your scene file, you will have to build it as a dynamic library. Make sure to link the necessary files. Below is an example of building on MacOS, please see the Makefile to see how to build on your platform.
+
+```
+clang -shared -fpic [scene file].c src/pb_cocoa.c src/rng.c -framework Cocoa -o scene.dylib
+```
+
+Now you have your dynamic library, you can run:
+
+```
+fwp -p scene.dylib
+```
+
+Provided you haven't changed the example, the window should appear and display a red background. If you now rebuild the scene with the same command as before, the screen will change to blue! That's about it really.
+
+## pb
+
+If you're interested in using _pb_ as a standalone library, it's very easy. It will be a similar process to before.
+
+_pb_ currently supports 4 different backends; Windows (Win32api), MacOS (Cocoa), \*nix (X11) and WASM (Emscripten). Each backend has a different system library or dependency that you will need to link. Feel free to request or submit a pull request for other backends.
+
+```c
+#include "pb.h"
+
+int main(int argc, const char *argv[]) {
+    // Initalize a new window titled "hello!"
+    pbBegin(640, 480, "hello!", 0);
+    // Create an image for the framebuffer
+    pbImage *fb = pbImageNew(640, 480);
+    // Loop while the window is open + poll events
+    while (pbPoll()) {
+        // Fill the image buffer red
+        pbImageFill(test, RGB(255, 0, 0));
+        // Flush the image to the window's framebuffer
+        pbFlush(test);
+    }
+    // Clean up
+    pbEnd();
+    return 0;
+}
+```
+
+And to build the executable:
+
+```
+clang -Ideps -Isrc [source file].c src/pb_cocoa.c -framework Cocoa -o [your executable]
+```
+
+## TODO + Planned features
+
+- [ ] Image loading + saving (stb_image.h + stb_image_write.h + qoi.h)
+- [ ] GIF support (gif_load.h + msf_gif.h)
+- [ ] TTF loading + rendering (stb_truetype.h)
+- [ ] ANSI escape parser for text rendering
+
+## Dependencies
+
+- [nothings/stb](https://github.com/nothings/stb) [MIT/UNLICENSE]
+- [phoboslab/qoi](https://github.com/phoboslab/qoi) [MIT]
+- [notnullnotvoid/msf_gif](https://github.com/notnullnotvoid/msf_gif) [MIT/Public Domain]
+- [hidefromkgb/gif_load](https://github.com/hidefromkgb/gif_load/) [Public Domain]
+- [dhepper/font8x8](https://github.com/dhepper/font8x8/blob/master/font8x8_basic.h) [Public Domain]
+- [skandhurkat/Getopt-for-Visual-Studio](https://github.com/skandhurkat/Getopt-for-Visual-Studio) [GNU GPLv3]
+- [dlfcn-win32/dlfcn-win32](https://github.com/dlfcn-win32/dlfcn-win32) [MIT]
+- Inspired by this [blog post](https://nullprogram.com/blog/2014/12/23/) by [skeeto](https://github.com/skeeto/interactive-c-demo) [UNLICENSE]
 
 ## License
 ```

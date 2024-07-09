@@ -31,18 +31,18 @@
 #include <time.h>
 #include <limits.h>
 
-rng_t rngSetSeed(uint64_t seed) {
+pbRng rngSetSeed(uint64_t seed) {
     return seed ? seed : (uint64_t)time(NULL);
 }
 
-uint64_t rngRandom(rng_t *rng) {
+uint64_t rngRandom(pbRng *rng) {
     uint64_t v = *rng;
     v = (uint64_t)(v * 6364136223846793005ULL) + 1;
     *rng = v;
     return v;
 }
 
-float rngRandomFloat(rng_t *rng) {
+float rngRandomFloat(pbRng *rng) {
     return (float)rngRandom(rng) / (float)ULLONG_MAX;
 }
 
@@ -54,13 +54,13 @@ float rngRandomFloat(rng_t *rng) {
         b = temp;     \
     } while (0)
 
-int rngRandomIntRange(rng_t *rng, int min, int max) {
+int rngRandomIntRange(pbRng *rng, int min, int max) {
     if (min > max)
         __SWAP(min, max);
     return (int)(rngRandomFloat(rng) * (max - min + 1) + min);
 }
 
-float rngRandomFloatRange(rng_t *rng, float min, float max) {
+float rngRandomFloatRange(pbRng *rng, float min, float max) {
     if (min > max)
         __SWAP(min, max);
     return rngRandomFloat(rng) * (max - min) + min;
@@ -69,7 +69,7 @@ float rngRandomFloatRange(rng_t *rng, float min, float max) {
 #define __MAX(a, b)  ((a) > (b) ? (a) : (b))
 #define __CLAMP(v, low, high)  ((v) < (low) ? (low) : ((v) > (high) ? (high) : (v)))
 
-uint8_t* rngCellularAutomataMap(rng_t *rng, unsigned int width, unsigned int height, unsigned int fillChance, unsigned int smoothIterations, unsigned int survive, unsigned int starve) {
+uint8_t* rngCellularAutomataMap(pbRng *rng, unsigned int width, unsigned int height, unsigned int fillChance, unsigned int smoothIterations, unsigned int survive, unsigned int starve) {
     size_t sz = width * height * sizeof(int);
     uint8_t *result = malloc(sz);
     memset(result, 0, sz);

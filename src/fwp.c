@@ -49,6 +49,7 @@
 #ifndef _MSC_VER
 #pragma comment(lib, "Psapi.lib")
 #endif
+#define DLFCN_IMPLEMENTATION
 #include "dlfcn_win32.h"
 #else // PLATFORM_POSIX
 #include <getopt.h>
