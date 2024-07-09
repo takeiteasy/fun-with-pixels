@@ -29,7 +29,7 @@ static void reload(fwpState *state) {
     // Here we change the `clearColor` field in our state to blue
     // If you rebuild the library, the screen will chang from red
     // to blue! Magic!
-    state->clearColor = RGB(0, 255, 0);
+    state->clearColor = RGB(0, 0, 255);
 }
 
 static void unload(fwpState *state) {
@@ -44,7 +44,6 @@ static int event(fwpState *state, pbEvent *e) {
 static int tick(fwpState *state, pbImage *pbo, double delta) {
     // Called every frame, this is your update callback
     pbImageFill(pbo, state->clearColor);
-    pbImageFill(pbo, RGB(255, 0, 0));
     return 1;
 }
 

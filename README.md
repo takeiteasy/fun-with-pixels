@@ -141,6 +141,7 @@ clang -Ideps -Isrc [source file].c src/pb_cocoa.c -framework Cocoa -o [your exec
 
 ## TODO
 
+- [ ] Frame timing + limiting
 - [ ] Documentation + some examples
 - [ ] Image loading + saving (stb_image.h + stb_image_write.h + qoi.h)
 - [ ] ANSI escape parser for text rendering

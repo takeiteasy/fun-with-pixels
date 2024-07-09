@@ -24,15 +24,14 @@ endif
 default: all
 
 BUILD=build
-LIBSRC = src/$(BACKEND).c src/rng.c
 CFLAGS = -Isrc -Ideps
-LINK = -L$(BUILD) -lpb
+LINK = src/rng.c -L$(BUILD) -lpb
 
 $(BUILD)/:
 	mkdir -p $(BUILD)
-	
+
 libpb: $(BUILD)/
-	$(CC) -shared -fpic $(CFLAGS) $(SYSFLAGS) $(LIBSRC) -o $(BUILD)/libpb.$(LIBEXT)
+	$(CC) -shared -fpic $(CFLAGS) $(SYSFLAGS) src/$(BACKEND).c -o $(BUILD)/libpb.$(LIBEXT)
 
 fwp: libpb
 	$(CC) $(CFLAGS) src/fwp.c $(LINK) -o $(BUILD)/fwp$(PROGEXT)
@@ -53,9 +52,9 @@ tests: test-lib test-scene test-web
 
 SRC := examples
 BIN := build
-TARGETS := $(foreach file,$(foreach src,$(wildcard $(SRC)/*.c),$(notdir $(src))),$(patsubst %.c,$(BIN)/fwp_example_%.$(LIB_EXT),$(file)))
+TARGETS := $(foreach file,$(foreach src,$(wildcard $(SRC)/*.c),$(notdir $(src))),$(patsubst %.c,$(BIN)/fwp_example_%.$(LIBEXT),$(file)))
 
-$(BIN)/fwp_example_%.$(LIB_EXT): $(SRC)/%.c | $(BIN)
+$(BIN)/fwp_example_%.$(LIBEXT): $(SRC)/%.c | $(BIN)
 	$(CC) -shared -fpic $(CFLAGS) $(LINK) -o $@ $^
 
 examples: $(TARGETS)

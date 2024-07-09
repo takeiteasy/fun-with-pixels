@@ -748,8 +748,10 @@ void pbEndNative(void) {
 }
 
 void pbSetWindowSizeNative(unsigned int w, unsigned int h) {
-    NSRect frame = {{0, 0}, {w, h}};
-    ObjC(void, NSRect, BOOL, BOOL)(pbMacInternal.window, sel(setFrame:frameRect:display:animate:), frame, YES, YES);
+    NSRect frame = ObjC(NSRect)(pbMacInternal.window, sel(frame));
+    frame.size.width = w;
+    frame.size.height = h;
+    ObjC(void, NSRect, BOOL, BOOL)(pbMacInternal.window, sel(setFrame:display:animate:), frame, YES, YES);
 }
 
 void pbSetWindowTitleNative(const char *title) {

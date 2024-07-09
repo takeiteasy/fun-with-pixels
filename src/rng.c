@@ -35,6 +35,10 @@ pbRng rngSetSeed(uint64_t seed) {
     return seed ? seed : (uint64_t)time(NULL);
 }
 
+pbRng rngInit(uint64_t initialSeed) {
+    return rngSetSeed(initialSeed);
+}
+
 uint64_t rngRandom(pbRng *rng) {
     uint64_t v = *rng;
     v = (uint64_t)(v * 6364136223846793005ULL) + 1;

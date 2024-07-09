@@ -76,8 +76,8 @@ static struct {
     fwpScene *scene;
     pbImage *buffer;
     struct {
-        int width;
-        int height;
+        unsigned int width;
+        unsigned int height;
         const char *title;
         pbFlags flags;
         char *path;
@@ -174,9 +174,17 @@ static int ReloadLibrary(const char *path) {
     if (!(state.scene = dlsym(state.handle, "scene")))
         goto BAIL;
     if (!state.state) {
+        if (state.scene->windowWidth > 0 && state.scene->windowHeight > 0)
+            pbSetWindowSize(state.scene->windowWidth, state.scene->windowHeight);
+        if (state.scene->windowTitle)
+            pbSetWindowTitle(state.scene->windowTitle);
         if (!(state.state = state.scene->init(state.buffer)))
             goto BAIL;
     } else {
+        if (state.scene->windowWidth > 0 && state.scene->windowHeight > 0)
+            pbSetWindowSize(state.scene->windowWidth, state.scene->windowHeight);
+        if (state.scene->windowTitle)
+            pbSetWindowTitle(state.scene->windowTitle);
         if (state.scene->reload)
             state.scene->reload(state.state);
     }
@@ -348,8 +356,10 @@ int main(int argc, char *argv[]) {
         state.args.width = 640;
     if (!state.args.height)
         state.args.height = 480;
-    pbBegin(state.args.width, state.args.height, state.args.title ? state.args.title : "fwp", state.args.flags);
-    
+    if (!state.args.title)
+        state.args.title = "fwp";
+    pbBegin(state.args.width, state.args.height, state.args.title, state.args.flags);
+
     if (!(state.buffer = pbImageNew(state.args.width, state.args.height)))
         return 0;
 

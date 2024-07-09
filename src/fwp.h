@@ -67,6 +67,9 @@ typedef struct {
 } pbEvent;
 
 typedef struct {
+    int windowWidth;
+    int windowHeight;
+    const char *windowTitle;
     fwpState*(*init)(pbImage*);
     void(*deinit)(fwpState*);
     void(*reload)(fwpState*);
