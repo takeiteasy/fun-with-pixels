@@ -2,18 +2,18 @@ ifeq ($(OS),Windows_NT)
 	LIBEXT=dll
 	PROGEXT=.exe
 	CFLAGS=-lgdi32
-	SRC=ppWindows
+	SRC=pb_winapi
 else
 	UNAME:=$(shell uname -s)
 	PROGEXT=
 	ifeq ($(UNAME),Darwin)
 		LIBEXT=dylib
 		CFLAGS=-framework Cocoa
-		SRC=ppMac
+		SRC=pb_cocoa
 	else ifeq ($(UNAME),Linux)
 		LIBEXT=so
 		CFLAGS=-lX11 -lm
-		SRC=ppLinux
+		SRC=pb_x11
 	else
 		$(error OS not supported by this Makefile)
 	endif
@@ -22,12 +22,6 @@ endif
 .PHONY: default all library web
 
 default:
-	$(CC) -Isrc src/$(SRC).c examples/basic.c $(CFLAGS) -o build/$(SRC)$(PROGEXT)
+	$(CC) -Isrc src/fwp.c src/pb_cocoa.c src/rng.c -framework Cocoa -o test
 
-library:
-	$(CC) -shared -fpic -Isrc src/$(SRC).c examples/basic.c $(CFLAGS) -o build/lib$(SRC).$(LIBEXT)
-
-web:
-	emcc -DPP_EMSCRIPTEN -Isrc src/ppEmscripten.c examples/basic.c -o build/pp.html
-
-all: default library web
+all: default

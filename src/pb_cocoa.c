@@ -1,4 +1,4 @@
-/* ppMac.c -- https://github.com/takeiteasy/pp
+/* pb_cocoa.c -- https://github.com/takeiteasy/fwp
  
  The MIT License (MIT)
 
@@ -23,8 +23,8 @@
  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#define PP_IMPLEMENTATION
-#include "pp.h"
+#define FWP_PB_IMPLEMENTATION
+#include "pb.h"
 #include <objc/objc.h>
 #include <objc/runtime.h>
 #include <objc/message.h>
@@ -184,17 +184,17 @@ typedef enum {
 static struct {
     id window;
     int mouseInWindow;
-} ppMacInternal = {0};
+} pbMacInternal = {0};
 
 static NSUInteger applicationShouldTerminate(id self, SEL _sel, id sender) {
-    ppInternal.running = 0;
+    pbInternal.running = 0;
     return 0;
 }
 
 static void windowWillClose(id self, SEL _sel, id notification) {
-    if (ppInternal.ClosedCallback)
-        ppInternal.ClosedCallback(ppInternal.userdata);
-    ppInternal.running = 0;
+    if (pbInternal.ClosedCallback)
+        pbInternal.ClosedCallback(pbInternal.userdata);
+    pbInternal.running = 0;
 }
 
 static BOOL windowShouldClose(id self, SEL _sel, id sender) {
@@ -203,33 +203,33 @@ static BOOL windowShouldClose(id self, SEL _sel, id sender) {
 }
 
 static void windowDidBecomeKey(id self, SEL _sel, id notification) {
-    ppCallCallback(Focus, 1);
+    pbCallCallback(Focus, 1);
 }
 
 static void windowDidResignKey(id self, SEL _sel, id notification) {
-    ppCallCallback(Focus, 0);
+    pbCallCallback(Focus, 0);
 }
 
 static void windowDidResize(id self, SEL _sel, id notification) {
-    CGRect frame = ObjC(CGRect)(ObjC(id)(ppMacInternal.window, sel(contentView)), sel(frame));
-    ppCallCallback(Resized, frame.size.width, frame.size.height);
+    CGRect frame = ObjC(CGRect)(ObjC(id)(pbMacInternal.window, sel(contentView)), sel(frame));
+    pbCallCallback(Resized, frame.size.width, frame.size.height);
 }
 
 static void mouseEntered(id self, SEL _sel, id event) {
-    ppMacInternal.mouseInWindow = 1;
+    pbMacInternal.mouseInWindow = 1;
 }
 
 static void mouseExited(id self, SEL _sel, id event) {
-    ppMacInternal.mouseInWindow = 0;
+    pbMacInternal.mouseInWindow = 0;
 }
 
 static void drawRect(id self, SEL _self, CGRect rect) {
-    if (!ppInternal.data || !ppInternal.w || !ppInternal.h)
+    if (!pbInternal.data || !pbInternal.w || !pbInternal.h)
         return;
     CGContextRef ctx = (CGContextRef)ObjC(id)(ObjC(id)(class(NSGraphicsContext), sel(currentContext)), sel(CGContext));
     CGColorSpaceRef s = CGColorSpaceCreateDeviceRGB();
-    CGDataProviderRef p = CGDataProviderCreateWithData(NULL, ppInternal.data, ppInternal.w * ppInternal.h * 4, NULL);
-    CGImageRef img = CGImageCreate(ppInternal.w, ppInternal.h, 8, 32, ppInternal.w * 4, s, kCGImageAlphaNoneSkipFirst | kCGBitmapByteOrder32Little, p, NULL, 0, kCGRenderingIntentDefault);
+    CGDataProviderRef p = CGDataProviderCreateWithData(NULL, pbInternal.data, pbInternal.w * pbInternal.h * 4, NULL);
+    CGImageRef img = CGImageCreate(pbInternal.w, pbInternal.h, 8, 32, pbInternal.w * 4, s, kCGImageAlphaNoneSkipFirst | kCGBitmapByteOrder32Little, p, NULL, 0, kCGRenderingIntentDefault);
     CGRect wh = ObjC_Struct(CGRect)(self, sel(frame));
     CGContextDrawImage(ctx, CGRectMake(0, 0, wh.size.width, wh.size.height), img);
     CGColorSpaceRelease(s);
@@ -237,7 +237,7 @@ static void drawRect(id self, SEL _self, CGRect rect) {
     CGImageRelease(img);
 }
 
-int ppBeginNative(int w, int h, const char *title, ppFlags flags) {
+int pbBeginNative(int w, int h, const char *title, pbFlags flags) {
     AutoreleasePool({
         ObjC(id)(class(NSApplication), sel(sharedApplication));
         ObjC(void, NSInteger)(NSApp, sel(setActivationPolicy:), NSApplicationActivationPolicyRegular);
@@ -266,10 +266,10 @@ int ppBeginNative(int w, int h, const char *title, ppFlags flags) {
         ObjC(void, id)(menuItem, sel(setSubmenu:), appMenu);
 
         NSWindowStyleMask styleMask = NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskMiniaturizable;
-        flags |= (flags & ppFullscreen ? (ppBorderless | ppResizable | ppFullscreenDesktop) : 0);
-        styleMask |= (flags & ppResizable ? NSWindowStyleMaskResizable : 0);
-        styleMask |= (flags & ppBorderless ? NSWindowStyleMaskFullSizeContentView : 0);
-        if (flags & ppFullscreenDesktop) {
+        flags |= (flags & pbFullscreen ? (pbBorderless | pbResizable | pbFullscreenDesktop) : 0);
+        styleMask |= (flags & pbResizable ? NSWindowStyleMaskResizable : 0);
+        styleMask |= (flags & pbBorderless ? NSWindowStyleMaskFullSizeContentView : 0);
+        if (flags & pbFullscreenDesktop) {
             NSRect f = ObjC_Struct(NSRect)(ObjC(id)(class(NSScreen), sel(mainScreen)), sel(frame));
             w = f.size.width;
             h = f.size.height;
@@ -277,37 +277,37 @@ int ppBeginNative(int w, int h, const char *title, ppFlags flags) {
         }
         NSRect windowFrame = {{0, 0}, {w, h}};
 
-        ppMacInternal.window = ObjC(id, NSRect, NSUInteger, NSUInteger, BOOL)(ObjC_Alloc(NSWindow), sel(initWithContentRect:styleMask:backing:defer:), windowFrame, styleMask, NSBackingStoreBuffered, NO);
-        ObjC(void, BOOL)(ppMacInternal.window, sel(setReleasedWhenClosed:), NO);
+        pbMacInternal.window = ObjC(id, NSRect, NSUInteger, NSUInteger, BOOL)(ObjC_Alloc(NSWindow), sel(initWithContentRect:styleMask:backing:defer:), windowFrame, styleMask, NSBackingStoreBuffered, NO);
+        ObjC(void, BOOL)(pbMacInternal.window, sel(setReleasedWhenClosed:), NO);
 
-        if (flags & ppAlwaysOnTop)
-            ObjC(void, NSInteger)(ppMacInternal.window, sel(setLevel:), NSFloatingWindowLevel);
+        if (flags & pbAlwaysOnTop)
+            ObjC(void, NSInteger)(pbMacInternal.window, sel(setLevel:), NSFloatingWindowLevel);
 
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_7
-        if (flags & ppFullscreen) {
-            ObjC(void, NSUInteger)(ppMacInternal.window, sel(setCollectionBehavior:), NSWindowCollectionBehaviorFullScreenPrimary);
-            ObjC(void, SEL, id, BOOL)(ppMacInternal.window, sel(performSelectorOnMainThread:withObject:waitUntilDone:), sel(toggleFullScreen:), ppMacInternal.window, NO);
+        if (flags & pbFullscreen) {
+            ObjC(void, NSUInteger)(pbMacInternal.window, sel(setCollectionBehavior:), NSWindowCollectionBehaviorFullScreenPrimary);
+            ObjC(void, SEL, id, BOOL)(pbMacInternal.window, sel(performSelectorOnMainThread:withObject:waitUntilDone:), sel(toggleFullScreen:), pbMacInternal.window, NO);
         }
 #else
 #pragma message("Fullscreen is unsupported on OSX versions < 10.7")
 #endif
 
-        ObjC(void, BOOL)(ppMacInternal.window, sel(setAcceptsMouseMovedEvents:), YES);
-        ObjC(void, BOOL)(ppMacInternal.window, sel(setRestorable:), NO);
-        ObjC(void, BOOL)(ppMacInternal.window, sel(setReleasedWhenClosed:), NO);
+        ObjC(void, BOOL)(pbMacInternal.window, sel(setAcceptsMouseMovedEvents:), YES);
+        ObjC(void, BOOL)(pbMacInternal.window, sel(setRestorable:), NO);
+        ObjC(void, BOOL)(pbMacInternal.window, sel(setReleasedWhenClosed:), NO);
 
         id windowTitle = nil;
-        if (flags & ppBorderless && flags & ~ppFullscreen) {
+        if (flags & pbBorderless && flags & ~pbFullscreen) {
             windowTitle = ObjC(id)(class(NSString), sel(string));
-            ObjC(void, BOOL)(ppMacInternal.window, sel(setTitlebarAppearsTransparent:), YES);
-            ObjC(void, BOOL)(ObjC(id, NSUInteger)(ppMacInternal.window, sel(standardWindowButton:), NSWindowZoomButton), sel(setHidden:), YES);
-            ObjC(void, BOOL)(ObjC(id, NSUInteger)(ppMacInternal.window, sel(standardWindowButton:), NSWindowCloseButton), sel(setHidden:), YES);
-            ObjC(void, BOOL)(ObjC(id, NSUInteger)(ppMacInternal.window, sel(standardWindowButton:), NSWindowMiniaturizeButton), sel(setHidden:), YES);
+            ObjC(void, BOOL)(pbMacInternal.window, sel(setTitlebarAppearsTransparent:), YES);
+            ObjC(void, BOOL)(ObjC(id, NSUInteger)(pbMacInternal.window, sel(standardWindowButton:), NSWindowZoomButton), sel(setHidden:), YES);
+            ObjC(void, BOOL)(ObjC(id, NSUInteger)(pbMacInternal.window, sel(standardWindowButton:), NSWindowCloseButton), sel(setHidden:), YES);
+            ObjC(void, BOOL)(ObjC(id, NSUInteger)(pbMacInternal.window, sel(standardWindowButton:), NSWindowMiniaturizeButton), sel(setHidden:), YES);
         } else {
             windowTitle = ObjC(id, const char*)(class(NSString), sel(stringWithUTF8String:), title);
         }
-        ObjC(void, id)(ppMacInternal.window, sel(setTitle:), windowTitle);
-        ObjC(void)(ppMacInternal.window, sel(center));
+        ObjC(void, id)(pbMacInternal.window, sel(setTitle:), windowTitle);
+        ObjC(void)(pbMacInternal.window, sel(center));
 
         Class WindowDelegate = ObjC_Class(WindowDelegate, NSObject);
         ObjC_AddMethod(WindowDelegate, windowShouldClose:, windowShouldClose, "c@:@");
@@ -319,7 +319,7 @@ int ppBeginNative(int w, int h, const char *title, ppFlags flags) {
         ObjC_AddMethod(WindowDelegate, mouseExited:, mouseExited, "v@:@");
         ObjC_SubClass(WindowDelegate);
         id windowDelegate = ObjC(id)(ObjC(id)((id)WindowDelegate, sel(alloc)), sel(init));
-        ObjC(void, id)(ppMacInternal.window, sel(setDelegate:), windowDelegate);
+        ObjC(void, id)(pbMacInternal.window, sel(setDelegate:), windowDelegate);
 
         Class View = ObjC_Class(View, NSView);
         ObjC_AddMethod(View, drawRect:, drawRect, "v@:");
@@ -328,9 +328,9 @@ int ppBeginNative(int w, int h, const char *title, ppFlags flags) {
         id trackingArea = ObjC(id, NSRect, int, id, id)(ObjC_Alloc(NSTrackingArea), sel(initWithRect:options:owner:userInfo:), windowFrame, trackingFlags, windowDelegate, nil);
         id view = ObjC(id, NSRect)(ObjC_Alloc(View), sel(initWithFrame:), windowFrame);
         ObjC(void, id)(view, sel(addTrackingArea:), trackingArea);
-        ObjC(void, id)(ppMacInternal.window, sel(setContentView:), view);
+        ObjC(void, id)(pbMacInternal.window, sel(setContentView:), view);
 
-        ObjC(void, SEL, id, BOOL)(ppMacInternal.window, sel(performSelectorOnMainThread:withObject:waitUntilDone:), sel(makeKeyAndOrderFront:), nil, YES);
+        ObjC(void, SEL, id, BOOL)(pbMacInternal.window, sel(performSelectorOnMainThread:withObject:waitUntilDone:), sel(makeKeyAndOrderFront:), nil, YES);
 
         ObjC(void, BOOL)(NSApp, sel(activateIgnoringOtherApps:), YES);
     });
@@ -681,39 +681,39 @@ static uint32_t ConvertMacMod(NSUInteger modifierFlags) {
     return mods;
 }
 
-int ppPollNative(void) {
-    if (!ppInternal.running)
+int pbPollNative(void) {
+    if (!pbInternal.running)
         return 0;
 
     AutoreleasePool({
         id distantPast = ObjC(id)(class(NSDate), sel(distantPast));
         id e = nil;
-        while (ppInternal.running && (e = ObjC(id, unsigned long long, id, id, BOOL)(NSApp, sel(nextEventMatchingMask:untilDate:inMode:dequeue:), NSUIntegerMax, distantPast, NSDefaultRunLoopMode, YES))) {
+        while (pbInternal.running && (e = ObjC(id, unsigned long long, id, id, BOOL)(NSApp, sel(nextEventMatchingMask:untilDate:inMode:dequeue:), NSUIntegerMax, distantPast, NSDefaultRunLoopMode, YES))) {
             NSUInteger type = ObjC(NSUInteger)(e, sel(type));
             switch (type) {
                 case NSEventTypeLeftMouseDown:
                 case NSEventTypeLeftMouseUp:
-                    ppCallCallback(MouseButton, 1, ConvertMacMod(ObjC(NSUInteger)(e, sel(modifierFlags))), type == NSEventTypeLeftMouseDown);
+                    pbCallCallback(MouseButton, 1, ConvertMacMod(ObjC(NSUInteger)(e, sel(modifierFlags))), type == NSEventTypeLeftMouseDown);
                     break;
                 case NSEventTypeRightMouseDown:
                 case NSEventTypeRightMouseUp:
-                    ppCallCallback(MouseButton, 2, ConvertMacMod(ObjC(NSUInteger)(e, sel(modifierFlags))), type == NSEventTypeRightMouseDown);
+                    pbCallCallback(MouseButton, 2, ConvertMacMod(ObjC(NSUInteger)(e, sel(modifierFlags))), type == NSEventTypeRightMouseDown);
                     break;
                 case NSEventTypeOtherMouseDown:
                 case NSEventTypeOtherMouseUp:
-                    ppCallCallback(MouseButton, (int)ObjC(NSUInteger)(e, sel(buttonNumber)), ConvertMacMod(ObjC(NSUInteger)(e, sel(modifierFlags))), type == NSEventTypeOtherMouseDown);
+                    pbCallCallback(MouseButton, (int)ObjC(NSUInteger)(e, sel(buttonNumber)), ConvertMacMod(ObjC(NSUInteger)(e, sel(modifierFlags))), type == NSEventTypeOtherMouseDown);
                     break;
                 case NSEventTypeScrollWheel:
-                    ppCallCallback(MouseScroll, ObjC(CGFloat)(e, sel(deltaX)), ObjC(CGFloat)(e, sel(deltaY)), ConvertMacMod(ObjC(NSUInteger)(e, sel(modifierFlags))));
+                    pbCallCallback(MouseScroll, ObjC(CGFloat)(e, sel(deltaX)), ObjC(CGFloat)(e, sel(deltaY)), ConvertMacMod(ObjC(NSUInteger)(e, sel(modifierFlags))));
                     break;
                 case NSEventTypeKeyDown:
                 case NSEventTypeKeyUp:
-                    ppCallCallback(Keyboard, ConvertMacKey(ObjC(unsigned short)(e, sel(keyCode))), ConvertMacMod(ObjC(NSUInteger)(e, sel(modifierFlags))), type == NSEventTypeKeyDown);
+                    pbCallCallback(Keyboard, ConvertMacKey(ObjC(unsigned short)(e, sel(keyCode))), ConvertMacMod(ObjC(NSUInteger)(e, sel(modifierFlags))), type == NSEventTypeKeyDown);
                     break;
                 case NSEventTypeMouseMoved:
-                    if (ppMacInternal.mouseInWindow) {
+                    if (pbMacInternal.mouseInWindow) {
                         CGPoint locationInWindow = ObjC(CGPoint)(e, sel(locationInWindow));
-                        ppCallCallback(MouseMove, (int)locationInWindow.x, (int)(ObjC_Struct(CGRect)(ObjC(id)(ppMacInternal.window, sel(contentView)), sel(frame)).size.height - roundf(locationInWindow.y)), ObjC(CGFloat)(e, sel(deltaX)), ObjC(CGFloat)(e, sel(deltaY)));
+                        pbCallCallback(MouseMove, (int)locationInWindow.x, (int)(ObjC_Struct(CGRect)(ObjC(id)(pbMacInternal.window, sel(contentView)), sel(frame)).size.height - roundf(locationInWindow.y)), ObjC(CGFloat)(e, sel(deltaX)), ObjC(CGFloat)(e, sel(deltaY)));
                     }
                     break;
                 default:
@@ -723,20 +723,21 @@ int ppPollNative(void) {
         }
     });
 
-    return ppInternal.running;
+    return pbInternal.running;
 }
 
-void ppFlushNative(int *data, int w, int h) {
-    assert(data && w && h);
-    ppInternal.data = data;
-    ppInternal.w = w;
-    ppInternal.h = h;
-    ObjC(void, BOOL)(ObjC(id)(ppMacInternal.window, sel(contentView)), sel(setNeedsDisplay:), YES);
+void pbFlushNative(pbImage *buffer) {
+    if (!buffer || !buffer->buffer || !buffer->width || !buffer->height)
+        return;
+    pbInternal.data = buffer->buffer;
+    pbInternal.w = buffer->width;
+    pbInternal.h = buffer->height;
+    ObjC(void, BOOL)(ObjC(id)(pbMacInternal.window, sel(contentView)), sel(setNeedsDisplay:), YES);
 }
 
-void ppEndNative(void) {
-    assert(ppInternal.running);
-    ObjC(void)(ppMacInternal.window, sel(close));
-    ObjC_Release(ppMacInternal.window);
+void pbEndNative(void) {
+    assert(pbInternal.running);
+    ObjC(void)(pbMacInternal.window, sel(close));
+    ObjC_Release(pbMacInternal.window);
     ObjC(void, id)(NSApp, sel(terminate:), nil);
 }

@@ -1,4 +1,4 @@
-/* ppWindows.c -- https://github.com/takeiteasy/pp
+/* pb_winapi.c -- https://github.com/takeiteasy/fwp
  
  The MIT License (MIT)
 
@@ -24,7 +24,7 @@
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #define PP_IMPLEMENTATION
-#include "pp.h"
+#include "pb.h"
 #define NOMINMAX
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -42,7 +42,7 @@ static struct {
     int tmeRefresh;
     int width, height;
     int cursorLastX, cursorLastY;
-} ppWinInternal = {0};
+} pbWinInternal = {0};
 
 static int WindowsModState(void) {
     int mods = 0;
@@ -212,28 +212,28 @@ static int ConvertWindowsKey(int key) {
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
-    if (!ppInternal.running)
+    if (!pbInternal.running)
         goto DEFAULT_PROC;
     
     switch (message) {
         case WM_PAINT:
-            if (!ppInternal.pbo)
+            if (!pbInternal.pbo)
                 goto DEFAULT_PROC;
-            ppWinInternal.bmp->bmiHeader.biWidth = ppInternal.w;
-            ppWinInternal.bmp->bmiHeader.biHeight = -ppInternal.h;
-            StretchDIBits(ppWinInternal.hdc, 0, 0, ppWinInternal.width, ppWinInternal.height, 0, 0, ppInternal.w, ppInternal.h, ppInternal.data, ppWinInternal.bmp, DIB_RGB_COLORS, SRCCOPY);
+            pbWinInternal.bmp->bmiHeader.biWidth = pbInternal.w;
+            pbWinInternal.bmp->bmiHeader.biHeight = -pbInternal.h;
+            StretchDIBits(pbWinInternal.hdc, 0, 0, pbWinInternal.width, pbWinInternal.height, 0, 0, pbInternal.w, pbInternal.h, pbInternal.data, pbWinInternal.bmp, DIB_RGB_COLORS, SRCCOPY);
             ValidateRect(hWnd, NULL);
             break;
         case WM_DESTROY:
         case WM_CLOSE:
-            if (ppInternal.ClosedCallback)
-                ppInternal.ClosedCallback(ppInternal.userdata);
-            ppInternal.running = 0;
+            if (pbInternal.ClosedCallback)
+                pbInternal.ClosedCallback(pbInternal.userdata);
+            pbInternal.running = 0;
             break;
         case WM_SIZE:
-            ppWinInternal.width = LOWORD(lParam);
-            ppWinInternal.height = HIWORD(lParam);
-            ppCallCallback(Resized, ppWinInternal.width, ppWinInternal.height);
+            pbWinInternal.width = LOWORD(lParam);
+            pbWinInternal.height = HIWORD(lParam);
+            pbCallCallback(Resized, pbWinInternal.width, pbWinInternal.height);
             break;
         case WM_MENUCHAR:
             // Disable beep on Alt+Enter
@@ -244,7 +244,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
         case WM_SYSKEYDOWN:
         case WM_KEYUP:
         case WM_SYSKEYUP:
-            ppCallCallback(Keyboard, ConvertWindowsKey(wParam), WindowsModState(), !((lParam >> 31) & 1));
+            pbCallCallback(Keyboard, ConvertWindowsKey(wParam), WindowsModState(), !((lParam >> 31) & 1));
             break;
         case WM_LBUTTONUP:
         case WM_RBUTTONUP:
@@ -281,41 +281,41 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
                     if (message == WM_XBUTTONDOWN)
                         action = 1;
             }
-            ppCallCallback(MouseButton, button, WindowsModState(), action);
+            pbCallCallback(MouseButton, button, WindowsModState(), action);
             break;
         }
         case WM_MOUSEWHEEL:
-            ppCallCallback(MouseScroll, 0.f, (SHORT)HIWORD(wParam) / (float)WHEEL_DELTA, WindowsModState());
+            pbCallCallback(MouseScroll, 0.f, (SHORT)HIWORD(wParam) / (float)WHEEL_DELTA, WindowsModState());
             break;
         case WM_MOUSEHWHEEL:
-            ppCallCallback(MouseScroll, -((SHORT)HIWORD(wParam) / (float)WHEEL_DELTA), 0., WindowsModState());
+            pbCallCallback(MouseScroll, -((SHORT)HIWORD(wParam) / (float)WHEEL_DELTA), 0., WindowsModState());
             break;
         case WM_MOUSEMOVE: {
-            if (ppWinInternal.tmeRefresh) {
-                ppWinInternal.tme.cbSize = sizeof(ppWinInternal.tme);
-                ppWinInternal.tme.hwndTrack = ppWinInternal.hwnd;
-                ppWinInternal.tme.dwFlags = TME_HOVER | TME_LEAVE;
-                ppWinInternal.tme.dwHoverTime = 1;
-                TrackMouseEvent(&ppWinInternal.tme);
+            if (pbWinInternal.tmeRefresh) {
+                pbWinInternal.tme.cbSize = sizeof(pbWinInternal.tme);
+                pbWinInternal.tme.hwndTrack = pbWinInternal.hwnd;
+                pbWinInternal.tme.dwFlags = TME_HOVER | TME_LEAVE;
+                pbWinInternal.tme.dwHoverTime = 1;
+                TrackMouseEvent(&pbWinInternal.tme);
             }
             int cx = ((int)(short)LOWORD(lParam));
             int cy = ((int)(short)HIWORD(lParam));
-            ppCallCallback(MouseMove, cx, cy, cx - ppWinInternal.cursorLastX, cy - ppWinInternal.cursorLastY);
-            ppWinInternal.cursorLastX = cx;
-            ppWinInternal.cursorLastY = cy;
+            pbCallCallback(MouseMove, cx, cy, cx - pbWinInternal.cursorLastX, cy - pbWinInternal.cursorLastY);
+            pbWinInternal.cursorLastX = cx;
+            pbWinInternal.cursorLastY = cy;
             break;
         }
         case WM_MOUSEHOVER:
-            ppWinInternal.tmeRefresh = 1;
+            pbWinInternal.tmeRefresh = 1;
             break;
         case WM_MOUSELEAVE:
-            ppWinInternal.tmeRefresh = 0;
+            pbWinInternal.tmeRefresh = 0;
             break;
         case WM_SETFOCUS:
-            ppCallCallback(Focus, 1);
+            pbCallCallback(Focus, 1);
             break;
         case WM_KILLFOCUS:
-            ppCallCallback(Focus, 0);
+            pbCallCallback(Focus, 0);
             break;
         default:
             goto DEFAULT_PROC;
@@ -326,11 +326,11 @@ DEFAULT_PROC:
     return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
-int ppBeginNative(int w, int h, const char *title, ppFlags flags) {
+int pbBeginNative(int w, int h, const char *title, pbFlags flags) {
     RECT rect = {0};
     long windowFlags = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
-    if (flags & ppFullscreen) {
-        flags = ppFullscreen;
+    if (flags & pbFullscreen) {
+        flags = pbFullscreen;
         rect.right = GetSystemMetrics(SM_CXSCREEN);
         rect.bottom = GetSystemMetrics(SM_CYSCREEN);
         windowFlags = WS_POPUP & ~(WS_CAPTION | WS_THICKFRAME | WS_MINIMIZE | WS_MAXIMIZE | WS_SYSMENU);
@@ -343,14 +343,14 @@ int ppBeginNative(int w, int h, const char *title, ppFlags flags) {
         settings.dmFields = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT;
 
         if (ChangeDisplaySettings(&settings, CDS_FULLSCREEN) != DISP_CHANGE_SUCCESSFUL)
-            flags = ppFullscreenDesktop;
+            flags = pbFullscreenDesktop;
     }
 
-    if (flags & ppBorderless)
+    if (flags & pbBorderless)
         windowFlags = WS_POPUP;
-    if (flags & ppResizable)
+    if (flags & pbResizable)
         windowFlags |= WS_MAXIMIZEBOX | WS_SIZEBOX;
-    if (flags & ppFullscreenDesktop) {
+    if (flags & pbFullscreenDesktop) {
         windowFlags = WS_OVERLAPPEDWINDOW;
 
         int width = GetSystemMetrics(SM_CXFULLSCREEN);
@@ -382,72 +382,73 @@ int ppBeginNative(int w, int h, const char *title, ppFlags flags) {
         rect.top = (GetSystemMetrics(SM_CYSCREEN) - rect.bottom + rect.top) / 2;
     }
 
-    memset(&ppWinInternal.wnd, 0, sizeof(ppWinInternal.wnd));
-    ppWinInternal.wnd.style = CS_OWNDC | CS_VREDRAW | CS_HREDRAW;
-    ppWinInternal.wnd.lpfnWndProc = WndProc;
-    ppWinInternal.wnd.hCursor = LoadCursor(0, IDC_ARROW);
-    ppWinInternal.wnd.lpszClassName = title;
-    if (!RegisterClass(&ppWinInternal.wnd))
+    memset(&pbWinInternal.wnd, 0, sizeof(pbWinInternal.wnd));
+    pbWinInternal.wnd.style = CS_OWNDC | CS_VREDRAW | CS_HREDRAW;
+    pbWinInternal.wnd.lpfnWndProc = WndProc;
+    pbWinInternal.wnd.hCursor = LoadCursor(0, IDC_ARROW);
+    pbWinInternal.wnd.lpszClassName = title;
+    if (!RegisterClass(&pbWinInternal.wnd))
         return 0;
     
-    ppWinInternal.width = rect.right;
-    ppWinInternal.height = rect.bottom;
-    if (!(ppWinInternal.hwnd = CreateWindowEx(0, title, title, windowFlags, rect.left, rect.top, rect.right, rect.bottom, 0, 0, 0, 0)))
+    pbWinInternal.width = rect.right;
+    pbWinInternal.height = rect.bottom;
+    if (!(pbWinInternal.hwnd = CreateWindowEx(0, title, title, windowFlags, rect.left, rect.top, rect.right, rect.bottom, 0, 0, 0, 0)))
         return 0;
-    if (!(ppWinInternal.hdc = GetDC(ppWinInternal.hwnd)))
+    if (!(pbWinInternal.hdc = GetDC(pbWinInternal.hwnd)))
         return 0;
 
-    if (flags & ppAlwaysOnTop)
-        SetWindowPos(ppWinInternal.hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+    if (flags & pbAlwaysOnTop)
+        SetWindowPos(pbWinInternal.hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
 
-    ShowWindow(ppWinInternal.hwnd, SW_NORMAL);
-    SetFocus(ppWinInternal.hwnd);
+    ShowWindow(pbWinInternal.hwnd, SW_NORMAL);
+    SetFocus(pbWinInternal.hwnd);
 
     size_t bmpSz = sizeof(BITMAPINFOHEADER) + sizeof(RGBQUAD) * 3;
-    if (!(ppWinInternal.bmp = malloc(bmpSz)))
+    if (!(pbWinInternal.bmp = malloc(bmpSz)))
         return 0;
-    ZeroMemory(ppWinInternal.bmp, bmpSz);
-    ppWinInternal.bmp->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-    ppWinInternal.bmp->bmiHeader.biPlanes = 1;
-    ppWinInternal.bmp->bmiHeader.biBitCount = 32;
-    ppWinInternal.bmp->bmiHeader.biCompression = BI_BITFIELDS;
-    ppWinInternal.bmp->bmiHeader.biWidth = w;
-    ppWinInternal.bmp->bmiHeader.biHeight = -(LONG)h;
-    ppWinInternal.bmp->bmiColors[0].rgbRed = 0xFF;
-    ppWinInternal.bmp->bmiColors[1].rgbGreen = 0xFF;
-    ppWinInternal.bmp->bmiColors[2].rgbBlue = 0xff;
+    ZeroMemory(pbWinInternal.bmp, bmpSz);
+    pbWinInternal.bmp->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+    pbWinInternal.bmp->bmiHeader.biPlanes = 1;
+    pbWinInternal.bmp->bmiHeader.biBitCount = 32;
+    pbWinInternal.bmp->bmiHeader.biCompression = BI_BITFIELDS;
+    pbWinInternal.bmp->bmiHeader.biWidth = w;
+    pbWinInternal.bmp->bmiHeader.biHeight = -(LONG)h;
+    pbWinInternal.bmp->bmiColors[0].rgbRed = 0xFF;
+    pbWinInternal.bmp->bmiColors[1].rgbGreen = 0xFF;
+    pbWinInternal.bmp->bmiColors[2].rgbBlue = 0xff;
 
-    ppWinInternal.tme.cbSize = sizeof(ppWinInternal.tme);
-    ppWinInternal.tme.hwndTrack = ppWinInternal.hwnd;
-    ppWinInternal.tme.dwFlags = TME_HOVER | TME_LEAVE;
-    ppWinInternal.tme.dwHoverTime = HOVER_DEFAULT;
-    TrackMouseEvent(&ppWinInternal.tme);
+    pbWinInternal.tme.cbSize = sizeof(pbWinInternal.tme);
+    pbWinInternal.tme.hwndTrack = pbWinInternal.hwnd;
+    pbWinInternal.tme.dwFlags = TME_HOVER | TME_LEAVE;
+    pbWinInternal.tme.dwHoverTime = HOVER_DEFAULT;
+    TrackMouseEvent(&pbWinInternal.tme);
 
     return 1;
 }
 
-int ppPollNative(void) {
+int pbPollNative(void) {
     static MSG msg;
-    if (PeekMessage(&msg, ppWinInternal.hwnd, 0, 0, PM_REMOVE)) {
+    if (PeekMessage(&msg, pbWinInternal.hwnd, 0, 0, PM_REMOVE)) {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }
-    return ppInternal.running;
+    return pbInternal.running;
 }
 
-void ppFlushNative(int *data, int w, int h) {
-    assert(data && w && h);
-    ppInternal.data = data;
-    ppInternal.w = w;
-    ppInternal.h = h;
-    InvalidateRect(ppWinInternal.hwnd, NULL, 1);
-    SendMessage(ppWinInternal.hwnd, WM_PAINT, 0, 0);
+void pbFlushNative(pbImage *buffer) {
+    if (!buffer || !buffer->buffer || !buffer->width || !buffer->height)
+        return;
+    pbInternal.data = buffer->buffer;
+    pbInternal.w = buffer->width;
+    pbInternal.h = buffer->height;
+    InvalidateRect(pbWinInternal.hwnd, NULL, 1);
+    SendMessage(pbWinInternal.hwnd, WM_PAINT, 0, 0);
 }
 
-void ppEndNative(void) {
-    assert(ppInternal.running);
-    free(ppWinInternal.bmp);
-    ReleaseDC(ppWinInternal.hwnd, ppWinInternal.hdc);
-    DestroyWindow(ppWinInternal.hwnd);
+void pbEndNative(void) {
+    assert(pbInternal.running);
+    free(pbWinInternal.bmp);
+    ReleaseDC(pbWinInternal.hwnd, pbWinInternal.hdc);
+    DestroyWindow(pbWinInternal.hwnd);
 }
 

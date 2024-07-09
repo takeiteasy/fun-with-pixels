@@ -1,4 +1,4 @@
-/* ppLinux.c -- https://github.com/takeiteasy/pp
+/* pb_x11.c -- https://github.com/takeiteasy/fwp
  
  The MIT License (MIT)
 
@@ -23,8 +23,8 @@
  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#define PP_IMPLEMENTATION
-#include "pp.h"
+#define FWP_PB_IMPLEMENTATION
+#include "pb.h"
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #include <X11/Xlocale.h>
@@ -45,7 +45,7 @@ static struct {
     GC gc;
     XImage *img, *scaler;
     int cursorLastX, cursorLastY;
-} ppLinuxInternal = {0};
+} pbLinuxInternal = {0};
 
 struct Hints {
     unsigned long flags;
@@ -55,22 +55,22 @@ struct Hints {
     unsigned long status;
 };
 
-int ppBeginNative(int w, int h, const char *title, ppFlags flags) {
-    if (!(ppLinuxInternal.display = XOpenDisplay(NULL)))
+int pbBeginNative(int w, int h, const char *title, pbFlags flags) {
+    if (!(pbLinuxInternal.display = XOpenDisplay(NULL)))
         return 0;
-    ppLinuxInternal.root   = DefaultRootWindow(ppLinuxInternal.display);
-    ppLinuxInternal.screen = DefaultScreen(ppLinuxInternal.display);
-    ppLinuxInternal.scaler = NULL;
-    ppLinuxInternal.buffer = NULL;
+    pbLinuxInternal.root   = DefaultRootWindow(pbLinuxInternal.display);
+    pbLinuxInternal.screen = DefaultScreen(pbLinuxInternal.display);
+    pbLinuxInternal.scaler = NULL;
+    pbLinuxInternal.buffer = NULL;
     
-    int screen_w = DisplayWidth(ppLinuxInternal.display, ppLinuxInternal.screen);
-    int screen_h = DisplayHeight(ppLinuxInternal.display, ppLinuxInternal.screen);
+    int screen_w = DisplayWidth(pbLinuxInternal.display, pbLinuxInternal.screen);
+    int screen_h = DisplayHeight(pbLinuxInternal.display, pbLinuxInternal.screen);
     
-    if (flags & ppFullscreen)
-        flags = ppFullscreen | ppBorderless;
+    if (flags & pbFullscreen)
+        flags = pbFullscreen | pbBorderless;
     
     int x = 0, y = 0;
-    if (flags & ppFullscreen || flags & ppFullscreenDesktop) {
+    if (flags & pbFullscreen || flags & pbFullscreenDesktop) {
         w = screen_w;
         h = screen_h;
     } else {
@@ -78,13 +78,13 @@ int ppBeginNative(int w, int h, const char *title, ppFlags flags) {
         y = screen_h / 2 - h / 2;
     }
     
-    Visual *visual = DefaultVisual(ppLinuxInternal.display, ppLinuxInternal.screen);
+    Visual *visual = DefaultVisual(pbLinuxInternal.display, pbLinuxInternal.screen);
     int format_c = 0;
-    XPixmapFormatValues* formats = XListPixmapFormats(ppLinuxInternal.display, &format_c);
-    ppLinuxInternal.depth = DefaultDepth(ppLinuxInternal.display, ppLinuxInternal.screen);
+    XPixmapFormatValues* formats = XListPixmapFormats(pbLinuxInternal.display, &format_c);
+    pbLinuxInternal.depth = DefaultDepth(pbLinuxInternal.display, pbLinuxInternal.screen);
     int depth_c;
     for (int i = 0; i < format_c; ++i)
-        if (ppLinuxInternal.depth == formats[i].depth) {
+        if (pbLinuxInternal.depth == formats[i].depth) {
             depth_c = formats[i].bits_per_pixel;
             break;
         }
@@ -94,42 +94,42 @@ int ppBeginNative(int w, int h, const char *title, ppFlags flags) {
     
     XSetWindowAttributes swa;
     swa.override_redirect = True;
-    swa.border_pixel = BlackPixel(ppLinuxInternal.display, ppLinuxInternal.screen);
-    swa.background_pixel = BlackPixel(ppLinuxInternal.display, ppLinuxInternal.screen);
+    swa.border_pixel = BlackPixel(pbLinuxInternal.display, pbLinuxInternal.screen);
+    swa.background_pixel = BlackPixel(pbLinuxInternal.display, pbLinuxInternal.screen);
     swa.backing_store = NotUseful;
-    if (!(ppLinuxInternal.window = XCreateWindow(ppLinuxInternal.display, ppLinuxInternal.root, x, y, w, h, 0, ppLinuxInternal.depth, InputOutput, visual, CWBackPixel | CWBorderPixel | CWBackingStore, &swa)))
+    if (!(pbLinuxInternal.window = XCreateWindow(pbLinuxInternal.display, pbLinuxInternal.root, x, y, w, h, 0, pbLinuxInternal.depth, InputOutput, visual, CWBackPixel | CWBorderPixel | CWBackingStore, &swa)))
         return 0;
-    ppLinuxInternal.width = w;
-    ppLinuxInternal.height = h;
+    pbLinuxInternal.width = w;
+    pbLinuxInternal.height = h;
     
-    ppLinuxInternal.delete = XInternAtom(ppLinuxInternal.display, "WM_DELETE_WINDOW", False);
-    XSetWMProtocols(ppLinuxInternal.display, ppLinuxInternal.window, &ppLinuxInternal.delete, 1);
+    pbLinuxInternal.delete = XInternAtom(pbLinuxInternal.display, "WM_DELETE_WINDOW", False);
+    XSetWMProtocols(pbLinuxInternal.display, pbLinuxInternal.window, &pbLinuxInternal.delete, 1);
     
-    XSelectInput(ppLinuxInternal.display, ppLinuxInternal.window, StructureNotifyMask | KeyPressMask | KeyReleaseMask | PointerMotionMask | ButtonPressMask | ButtonReleaseMask | ExposureMask | FocusChangeMask | EnterWindowMask | LeaveWindowMask);
-    XStoreName(ppLinuxInternal.display, ppLinuxInternal.window, title);
+    XSelectInput(pbLinuxInternal.display, pbLinuxInternal.window, StructureNotifyMask | KeyPressMask | KeyReleaseMask | PointerMotionMask | ButtonPressMask | ButtonReleaseMask | ExposureMask | FocusChangeMask | EnterWindowMask | LeaveWindowMask);
+    XStoreName(pbLinuxInternal.display, pbLinuxInternal.window, title);
     
-    if (flags & ppFullscreen) {
-        Atom p = XInternAtom(ppLinuxInternal.display, "_NET_WM_STATE_FULLSCREEN", True);
-        XChangeProperty(ppLinuxInternal.display, ppLinuxInternal.window, XInternAtom(ppLinuxInternal.display, "_NET_WM_STATE", True), XA_ATOM, 32, PropModeReplace, (unsigned char*)&p, 1);
+    if (flags & pbFullscreen) {
+        Atom p = XInternAtom(pbLinuxInternal.display, "_NET_WM_STATE_FULLSCREEN", True);
+        XChangeProperty(pbLinuxInternal.display, pbLinuxInternal.window, XInternAtom(pbLinuxInternal.display, "_NET_WM_STATE", True), XA_ATOM, 32, PropModeReplace, (unsigned char*)&p, 1);
     }
-    if (flags & ppBorderless) {
+    if (flags & pbBorderless) {
         struct Hints hints;
         hints.flags = 2;
         hints.decorations = 0;
-        Atom p = XInternAtom(ppLinuxInternal.display, "_MOTIF_WM_HINTS", True);
-        XChangeProperty(ppLinuxInternal.display, ppLinuxInternal.window, p, p, 32, PropModeReplace, (unsigned char*)&hints, 5);
+        Atom p = XInternAtom(pbLinuxInternal.display, "_MOTIF_WM_HINTS", True);
+        XChangeProperty(pbLinuxInternal.display, pbLinuxInternal.window, p, p, 32, PropModeReplace, (unsigned char*)&hints, 5);
     }
     
-    if (flags & ppAlwaysOnTop) {
-        Atom p = XInternAtom(ppLinuxInternal.display, "_NET_WM_STATE_ABOVE", False);
-        XChangeProperty(ppLinuxInternal.display, ppLinuxInternal.window, XInternAtom(ppLinuxInternal.display, "_NET_WM_STATE", False), XA_ATOM, 32, PropModeReplace, (unsigned char *)&p, 1);
+    if (flags & pbAlwaysOnTop) {
+        Atom p = XInternAtom(pbLinuxInternal.display, "_NET_WM_STATE_ABOVE", False);
+        XChangeProperty(pbLinuxInternal.display, pbLinuxInternal.window, XInternAtom(pbLinuxInternal.display, "_NET_WM_STATE", False), XA_ATOM, 32, PropModeReplace, (unsigned char *)&p, 1);
     }
     
     XSizeHints hints;
     hints.flags = PPosition | PMinSize | PMaxSize;
     hints.x = 0;
     hints.y = 0;
-    if (flags & ppResizable) {
+    if (flags & pbResizable) {
         hints.min_width = 0;
         hints.min_height = 0;
         hints.max_width = screen_w;
@@ -140,12 +140,12 @@ int ppBeginNative(int w, int h, const char *title, ppFlags flags) {
         hints.max_width = w;
         hints.max_height = h;
     }
-    XSetWMNormalHints(ppLinuxInternal.display, ppLinuxInternal.window, &hints);
-    XClearWindow(ppLinuxInternal.display, ppLinuxInternal.window);
-    XMapRaised(ppLinuxInternal.display, ppLinuxInternal.window);
-    XFlush(ppLinuxInternal.display);
-    ppLinuxInternal.gc = DefaultGC(ppLinuxInternal.display, ppLinuxInternal.screen);
-    ppLinuxInternal.img = XCreateImage(ppLinuxInternal.display, CopyFromParent, ppLinuxInternal.depth, ZPixmap, 0, NULL, w, h, 32, w * 4);
+    XSetWMNormalHints(pbLinuxInternal.display, pbLinuxInternal.window, &hints);
+    XClearWindow(pbLinuxInternal.display, pbLinuxInternal.window);
+    XMapRaised(pbLinuxInternal.display, pbLinuxInternal.window);
+    XFlush(pbLinuxInternal.display);
+    pbLinuxInternal.gc = DefaultGC(pbLinuxInternal.display, pbLinuxInternal.screen);
+    pbLinuxInternal.img = XCreateImage(pbLinuxInternal.display, CopyFromParent, pbLinuxInternal.depth, ZPixmap, 0, NULL, w, h, 32, w * 4);
     
     return 1;
 }
@@ -354,14 +354,14 @@ static int ConvertX11ModEx(int key, int state, int is_pressed) {
     return mod_keys;
 }
 
-int ppPollNative(void) {
+int pbPollNative(void) {
     XEvent e;
-    while (ppInternal.running && XPending(ppLinuxInternal.display)) {
-        XNextEvent(ppLinuxInternal.display, &e);
+    while (pbInternal.running && XPending(pbLinuxInternal.display)) {
+        XNextEvent(pbLinuxInternal.display, &e);
         switch (e.type) {
             case KeyPress:
             case KeyRelease:
-                ppCallCallback(Keyboard, ConvertX11Key(e.xkey.keycode), ConvertX11ModEx(e.xkey.keycode, e.xkey.state, e.type == KeyPress), e.type == KeyPress);
+                pbCallCallback(Keyboard, ConvertX11Key(e.xkey.keycode), ConvertX11ModEx(e.xkey.keycode, e.xkey.state, e.type == KeyPress), e.type == KeyPress);
                 break;
             case ButtonPress:
             case ButtonRelease:
@@ -369,62 +369,62 @@ int ppPollNative(void) {
                     case Button1:
                     case Button2:
                     case Button3:
-                        ppCallCallback(MouseButton, (int)e.xbutton.button, ConvertX11Mod(e.xkey.state), e.type == ButtonPress);
+                        pbCallCallback(MouseButton, (int)e.xbutton.button, ConvertX11Mod(e.xkey.state), e.type == ButtonPress);
                         break;
                     case Button4:
-                        ppCallCallback(MouseScroll, 0.f, 1.f, ConvertX11Mod(e.xkey.state));
+                        pbCallCallback(MouseScroll, 0.f, 1.f, ConvertX11Mod(e.xkey.state));
                         break;
                     case Button5:
-                        ppCallCallback(MouseScroll, 0.f, -1.f, ConvertX11Mod(e.xkey.state));
+                        pbCallCallback(MouseScroll, 0.f, -1.f, ConvertX11Mod(e.xkey.state));
                         break;
                     case Button6:
-                        ppCallCallback(MouseScroll, 1.f, 0.f, ConvertX11Mod(e.xkey.state));
+                        pbCallCallback(MouseScroll, 1.f, 0.f, ConvertX11Mod(e.xkey.state));
                         break;
                     case Button7:
-                        ppCallCallback(MouseScroll, -1.f, 0.f, ConvertX11Mod(e.xkey.state));
+                        pbCallCallback(MouseScroll, -1.f, 0.f, ConvertX11Mod(e.xkey.state));
                         break;
                     default:
-                        ppCallCallback(MouseButton, (int)(e.xbutton.button - 4), ConvertX11Mod(e.xkey.state), e.type == ButtonPress);
+                        pbCallCallback(MouseButton, (int)(e.xbutton.button - 4), ConvertX11Mod(e.xkey.state), e.type == ButtonPress);
                         break;
                 }
                 break;
             case FocusIn:
             case FocusOut:
-                ppCallCallback(Focus, e.type == FocusIn);
+                pbCallCallback(Focus, e.type == FocusIn);
                 break;
             case MotionNotify: {
                 int cx = e.xmotion.x;
                 int cy = e.xmotion.y;
-                ppCallCallback(MouseMove, cx, cy, cx - ppLinuxInternal.cursorLastX, cy - ppLinuxInternal.cursorLastY);
-                ppLinuxInternal.cursorLastX = cx;
-                ppLinuxInternal.cursorLastY = cy;
+                pbCallCallback(MouseMove, cx, cy, cx - pbLinuxInternal.cursorLastX, cy - pbLinuxInternal.cursorLastY);
+                pbLinuxInternal.cursorLastX = cx;
+                pbLinuxInternal.cursorLastY = cy;
                 break;
             }
             case ConfigureNotify: {
                 int w = e.xconfigure.width;
                 int h = e.xconfigure.height;
-                if (ppLinuxInternal.width == w && ppLinuxInternal.height == h)
+                if (pbLinuxInternal.width == w && pbLinuxInternal.height == h)
                     break;
-                ppCallCallback(Resized, w, h);
-                ppLinuxInternal.width = w;
-                ppLinuxInternal.height = h;
+                pbCallCallback(Resized, w, h);
+                pbLinuxInternal.width = w;
+                pbLinuxInternal.height = h;
                 
-                if (ppLinuxInternal.scaler) {
-                    ppLinuxInternal.scaler->data = NULL;
-                    XDestroyImage(ppLinuxInternal.scaler);
-                    ppLinuxInternal.scaler = NULL;
+                if (pbLinuxInternal.scaler) {
+                    pbLinuxInternal.scaler->data = NULL;
+                    XDestroyImage(pbLinuxInternal.scaler);
+                    pbLinuxInternal.scaler = NULL;
                 }
-                XClearWindow(ppLinuxInternal.display, ppLinuxInternal.window);
+                XClearWindow(pbLinuxInternal.display, pbLinuxInternal.window);
                 break;
             }
             case ClientMessage:
-                if (e.xclient.data.l[0] != ppLinuxInternal.delete)
+                if (e.xclient.data.l[0] != pbLinuxInternal.delete)
                     break;
-                ppInternal.running = 0;
+                pbInternal.running = 0;
                 break;
         }
     }
-    return ppInternal.running;
+    return pbInternal.running;
 }
 
 static int* scale(int *data, int w, int h, int nw, int nh) {
@@ -448,38 +448,39 @@ static int* scale(int *data, int w, int h, int nw, int nh) {
     return result;
 }
 
-void ppFlushNative(int *data, int w, int h) {
-    assert(data && w && h);
-    if (ppLinuxInternal.width != w || ppLinuxInternal.height != h) {
-        if (ppLinuxInternal.scaler) {
-            ppLinuxInternal.scaler->data = NULL;
-            XDestroyImage(ppLinuxInternal.scaler);
-            ppLinuxInternal.scaler = NULL;
+void pbFlushNative(pbImage *buffer) {
+    if (!buffer || !buffer->buffer || !buffer->width || !buffer->height)
+        return;
+    if (pbLinuxInternal.width != buffer->width || pbLinuxInternal.height != buffer->height) {
+        if (pbLinuxInternal.scaler) {
+            pbLinuxInternal.scaler->data = NULL;
+            XDestroyImage(pbLinuxInternal.scaler);
+            pbLinuxInternal.scaler = NULL;
         }
-        ppLinuxInternal.scaler = XCreateImage(ppLinuxInternal.display, CopyFromParent, ppLinuxInternal.depth, ZPixmap, 0, NULL, ppLinuxInternal.width, ppLinuxInternal.height, 32, ppLinuxInternal.width * 4);
+        pbLinuxInternal.scaler = XCreateImage(pbLinuxInternal.display, CopyFromParent, pbLinuxInternal.depth, ZPixmap, 0, NULL, pbLinuxInternal.width, pbLinuxInternal.height, 32, pbLinuxInternal.width * 4);
         
-        if (ppLinuxInternal.buffer)
-            free(ppLinuxInternal.buffer);
-        ppLinuxInternal.buffer = scale(data, w, h, ppLinuxInternal.width, ppLinuxInternal.height);
-        ppLinuxInternal.scaler->data = (char*)ppLinuxInternal.buffer;
-        XPutImage(ppLinuxInternal.display, ppLinuxInternal.window, ppLinuxInternal.gc, ppLinuxInternal.scaler, 0, 0, 0, 0, ppLinuxInternal.width, ppLinuxInternal.height);
+        if (pbLinuxInternal.buffer)
+            free(pbLinuxInternal.buffer);
+        pbLinuxInternal.buffer = scale(buffer->data, buffer->width, buffer->height, pbLinuxInternal.width, pbLinuxInternal.height);
+        pbLinuxInternal.scaler->data = (char*)pbLinuxInternal.buffer;
+        XPutImage(pbLinuxInternal.display, pbLinuxInternal.window, pbLinuxInternal.gc, pbLinuxInternal.scaler, 0, 0, 0, 0, pbLinuxInternal.width, pbLinuxInternal.height);
     } else {
-        ppLinuxInternal.img->data = (char*)data;
-        XPutImage(ppLinuxInternal.display, ppLinuxInternal.window, ppLinuxInternal.gc, ppLinuxInternal.img, 0, 0, 0, 0, ppLinuxInternal.width, ppLinuxInternal.height);
+        pbLinuxInternal.img->data = (char*)buffer->buffer;
+        XPutImage(pbLinuxInternal.display, pbLinuxInternal.window, pbLinuxInternal.gc, pbLinuxInternal.img, 0, 0, 0, 0, pbLinuxInternal.width, pbLinuxInternal.height);
     }
-    XFlush(ppLinuxInternal.display);
+    XFlush(pbLinuxInternal.display);
 }
 
-void ppEndNative(void) {
-    assert(ppInternal.running);
-    if (ppLinuxInternal.scaler) {
-        ppLinuxInternal.scaler->data = NULL;
-        XDestroyImage(ppLinuxInternal.scaler);
+void pbEndNative(void) {
+    assert(pbInternal.running);
+    if (pbLinuxInternal.scaler) {
+        pbLinuxInternal.scaler->data = NULL;
+        XDestroyImage(pbLinuxInternal.scaler);
     }
-    if (ppLinuxInternal.buffer)
-        free(ppLinuxInternal.buffer);
-    ppLinuxInternal.img->data = NULL;
-    XDestroyImage(ppLinuxInternal.img);
-    XDestroyWindow(ppLinuxInternal.display, ppLinuxInternal.window);
-    XCloseDisplay(ppLinuxInternal.display);
+    if (pbLinuxInternal.buffer)
+        free(pbLinuxInternal.buffer);
+    pbLinuxInternal.img->data = NULL;
+    XDestroyImage(pbLinuxInternal.img);
+    XDestroyWindow(pbLinuxInternal.display, pbLinuxInternal.window);
+    XCloseDisplay(pbLinuxInternal.display);
 }

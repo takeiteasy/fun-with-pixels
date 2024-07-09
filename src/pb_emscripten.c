@@ -1,4 +1,4 @@
-/* ppEmscripten.c -- https://github.com/takeiteasy/pp
+/* pb_emscripten.c -- https://github.com/takeiteasy/fwp
  
  The MIT License (MIT)
 
@@ -23,8 +23,8 @@
  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#define PP_IMPLEMENTATION
-#include "pp.h"
+#define FWP_PB_IMPLEMENTATION
+#include "pb.h"
 #include <emscripten.h>
 #include <emscripten/html5.h>
 
@@ -33,7 +33,7 @@ static struct {
     int screenW, screenH;
     int canvasW, canvasH;
     int mouseInCanvas;
-} ppEmccInternal = {0};
+} pbEmccInternal = {0};
 
 static int TranslateWebMod(int ctrl, int shift, int alt, int meta) {
     return (ctrl ? KEY_MOD_CONTROL : 0) | (shift ? KEY_MOD_SHIFT : 0) | (alt ? KEY_MOD_ALT : 0) | (meta ? KEY_MOD_SUPER : 0);
@@ -41,29 +41,29 @@ static int TranslateWebMod(int ctrl, int shift, int alt, int meta) {
 
 static EM_BOOL key_callback(int type, const EmscriptenKeyboardEvent* e, void* user_data) {
     int mod = TranslateWebMod(e->ctrlKey, e->shiftKey, e->altKey, e->metaKey);
-    ppCallCallback(Keyboard, e->keyCode, mod, type == EMSCRIPTEN_EVENT_KEYDOWN);
+    pbCallCallback(Keyboard, e->keyCode, mod, type == EMSCRIPTEN_EVENT_KEYDOWN);
     return !(e->keyCode == 82 && mod == KEY_MOD_SUPER);
 }
 
 static EM_BOOL mouse_callback(int type, const EmscriptenMouseEvent* e, void* user_data) {
     switch (type) {
         case EMSCRIPTEN_EVENT_MOUSEDOWN:
-            if (ppEmccInternal.mouseInCanvas && e->buttons != 0)
-                ppCallCallback(MouseButton, e->button + 1, TranslateWebMod(e->ctrlKey, e->shiftKey, e->altKey, e->metaKey), 1);
+            if (pbEmccInternal.mouseInCanvas && e->buttons != 0)
+                pbCallCallback(MouseButton, e->button + 1, TranslateWebMod(e->ctrlKey, e->shiftKey, e->altKey, e->metaKey), 1);
             break;
         case EMSCRIPTEN_EVENT_MOUSEUP:
-            if (ppEmccInternal.mouseInCanvas)
-                ppCallCallback(MouseButton, e->button + 1, TranslateWebMod(e->ctrlKey, e->shiftKey, e->altKey, e->metaKey), 0);
+            if (pbEmccInternal.mouseInCanvas)
+                pbCallCallback(MouseButton, e->button + 1, TranslateWebMod(e->ctrlKey, e->shiftKey, e->altKey, e->metaKey), 0);
             break;
         case EMSCRIPTEN_EVENT_MOUSEMOVE:
-            if (ppEmccInternal.mouseInCanvas)
-                ppCallCallback(MouseMove, e->clientX - (ppEmccInternal.screenW / 2) + (ppEmccInternal.canvasW / 2), e->clientY, e->movementX, e->movementY);
+            if (pbEmccInternal.mouseInCanvas)
+                pbCallCallback(MouseMove, e->clientX - (pbEmccInternal.screenW / 2) + (pbEmccInternal.canvasW / 2), e->clientY, e->movementX, e->movementY);
             break;
         case EMSCRIPTEN_EVENT_MOUSEENTER:
-            ppEmccInternal.mouseInCanvas = 1;
+            pbEmccInternal.mouseInCanvas = 1;
             return 1;
         case EMSCRIPTEN_EVENT_MOUSELEAVE:
-            ppEmccInternal.mouseInCanvas = 0;
+            pbEmccInternal.mouseInCanvas = 0;
             return 0;
         case EMSCRIPTEN_EVENT_CLICK:
         case EMSCRIPTEN_EVENT_DBLCLICK:
@@ -74,20 +74,20 @@ static EM_BOOL mouse_callback(int type, const EmscriptenMouseEvent* e, void* use
 }
 
 static EM_BOOL wheel_callback(int type, const EmscriptenWheelEvent* e, void* user_data) {
-    ppCallCallback(MouseScroll, e->deltaX, e->deltaY, TranslateWebMod(e->mouse.ctrlKey, e->mouse.shiftKey, e->mouse.altKey, e->mouse.metaKey));
+    pbCallCallback(MouseScroll, e->deltaX, e->deltaY, TranslateWebMod(e->mouse.ctrlKey, e->mouse.shiftKey, e->mouse.altKey, e->mouse.metaKey));
     return 1;
 }
 
 static EM_BOOL uievent_callback(int type, const EmscriptenUiEvent* e, void* user_data) {
-    ppEmccInternal.screenW = e->documentBodyClientWidth;
-    ppEmccInternal.screenH = e->documentBodyClientHeight;
-    emscripten_get_element_css_size(canvas, (double*)&ppEmccInternal.canvasW, (double*)&ppEmccInternal.canvasH);
-    ppCallCallback(Resized, ppEmccInternal.screenW, ppEmccInternal.screenH);
+    pbEmccInternal.screenW = e->documentBodyClientWidth;
+    pbEmccInternal.screenH = e->documentBodyClientHeight;
+    emscripten_get_element_css_size(canvas, (double*)&pbEmccInternal.canvasW, (double*)&pbEmccInternal.canvasH);
+    pbCallCallback(Resized, pbEmccInternal.screenW, pbEmccInternal.screenH);
     return 1;
 }
 
 static EM_BOOL focusevent_callback(int type, const EmscriptenFocusEvent* e, void* user_data) {
-    ppCallCallback(Focus, type == EMSCRIPTEN_EVENT_FOCUS);
+    pbCallCallback(Focus, type == EMSCRIPTEN_EVENT_FOCUS);
     return 1;
 }
 
@@ -95,7 +95,7 @@ static const char* beforeunload_callback(int eventType, const void *reserved, vo
     return "Do you really want to leave the page?";
 }
 
-int ppBeginNative(int w, int h, const char *title, ppFlags flags) {
+int pbBeginNative(int w, int h, const char *title, pbFlags flags) {
     emscripten_set_canvas_element_size(canvas, w, h);
     
     emscripten_set_keypress_callback(EMSCRIPTEN_EVENT_TARGET_WINDOW, 0, 1, key_callback);
@@ -125,13 +125,14 @@ int ppBeginNative(int w, int h, const char *title, ppFlags flags) {
     return 1;
 }
 
-int ppPollNative(void) {
+int pbPollNative(void) {
     // Nothing to do here
     return 1;
 }
 
-void ppFlushNative(int *data, int w, int h) {
-    assert(data && w && h);
+void pbFlushNative(pbImage *buffer) {
+    if (!buffer || !buffer->buffer || !buffer->width || !buffer->height)
+        return;
     EM_ASM({
         var w = $0;
         var h = $1;
@@ -155,9 +156,9 @@ void ppFlushNative(int *data, int w, int h) {
         }
         
         ctx.putImageData(img, 0, 0);
-    }, w, h, data);
+    }, buffer->width, buffer->height, buffer->buffer);
 }
 
-void ppEndNative(void) {
+void pbEndNative(void) {
     // Nothing to do here
 }
