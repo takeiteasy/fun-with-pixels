@@ -1,9 +1,9 @@
-# fwp
+# Fun With Pixels
 
 > [!WARNING]
 > Work in progress, see [TODO](#todo) section. Everything works, but features need adding.
 
-__Fun With Pixels__ is a cross-platform hot-reloading software-rendering enviroment for C, designed for quick experiments and testing. Edit your C code, rebuild and see the changes in real-time!
+__Fun With Pixels__ (_fwp_) is a cross-platform hot-reloading software-rendering enviroment for C, designed for quick experiments and testing. Edit your C code, rebuild and see the changes in real-time!
 
 If you would like to try it out, see the [setting up](#setting-up) section. Also included is a utility library _pb_ that can function independently from the _fwp_ program. If you're interested in that, see the [pb](#pb) section.
 
