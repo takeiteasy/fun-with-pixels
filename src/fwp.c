@@ -90,14 +90,21 @@ static struct option long_options[] = {
 };
 
 static void usage(void) {
-    puts("usage: fwp -p [path] [options]\n");
-    puts("  -w/--width     Window width [default: 640]");
-    puts("  -h/--height    Window height [default: 480]");
-    puts("  -t/--title     Window title [default: \"fwp\"]");
-    puts("  -r/--resizable Enable resizable window");
-    puts("  -a/--top       Enable window always on top");
-    puts("  -p/--path      Path the dynamic library [required]");
-    puts("  -u/--usage     Display this message");
+    puts(" usage: fwp -p [path] [options]");
+    puts("");
+    puts(" fun-with-pixels  Copyright (C) 2024  George Watson");
+    puts(" This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.");
+    puts(" This is free software, and you are welcome to redistribute it");
+    puts(" under certain conditions; type `show c' for details.");
+    puts("");
+    puts("  Options:");
+    puts("      -w/--width     Window width [default: 640]");
+    puts("      -h/--height    Window height [default: 480]");
+    puts("      -t/--title     Window title [default: \"fwp\"]");
+    puts("      -r/--resizable Enable resizable window");
+    puts("      -a/--top       Enable window always on top");
+    puts("      -p/--path      Path the dynamic library [required]");
+    puts("      -u/--usage     Display this message");
 }
 
 #if defined(PLATFORM_WINDOWS)

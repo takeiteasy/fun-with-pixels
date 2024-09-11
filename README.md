@@ -12,15 +12,22 @@ If you would like to try it out, see the [setting up](#setting-up) section. Also
 ## Usage
 
 ```
-usage: fwp -p [path] [options]
+ usage: fwp -p [path] [options]
 
-  -w/--width     Window width [default: 640]
-  -h/--height    Window height [default: 480]
-  -t/--title     Window title [default: "fwp"]
-  -r/--resizable Enable resizable window
-  -a/--top       Enable window always on top
-  -p/--path      Path the dynamic library [required]
-  -u/--usage     Display this message
+ fun-with-pixels  Copyright (C) 2024  George Watson
+ This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
+ This is free software, and you are welcome to redistribute it
+ under certain conditions; type `show c' for details.
+
+  Options:
+      -w/--width     Window width [default: 640]
+      -h/--height    Window height [default: 480]
+      -t/--title     Window title [default: "fwp"]
+      -r/--resizable Enable resizable window
+      -a/--top       Enable window always on top
+      -p/--path      Path the dynamic library [required]
+      -u/--usage     Display this message
+
 ```
 
 ## Setting up
