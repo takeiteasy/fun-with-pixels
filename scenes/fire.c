@@ -6,7 +6,7 @@
 #define FIRE_HEIGHT 100
 
 #define FIRE_PALLET_SIZE 7
-static pbColor FIRE_PALETTE[] = {
+static int FIRE_PALETTE[] = {
     -65536,
     -6807033,
     -331755,
@@ -17,7 +17,7 @@ static pbColor FIRE_PALETTE[] = {
 };
 
 struct fwpState {
-    pbRng rng;
+    int dummy;
 };
 
 static void DrawFireBase(pbImage *framebuffer) {
@@ -28,7 +28,7 @@ static void DrawFireBase(pbImage *framebuffer) {
 
 static fwpState* init(pbImage *framebuffer) {
     fwpState *state = malloc(sizeof(fwpState));
-    state->rng = rngInit(0);
+    rngInit(0);
     DrawFireBase(framebuffer);
     return state;
 }
@@ -53,9 +53,9 @@ static int event(fwpState *state, pbEvent *e) {
 static int tick(fwpState *state, pbImage *framebuffer, double delta) {
     DrawFireBase(framebuffer);
     for (int i = 0; i < framebuffer->width * FIRE_HEIGHT; i++) {
-        int x = rngRandomIntRange(&state->rng, 0, framebuffer->width);
-        int y = framebuffer->height - rngRandomIntRange(&state->rng, 0, FIRE_HEIGHT);
-        pbColor c = pbImagePGet(framebuffer, x, y);
+        int x = rngRandomIntRange(0, framebuffer->width);
+        int y = framebuffer->height - rngRandomIntRange(0, FIRE_HEIGHT);
+        int c = pbImagePGet(framebuffer, x, y);
 
         int pIdx = -1;
         for (int j = 0; j < FIRE_PALLET_SIZE; j++)
@@ -64,9 +64,9 @@ static int tick(fwpState *state, pbImage *framebuffer, double delta) {
                 break;
             }
 
-        float r = rngRandomFloat(&state->rng);
+        float r = rngRandomFloat();
         if (r <= FIRE_INTENSITY) {
-            int nx = x + rngRandomIntRange(&state->rng, 0, 3) - 1;
+            int nx = x + rngRandomIntRange(0, 3) - 1;
             pbImagePSet(framebuffer, nx, y - 1, c);
             pbImagePSet(framebuffer, x, y, pIdx < 0 || ++pIdx >= FIRE_PALLET_SIZE ? RGBA(0, 0, 0, 0) : FIRE_PALETTE[pIdx]);
         }
@@ -74,7 +74,7 @@ static int tick(fwpState *state, pbImage *framebuffer, double delta) {
     return 1;
 }
 
-EXPORT const fwpScene scene = {
+const fwpScene scene = {
     .windowWidth = 320,
     .windowHeight = 240,
     .windowTitle = "AHHHHH! FIRE!",

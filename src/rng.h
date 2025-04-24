@@ -25,25 +25,13 @@ extern "C" {
 
 #include <stdint.h>
 
-#if defined(_WIN32) || defined(_WIN64)
-#define FWP_RNG_WINDOWS
-#endif
+void rngInit(uint64_t initialSeed);
+uint64_t rngRandom(void);
+float rngRandomFloat(void);
+int rngRandomIntRange(int min, int max);
+float rngRandomFloatRange(float min, float max);
 
-#if defined(FWP_RNG_WINDOWS) && !defined(FWP_RNG_NO_EXPORT)
-#define EXPORT __declspec(dllexport)
-#else
-#define EXPORT
-#endif
-
-typedef uint64_t pbRng;
-
-pbRng rngInit(uint64_t initialSeed);
-uint64_t rngRandom(pbRng *rng);
-float rngRandomFloat(pbRng *rng);
-int rngRandomIntRange(pbRng *rng, int min, int max);
-float rngRandomFloatRange(pbRng *rng, float min, float max);
-
-uint8_t* rngCellularAutomataMap(pbRng *rng, unsigned int width, unsigned int height, unsigned int fillChance, unsigned int smoothIterations, unsigned int survive, unsigned int starve);
+uint8_t* rngCellularAutomataMap(unsigned int width, unsigned int height, unsigned int fillChance, unsigned int smoothIterations, unsigned int survive, unsigned int starve);
 uint8_t* rngPerlinNoiseMap(unsigned int width, unsigned int height, float z, float offsetX, float offsetY, float scale, float lacunarity, float gain, float octaves);
 float rngPerlinNoise(float x, float y, float z);
 

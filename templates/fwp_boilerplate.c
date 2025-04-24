@@ -4,7 +4,7 @@
 
 // A fwpState should be defined in each scene. This structure can contain whatever variables and types you want, but it must be defined like this. Do not typedef the struct definition, as it is already typedef'd in fwp.h
 struct fwpState {
-    pbColor clearColor;
+    int clearColor;
 };
 
 static fwpState* init(pbImage *framebuffer) {
@@ -50,7 +50,7 @@ static int tick(fwpState *state, pbImage *pbo, double delta) {
 // So fwp knows where your callbacks are a `scene` definition must be made
 // The definition should be always be called scene. If the name changes fwp
 // won't know where to look!
-EXPORT const fwpScene scene = {
+const fwpScene scene = {
     .init = init,
     .deinit = deinit,
     .reload = reload,

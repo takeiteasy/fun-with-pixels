@@ -1,8 +1,5 @@
 # Fun With Pixels
 
-> [!WARNING]
-> Work in progress, see [TODO](#todo) section. Everything works, but features need adding.
-
 __Fun With Pixels__ (_fwp_) is a cross-platform hot-reloading software-rendering enviroment for C, designed for quick experiments and testing. Edit your C code, rebuild and see the changes in real-time!
 
 If you would like to try it out, see the [setting up](#setting-up) section. Also included is a utility library _pb_ that can function independently from the _fwp_ program. If you're interested in that, see the [pb](#pb) section.
@@ -12,7 +9,7 @@ If you would like to try it out, see the [setting up](#setting-up) section. Also
 ## Usage
 
 ```
- usage: fwp -p [path] [options]
+ usage: fwp [path] [options]
 
  fun-with-pixels  Copyright (C) 2024  George Watson
  This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
@@ -25,7 +22,6 @@ If you would like to try it out, see the [setting up](#setting-up) section. Also
       -t/--title     Window title [default: "fwp"]
       -r/--resizable Enable resizable window
       -a/--top       Enable window always on top
-      -p/--path      Path the dynamic library [required]
       -u/--usage     Display this message
 
 ```
@@ -33,6 +29,10 @@ If you would like to try it out, see the [setting up](#setting-up) section. Also
 ## Setting up
 
 To achieve hot-reloading in C, all the code that is to be reloaded is built as a dynamic library. The symbols are loaded from the library and updated by the _fwp_ executable; which remains running.
+
+```
+make program
+```
 
 To make it easy, the user's code is put into a `scene`. Below is a barebones example of how to setup a scene. Look at the example and read the comments.
 
@@ -43,7 +43,7 @@ To make it easy, the user's code is put into a `scene`. Below is a barebones exa
 
 // A fwpState should be defined in each scene. This structure can contain whatever variables and types you want, but it must be defined like this. Do not typedef the struct definition, as it is already typedef'd in fwp.h
 struct fwpState {
-    pbColor clearColor;
+    int clearColor;
 };
 
 static fwpState* init(void) {
@@ -99,19 +99,19 @@ EXPORT const fwpScene scene = {
 };
 ```
 
-Now you have your scene file, you will have to build it as a dynamic library. Make sure to link the necessary files. Below is an example of building on MacOS, please see the Makefile to see how to build on your platform.
+Now build the scenes
 
 ```
-clang -shared -fpic [scene file].c src/pb_cocoa.c src/rng.c -framework Cocoa -o scene.dylib
+make scenes
 ```
 
 Now you have your dynamic library, you can run:
 
 ```
-fwp -p scene.dylib
+./build/fwp build/[scene].dylib
 ```
 
-Provided you haven't changed the example, the window should appear and display a red background. If you now rebuild the scene with the same command as before, the screen will change to blue! That's about it really.
+Provided you haven't changed the example, the window should appear and display a red background. If you now rebuild the scene with the same command as before, the screen will change to blue!
 
 ## pb
 
@@ -149,18 +149,14 @@ clang -Ideps -Isrc [source file].c src/pb_cocoa.c -framework Cocoa -o [your exec
 ## TODO
 
 - [ ] Frame timing + limiting
+- [ ] Escape key to quit
 - [ ] Documentation + some examples
-- [ ] Image loading + saving (stb_image.h + stb_image_write.h + qoi.h)
-- [ ] ANSI escape parser for text rendering
-- [ ] GIF support (gif_load.h + msf_gif.h)
-- [ ] TTF loading + rendering (stb_truetype.h)
+- [ ] Image exporting 
 
 ## Dependencies
 
 - [nothings/stb](https://github.com/nothings/stb) [MIT/UNLICENSE]
 - [phoboslab/qoi](https://github.com/phoboslab/qoi) [MIT]
-- [notnullnotvoid/msf_gif](https://github.com/notnullnotvoid/msf_gif) [MIT/Public Domain]
-- [hidefromkgb/gif_load](https://github.com/hidefromkgb/gif_load/) [Public Domain]
 - [dhepper/font8x8](https://github.com/dhepper/font8x8/blob/master/font8x8_basic.h) [Public Domain]
 - [skandhurkat/Getopt-for-Visual-Studio](https://github.com/skandhurkat/Getopt-for-Visual-Studio) [GNU GPLv3]
 - [dlfcn-win32/dlfcn-win32](https://github.com/dlfcn-win32/dlfcn-win32) [MIT]

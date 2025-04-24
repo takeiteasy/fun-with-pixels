@@ -27,18 +27,14 @@ extern "C" {
 #include <stddef.h>
 #include <stdarg.h>
 #include <math.h>
-
-#if defined(_WIN32) || defined(_WIN64)
-#define FWP_PB_WINDOWS
-#endif
-
-#if defined(FWP_PB_WINDOWS) && !defined(FWP_PB_NO_EXPORT)
-#define EXPORT __declspec(dllexport)
+#ifdef _WIN32
+#include <io.h>
+#include <dirent.h>
+#define F_OK 0
+#define access _access
 #else
-#define EXPORT
+#include <unistd.h>
 #endif
-
-typedef int32_t pbColor;
 
 typedef enum {
     IndianRed = -3318692,
@@ -184,51 +180,52 @@ typedef enum {
     Black = -16777216,
 } pbBuiltinColor;
 
-EXPORT pbColor RGBA(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
-EXPORT pbColor RGB(uint8_t r, uint8_t g, uint8_t b);
-EXPORT pbColor RGBA1(uint8_t c, uint8_t a);
-EXPORT pbColor RGB1(uint8_t c);
+int RGBA(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
+int RGB(uint8_t r, uint8_t g, uint8_t b);
+int RGBA1(uint8_t c, uint8_t a);
+int RGB1(uint8_t c);
 
-EXPORT uint8_t Rgba(pbColor c);
-EXPORT uint8_t rGba(pbColor c);
-EXPORT uint8_t rgBa(pbColor c);
-EXPORT uint8_t rgbA(pbColor c);
+uint8_t Rgba(int c);
+uint8_t rGba(int c);
+uint8_t rgBa(int c);
+uint8_t rgbA(int c);
 
-EXPORT pbColor rGBA(pbColor c, uint8_t r);
-EXPORT pbColor RgBA(pbColor c, uint8_t g);
-EXPORT pbColor RGbA(pbColor c, uint8_t b);
-EXPORT pbColor RGBa(pbColor c, uint8_t a);
+int rGBA(int c, uint8_t r);
+int RgBA(int c, uint8_t g);
+int RGbA(int c, uint8_t b);
+int RGBa(int c, uint8_t a);
 
 typedef struct {
     unsigned int width, height;
-    pbColor *buffer;
+    int *buffer;
 } pbImage;
 
-EXPORT pbImage* pbImageNew(unsigned int w, unsigned int h);
-EXPORT void pbImageFree(pbImage *img);
+pbImage* pbImageNew(unsigned int w, unsigned int h);
+void pbImageFree(pbImage *img);
 
-EXPORT void pbImageFill(pbImage *img, pbColor col);
-EXPORT void pbImageFlood(pbImage *img, int x, int y, pbColor col);
-EXPORT void pbImagePSet(pbImage *img, int x, int y, pbColor col);
-EXPORT pbColor pbImagePGet(pbImage *img, int x, int y);
-EXPORT void pbImagePaste(pbImage *dst, pbImage *src, int x, int y);
-EXPORT void pbImagePartialPaste(pbImage *dst, pbImage *src, int x, int y, int rx, int ry, int rw, int rh);
-EXPORT pbImage* pbImageDupe(pbImage *src);
-EXPORT void pbImagePassThru(pbImage *img, pbColor(*fn)(int x, int y, pbColor col));
-EXPORT pbImage* pbImageResize(pbImage *src, int nw, int nh);
-EXPORT pbImage* pbImageRotate(pbImage *src, float angle);
-EXPORT void pbImageDrawLine(pbImage *img, int x0, int y0, int x1, int y1, pbColor col);
-EXPORT void pbImageDrawCircle(pbImage *img, int xc, int yc, int r, pbColor col, int fill);
-EXPORT void pbImageDrawRectangle(pbImage *img, int x, int y, int w, int h, pbColor col, int fill);
-EXPORT void pbImageDrawTriangle(pbImage *img, int x0, int y0, int x1, int y1, int x2, int y2, pbColor col, int fill);
+void pbImageFill(pbImage *img, int col);
+void pbImageFlood(pbImage *img, int x, int y, int col);
+void pbImagePSet(pbImage *img, int x, int y, int col);
+int pbImagePGet(pbImage *img, int x, int y);
+void pbImagePaste(pbImage *dst, pbImage *src, int x, int y);
+void pbImageClippedPaste(pbImage *dst, pbImage *src, int x, int y, int rx, int ry, int rw, int rh);
+pbImage* pbImageDupe(pbImage *src);
+void pbImagePassThru(pbImage *img, int(*fn)(int x, int y, int col));
+pbImage* pbImageResized(pbImage *src, int nw, int nh);
+pbImage* pbImageRotated(pbImage *src, float angle);
+pbImage* pbImageClipped(pbImage *src, int rx, int ry, int rw, int rh);
+void pbImageDrawLine(pbImage *img, int x0, int y0, int x1, int y1, int col);
+void pbImageDrawCircle(pbImage *img, int xc, int yc, int r, int col, int fill);
+void pbImageDrawRectangle(pbImage *img, int x, int y, int w, int h, int col, int fill);
+void pbImageDrawTriangle(pbImage *img, int x0, int y0, int x1, int y1, int x2, int y2, int col, int fill);
 
-EXPORT void pbImageDrawCharacter(pbImage *img, char c, int x, int y, pbColor col);
-EXPORT void pbImageDrawString(pbImage *img, const char *str, int x, int y, pbColor col);
-EXPORT void pbImageDrawStringFormat(pbImage *img, int x, int y, pbColor col, const char *fmt, ...);
+void pbImageDrawCharacter(pbImage *img, char c, int x, int y, int col);
+void pbImageDrawString(pbImage *img, const char *str, int x, int y, int col);
+void pbImageDrawStringFormat(pbImage *img, int x, int y, int col, const char *fmt, ...);
 
-EXPORT pbImage* pbImageLoadFromPath(const char *path);
-EXPORT pbImage* pbImageLoadFromMemory(const void *data, size_t length);
-EXPORT int pbImageSave(pbImage *img, const char *path);
+pbImage* pbImageLoadFromPath(const char *path);
+pbImage* pbImageLoadFromMemory(const void *data, size_t length);
+int pbImageSave(pbImage *img, const char *path);
 
 typedef enum {
     pbResizable         = 1 << 0,
@@ -269,27 +266,27 @@ typedef enum {
     X(Focus,        (void*, int))                    \
     X(Closed,       (void*))
 
-EXPORT int pbBegin(unsigned int w, unsigned int h, const char *title, pbFlags flags);
-EXPORT int pbPoll(void);
-EXPORT void pbFlush(pbImage *buffer);
-EXPORT void pbEnd(void);
+int pbBegin(unsigned int w, unsigned int h, const char *title, pbFlags flags);
+int pbPoll(void);
+void pbFlush(pbImage *buffer);
+void pbEnd(void);
 
-EXPORT void pbSetWindowTitle(const char *title);
-EXPORT void pbWindowSize(unsigned int *w, unsigned int *h);
-EXPORT void pbSetWindowSize(unsigned int w, unsigned int h);
-EXPORT void pbCursorPosition(int *x, int *y);
+void pbSetWindowTitle(const char *title);
+void pbWindowSize(unsigned int *w, unsigned int *h);
+void pbSetWindowSize(unsigned int w, unsigned int h);
+void pbCursorPosition(int *x, int *y);
 
 #define X(NAME, ARGS) \
     void(*NAME##Callback)ARGS,
-EXPORT void pbCallbacks(FWP_PB_CALLBACKS void *userdata);
+void pbCallbacks(FWP_PB_CALLBACKS void *userdata);
 #undef X
 #define X(NAME, ARGS) \
-    EXPORT void pb##NAME##Callback(void(*NAME##Callback)ARGS);
+    void pb##NAME##Callback(void(*NAME##Callback)ARGS);
 FWP_PB_CALLBACKS
 #undef X
 
-EXPORT void pbUserdata(void *userdata);
-EXPORT int pbRunning(void);
+void pbUserdata(void *userdata);
+int pbRunning(void);
 
 #if defined(__cplusplus)
 }
@@ -301,52 +298,56 @@ EXPORT int pbRunning(void);
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+#define QOI_IMPLEMENTATION
+#include "qoi.h"
 
-pbColor RGBA(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
+int RGBA(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
     return ((uint8_t)a << 24) | ((uint8_t)r << 16) | ((uint8_t)g << 8) | b;
 }
 
-pbColor RGB(uint8_t r, uint8_t g, uint8_t b) {
+int RGB(uint8_t r, uint8_t g, uint8_t b) {
     return RGBA(r, g, b, 255);
 }
 
-pbColor RGBA1(uint8_t c, uint8_t a) {
+int RGBA1(uint8_t c, uint8_t a) {
     return RGBA(c, c, c, a);
 }
 
-pbColor RGB1(uint8_t c) {
+int RGB1(uint8_t c) {
     return RGB(c, c, c);
 }
 
-uint8_t Rgba(pbColor c) {
+uint8_t Rgba(int c) {
     return (uint8_t)((c >> 16) & 0xFF);
 }
 
-uint8_t rGba(pbColor c) {
+uint8_t rGba(int c) {
     return (uint8_t)((c >>  8) & 0xFF);
 }
 
-uint8_t rgBa(pbColor c) {
+uint8_t rgBa(int c) {
     return (uint8_t)(c & 0xFF);
 }
 
-uint8_t rgbA(pbColor c) {
+uint8_t rgbA(int c) {
     return (uint8_t)((c >> 24) & 0xFF);
 }
 
-pbColor rGBA(pbColor c, uint8_t r) {
+int rGBA(int c, uint8_t r) {
     return (c & ~0x00FF0000) | (r << 16);
 }
 
-pbColor RgBA(pbColor c, uint8_t g) {
+int RgBA(int c, uint8_t g) {
     return (c & ~0x0000FF00) | (g << 8);
 }
 
-pbColor RGbA(pbColor c, uint8_t b) {
+int RGbA(int c, uint8_t b) {
     return (c & ~0x000000FF) | b;
 }
 
-pbColor RGBa(pbColor c, uint8_t a) {
+int RGBa(int c, uint8_t a) {
     return (c & ~0x00FF0000) | (a << 24);
 }
 
@@ -366,12 +367,12 @@ void pbImageFree(pbImage *img) {
     }
 }
 
-void pbImageFill(pbImage *img, pbColor col) {
+void pbImageFill(pbImage *img, int col) {
     for (int i = 0; i < img->width * img->height; ++i)
         img->buffer[i] = col;
 }
 
-static inline void flood_fn(pbImage *img, int x, int y, pbColor new, pbColor old) {
+static inline void flood_fn(pbImage *img, int x, int y, int new, int old) {
     if (new == old || pbImagePGet(img, x, y) != old)
         return;
     
@@ -416,7 +417,7 @@ static inline void flood_fn(pbImage *img, int x, int y, pbColor new, pbColor old
     }
 }
 
-void pbImageFlood(pbImage *img, int x, int y, pbColor col) {
+void pbImageFlood(pbImage *img, int x, int y, int col) {
     if (x < 0 || y < 0 || x >= img->width || y >= img->height)
         return;
     flood_fn(img, x, y, col, pbImagePGet(img, x, y));
@@ -424,7 +425,7 @@ void pbImageFlood(pbImage *img, int x, int y, pbColor col) {
 
 #define BLEND(c0, c1, a0, a1) (c0 * a0 / 255) + (c1 * a1 * (255 - a0) / 65025)
 
-static int Blend(pbColor _a, pbColor _b) {
+static int Blend(int _a, int _b) {
     int a   = rgbA(_a);
     int b   = rgbA(_b);
     return !a ? 0xFF000000 : a >= 255 ? RGBa(a, 255) : RGBA(BLEND(Rgba(_a), Rgba(_b), a, b),
@@ -433,7 +434,7 @@ static int Blend(pbColor _a, pbColor _b) {
                                                             a + (b * (255 - a) >> 8));
 }
 
-void pbImagePSet(pbImage *img, int x, int y, pbColor col) {
+void pbImagePSet(pbImage *img, int x, int y, int col) {
     if (x >= 0 && y >= 0 && x < img->width && y < img->height) {
         int a = rgbA(col);
         img->buffer[y * img->width + x] = a == 255 ? col : a == 0 ? 0 : Blend(pbImagePGet(img, x, y), col);
@@ -456,7 +457,7 @@ void pbImagePaste(pbImage *dst, pbImage *src, int x, int y) {
     }
 }
 
-void pbImagePartialPaste(pbImage *dst, pbImage *src, int x, int y, int rx, int ry, int rw, int rh) {
+void pbImageClippedPaste(pbImage *dst, pbImage *src, int x, int y, int rx, int ry, int rw, int rh) {
     for (int ox = 0; ox < rw; ++ox)
         for (int oy = 0; oy < rh; ++oy)
             pbImagePSet(dst, ox + x, oy + y, pbImagePGet(src, ox + rx, oy + ry));
@@ -468,14 +469,14 @@ pbImage* pbImageDupe(pbImage *src) {
     return result;
 }
 
-void pbImagePassThru(pbImage *img, pbColor(*fn)(int x, int y, pbColor col)) {
+void pbImagePassThru(pbImage *img, int(*fn)(int x, int y, int col)) {
     int x, y;
     for (x = 0; x < img->width; ++x)
         for (y = 0; y < img->height; ++y)
             img->buffer[y * img->width + x] = fn(x, y, pbImagePGet(img, x, y));
 }
 
-pbImage* pbImageResize(pbImage *src, int nw, int nh) {
+pbImage* pbImageResized(pbImage *src, int nw, int nh) {
     pbImage *result = pbImageNew(nw, nh);
     int x_ratio = (int)((src->width << 16) / result->width) + 1;
     int y_ratio = (int)((src->height << 16) / result->height) + 1;
@@ -498,7 +499,7 @@ pbImage* pbImageResize(pbImage *src, int nw, int nh) {
 #define __MAX(a, b) (((a) > (b)) ? (a) : (b))
 #define __D2R(a) ((a) * M_PI / 180.0)
 
-pbImage* pbImageRotate(pbImage *src, float angle) {
+pbImage* pbImageRotated(pbImage *src, float angle) {
     float theta = __D2R(angle);
     float c = cosf(theta), s = sinf(theta);
     float r[3][2] = {
@@ -531,7 +532,30 @@ pbImage* pbImageRotate(pbImage *src, float angle) {
     return result;
 }
 
-static inline void vline(pbImage *img, int x, int y0, int y1, pbColor col) {
+#define __CLAMP(X, MINX, MAXX) __MIN(__MAX((X), (MINX)), (MAXX))
+
+pbImage* pbImageClipped(pbImage *src, int rx, int ry, int rw, int rh) {
+    int ox = __CLAMP(rx, 0, src->width);
+    int oy = __CLAMP(ry, 0, src->height);
+    if (ox >= src->width || oy >= src->height)
+        return NULL;
+    int mx = __MIN(ox + rw, src->width);
+    int my = __MIN(oy + rh, src->height);
+    int iw = mx - ox;
+    int ih = my - oy;
+    if (iw <= 0 || ih <= 0)
+        return NULL;
+    pbImage *result = pbImageNew(iw, ih);
+    for (int px = 0; px < iw; px++)
+        for (int py = 0; py < ih; py++) {
+            int cx = ox + px;
+            int cy = oy + py;
+            pbImagePSet(result, px, py, pbImagePGet(src, cx, cy));
+        }
+    return result;
+}
+
+static inline void vline(pbImage *img, int x, int y0, int y1, int col) {
     if (y1 < y0) {
         y0 += y1;
         y1  = y0 - y1;
@@ -550,7 +574,7 @@ static inline void vline(pbImage *img, int x, int y0, int y1, pbColor col) {
         pbImagePSet(img, x, y, col);
 }
 
-static inline void hline(pbImage *img, int y, int x0, int x1, pbColor col) {
+static inline void hline(pbImage *img, int y, int x0, int x1, int col) {
     if (x1 < x0) {
         x0 += x1;
         x1  = x0 - x1;
@@ -569,23 +593,25 @@ static inline void hline(pbImage *img, int y, int x0, int x1, pbColor col) {
         pbImagePSet(img, x, y, col);
 }
 
-void pbImageDrawLine(pbImage *img, int x0, int y0, int x1, int y1, pbColor col) {
+void pbImageDrawLine(pbImage *img, int x0, int y0, int x1, int y1, int col) {
     if (x0 == x1)
         vline(img, x0, y0, y1, col);
-    if (y0 == y1)
+    else if (y0 == y1)
         hline(img, y0, x0, x1, col);
-    int dx = abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
-    int dy = abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
-    int err = (dx > dy ? dx : -dy) / 2;
-    
-    while (pbImagePSet(img, x0, y0, col), x0 != x1 || y0 != y1) {
-        int e2 = err;
-        if (e2 > -dx) { err -= dy; x0 += sx; }
-        if (e2 <  dy) { err += dx; y0 += sy; }
+    else {
+        int dx = abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
+        int dy = abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
+        int err = (dx > dy ? dx : -dy) / 2;
+
+        while (pbImagePSet(img, x0, y0, col), x0 != x1 || y0 != y1) {
+            int e2 = err;
+            if (e2 > -dx) { err -= dy; x0 += sx; }
+            if (e2 <  dy) { err += dx; y0 += sy; }
+        }
     }
 }
 
-void pbImageDrawCircle(pbImage *img, int xc, int yc, int r, pbColor col, int fill) {
+void pbImageDrawCircle(pbImage *img, int xc, int yc, int r, int col, int fill) {
     int x = -r, y = 0, err = 2 - 2 * r; /* II. Quadrant */
     do {
         pbImagePSet(img, xc - x, yc + y, col);    /*   I. Quadrant */
@@ -606,7 +632,7 @@ void pbImageDrawCircle(pbImage *img, int xc, int yc, int r, pbColor col, int fil
     } while (x < 0);
 }
 
-void pbImageDrawRectangle(pbImage *img, int x, int y, int w, int h, pbColor col, int fill) {
+void pbImageDrawRectangle(pbImage *img, int x, int y, int w, int h, int col, int fill) {
     if (x < 0) {
         w += x;
         x  = 0;
@@ -645,7 +671,7 @@ void pbImageDrawRectangle(pbImage *img, int x, int y, int w, int h, pbColor col,
         b = temp;     \
     } while (0)
 
-void pbImageDrawTriangle(pbImage *img, int x0, int y0, int x1, int y1, int x2, int y2, pbColor col, int fill) {
+void pbImageDrawTriangle(pbImage *img, int x0, int y0, int x1, int y1, int x2, int y2, int col, int fill) {
     if (y0 ==  y1 && y0 ==  y2)
         return;
     if (fill) {
@@ -828,14 +854,14 @@ static char font8x8_basic[128][8] = {
     {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}  // U+007F
 };
 
-void pbImageDrawCharacter(pbImage *img, char c, int x, int y, pbColor col) {
+void pbImageDrawCharacter(pbImage *img, char c, int x, int y, int col) {
     char *bitmap = font8x8_basic[(int)c];
     for (int i = 0; i < 8; i++)
         for (int j = 0; j < 8; j++)
             pbImagePSet(img, x + i, y + j, bitmap[j] & 1 << i ? col : 0xFF000000);
 }
 
-void pbImageDrawString(pbImage *img, const char *str, int x, int y, pbColor col) {
+void pbImageDrawString(pbImage *img, const char *str, int x, int y, int col) {
     int nx = x, ny = y;
     for (int i = 0; i < strlen(str); ++i) {
         if (str[i] == '\n') {
@@ -848,7 +874,7 @@ void pbImageDrawString(pbImage *img, const char *str, int x, int y, pbColor col)
     }
 }
 
-void pbImageDrawStringFormat(pbImage *img, int x, int y, pbColor col, const char *fmt, ...) {
+void pbImageDrawStringFormat(pbImage *img, int x, int y, int col, const char *fmt, ...) {
     va_list args;
     va_start(args, fmt);
     size_t size = _vscprintf(fmt, args) + 1;
@@ -859,6 +885,87 @@ void pbImageDrawStringFormat(pbImage *img, int x, int y, pbColor col, const char
     free(str);
 }
 
+#define QOI_MAGIC (((unsigned int)'q') << 24 | ((unsigned int)'o') << 16 | ((unsigned int)'i') <<  8 | ((unsigned int)'f'))
+
+static int check_if_qoi(unsigned char *data) {
+    return (data[0] << 24 | data[1] << 16 | data[2] << 8 | data[3]) == QOI_MAGIC;
+}
+
+#define VALID_EXTS_SZ 11
+static const char *valid_extensions[VALID_EXTS_SZ] = {
+    "jpg", "jpeg", "png", "bmp", "psd", "tga", "hdr", "pic", "ppm", "pgm", "qoi"
+};
+
+static int does_file_exist(const char *path) {
+    return !access(path, F_OK);
+}
+
+static const char* file_extension(const char *path) {
+    const char *dot = strrchr(path, '.');
+    return !dot || dot == path ? NULL : dot + 1;
+}
+
+pbImage* pbImageLoadFromPath(const char *path) {
+    if (!does_file_exist(path))
+        return NULL;
+
+    const char *ext = file_extension(path);
+    unsigned long ext_length = strlen(ext);
+    char *dup = strdup(ext);
+    for (int i = 0; i < ext_length; i++)
+        if (dup[i] >= 'A' && dup[i] <= 'Z')
+            dup[i] += 32;
+    int found = 0;
+    for (int i = 0; i < VALID_EXTS_SZ; i++) {
+        if (!strncmp(dup, valid_extensions[i], ext_length)) {
+            found = 1;
+            break;
+        }
+    }
+    free(dup);
+    if (!found)
+        return NULL;
+
+    size_t sz = -1;
+    FILE *fh = fopen(path, "rb");
+    assert(fh);
+    fseek(fh, 0, SEEK_END);
+    sz = ftell(fh);
+    fseek(fh, 0, SEEK_SET);
+
+    unsigned char *data = malloc(sz * sizeof(unsigned char));
+    fread(data, sz, 1, fh);
+    fclose(fh);
+    pbImage *result = pbImageLoadFromMemory(data, (int)sz);
+    free(data);
+    return result;
+}
+
+pbImage* pbImageLoadFromMemory(const void *data, size_t length) {
+    int _w, _h, c;
+    unsigned char *in = NULL;
+    if (check_if_qoi((unsigned char*)data)) {
+        qoi_desc desc;
+        in = qoi_decode(data, length, &desc, 4);
+        _w = desc.width;
+        _h = desc.height;
+    } else
+        in = stbi_load_from_memory(data, length, &_w, &_h, &c, 4);
+    assert(in && _w && _h);
+
+    pbImage *result = pbImageNew(_w, _h);
+    for (int x = 0; x < _w; x++)
+        for (int y = 0; y < _h; y++) {
+            unsigned char *p = in + (x + _w * y) * 4;
+            result->buffer[y * _w + x] = RGBA(p[0], p[1], p[2], p[3]);
+        }
+    free(in);
+    return result;
+}
+
+int pbImageSave(pbImage *img, const char *path) {
+    return -1; // TODO
+}
 
 static struct {
 #define X(NAME, ARGS) void(*NAME##Callback)ARGS;

@@ -1,0 +1,4 @@
+LIBEXT=dll
+PROGEXT=.exe
+SYSFLAGS=-lgdi32
+BACKEND=pb_winapi

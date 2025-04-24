@@ -90,7 +90,7 @@ static struct option long_options[] = {
 };
 
 static void usage(void) {
-    puts(" usage: fwp -p [path] [options]");
+    puts(" usage: fwp [path to dylib] [options]");
     puts("");
     puts(" fun-with-pixels  Copyright (C) 2024  George Watson");
     puts(" This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.");
@@ -103,7 +103,6 @@ static void usage(void) {
     puts("      -t/--title     Window title [default: \"fwp\"]");
     puts("      -r/--resizable Enable resizable window");
     puts("      -a/--top       Enable window always on top");
-    puts("      -p/--path      Path the dynamic library [required]");
     puts("      -u/--usage     Display this message");
 }
 
@@ -295,8 +294,9 @@ static void pbInputClosed(void *userdata) {
 int main(int argc, char *argv[]) {
     extern char* optarg;
     extern int optopt;
+    extern int optind;
     int opt;
-    while ((opt = getopt_long(argc, argv, ":w:h:t:p:uar", long_options, NULL)) != -1) {
+    while ((opt = getopt_long(argc, argv, ":w:h:t:uar", long_options, NULL)) != -1) {
         switch (opt) {
             case 'w':
                 state.args.width = atoi(optarg);
@@ -312,9 +312,6 @@ int main(int argc, char *argv[]) {
                 break;
             case 'a':
                 state.args.flags |= pbAlwaysOnTop;
-                break;
-            case 'p':
-                state.args.path = optarg;
                 break;
             case ':':
                 printf("ERROR: \"-%c\" requires an value!\n", optopt);
@@ -333,11 +330,14 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    if (!state.args.path) {
-        puts("ERROR: No path to dynamic library provided (-p/--path)");
+    if (optind >= argc) {
+        puts("ERROR: No path to dynamic library provided");
         usage();
         return 0;
     } else {
+        state.args.path = argv[optind];
+    }
+    if (state.args.path) {
 #if !defined(PLATFORM_WINDOWS)
         if (state.args.path[0] != '.' || state.args.path[1] != '/') {
             char *tmp = malloc(strlen(state.args.path) + 2 * sizeof(char));

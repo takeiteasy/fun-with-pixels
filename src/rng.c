@@ -25,23 +25,21 @@
 #include <time.h>
 #include <limits.h>
 
-pbRng rngSetSeed(uint64_t seed) {
-    return seed ? seed : (uint64_t)time(NULL);
+static uint64_t __seed = 0;
+
+void rngInit(uint64_t seed) {
+    __seed = seed ? seed : (uint64_t)time(NULL);
 }
 
-pbRng rngInit(uint64_t initialSeed) {
-    return rngSetSeed(initialSeed);
-}
-
-uint64_t rngRandom(pbRng *rng) {
-    uint64_t v = *rng;
+uint64_t rngRandom(void) {
+    uint64_t v = __seed;
     v = (uint64_t)(v * 6364136223846793005ULL) + 1;
-    *rng = v;
+    __seed = v;
     return v;
 }
 
-float rngRandomFloat(pbRng *rng) {
-    return (float)rngRandom(rng) / (float)ULLONG_MAX;
+float rngRandomFloat(void) {
+    return (float)rngRandom() / (float)ULLONG_MAX;
 }
 
 #define __SWAP(a, b)  \
@@ -52,22 +50,22 @@ float rngRandomFloat(pbRng *rng) {
         b = temp;     \
     } while (0)
 
-int rngRandomIntRange(pbRng *rng, int min, int max) {
+int rngRandomIntRange(int min, int max) {
     if (min > max)
         __SWAP(min, max);
-    return (int)(rngRandomFloat(rng) * (max - min + 1) + min);
+    return (int)(rngRandomFloat() * (max - min + 1) + min);
 }
 
-float rngRandomFloatRange(pbRng *rng, float min, float max) {
+float rngRandomFloatRange(float min, float max) {
     if (min > max)
         __SWAP(min, max);
-    return rngRandomFloat(rng) * (max - min) + min;
+    return rngRandomFloat() * (max - min) + min;
 }
 
 #define __MAX(a, b)  ((a) > (b) ? (a) : (b))
 #define __CLAMP(v, low, high)  ((v) < (low) ? (low) : ((v) > (high) ? (high) : (v)))
 
-uint8_t* rngCellularAutomataMap(pbRng *rng, unsigned int width, unsigned int height, unsigned int fillChance, unsigned int smoothIterations, unsigned int survive, unsigned int starve) {
+uint8_t* rngCellularAutomataMap(unsigned int width, unsigned int height, unsigned int fillChance, unsigned int smoothIterations, unsigned int survive, unsigned int starve) {
     size_t sz = width * height * sizeof(int);
     uint8_t *result = malloc(sz);
     memset(result, 0, sz);
@@ -75,7 +73,7 @@ uint8_t* rngCellularAutomataMap(pbRng *rng, unsigned int width, unsigned int hei
     fillChance = __CLAMP(fillChance, 1, 99);
     for (int x = 0; x < width; x++)
         for (int y = 0; y < height; y++)
-            result[y * width + x] = rngRandom(rng) % 100 + 1 < fillChance;
+            result[y * width + x] = rngRandom() % 100 + 1 < fillChance;
     // Run cellular-automata on grid n times
     for (int i = 0; i < __MAX(smoothIterations, 1); i++)
         for (int x = 0; x < width; x++)

@@ -1,25 +1,15 @@
 ifeq ($(OS),Windows_NT)
-	LIBEXT=dll
-	PROGEXT=.exe
-	SYSFLAGS=-lgdi32
-	BACKEND=pb_winapi
+	include windows.Makefile
 else
 	UNAME:=$(shell uname -s)
-	PROGEXT=
 	ifeq ($(UNAME),Darwin)
-		LIBEXT=dylib
-		SYSFLAGS=-framework Cocoa
-		BACKEND=pb_cocoa
+		include macos.Makefile
 	else ifeq ($(UNAME),Linux)
-		LIBEXT=so
-		SYSFLAGS=-lX11 -lm
-		BACKEND=pb_x11
+		include linux.Makefile
 	else
 		$(error OS not supported by this Makefile)
 	endif
 endif
-
-.PHONY: default all library web
 
 default: all
 
@@ -33,35 +23,28 @@ $(BUILD)/:
 libpb: $(BUILD)/
 	$(CC) -shared -fpic $(CFLAGS) $(SYSFLAGS) src/$(BACKEND).c -o $(BUILD)/libpb.$(LIBEXT)
 
-fwp: libpb
+program: libpb
 	$(CC) $(CFLAGS) src/fwp.c $(LINK) -o $(BUILD)/fwp$(PROGEXT)
-
-test-lib: libpb
-	$(CC) $(CFLAGS) templates/pb_boilerplate.c $(LINK) -o $(BUILD)/test_lib$(PROGEXT)
-
-test-scene: libpb
-	$(CC) $(CFLAGS) -shared -fpic templates/fwp_boilerplate.c $(LINK) -o $(BUILD)/test_scene.$(LIBEXT)
-
-rebuild-test:
-	$(CC) $(CFLAGS) -shared -fpic examples/basic.c $(LINK) -o $(BUILD)/rebuild_test.$(LIBEXT)
 
 test-web: libpb
 	emcc $(CFLAGS) src/pb_emscripten.c templates/pb_boilerplate.c -o $(BUILD)/fwp_web.html
 
-tests: test-lib test-scene test-web
-
-SRC := examples
+SRC := scenes
 BIN := build
-TARGETS := $(foreach file,$(foreach src,$(wildcard $(SRC)/*.c),$(notdir $(src))),$(patsubst %.c,$(BIN)/fwp_example_%.$(LIBEXT),$(file)))
+TARGETS := $(foreach file,$(foreach src,$(wildcard $(SRC)/*.c),$(notdir $(src))),$(patsubst %.c,$(BIN)/%.$(LIBEXT),$(file)))
 
-$(BIN)/fwp_example_%.$(LIBEXT): $(SRC)/%.c | $(BIN)
-	$(CC) -shared -fpic $(CFLAGS) $(LINK) -o $@ $^
+.PHONY: FORCE scenes
 
-examples: $(TARGETS)
+FORCE: ;
 
-all: fwp tests examples
+$(BIN)/%.$(LIBEXT): $(SRC)/%.c FORCE | $(BIN)
+	$(CC) -shared -fpic $(CFLAGS) $(LINK) -o $@ $<
+
+scenes: $(TARGETS)
+
+all: program scenes
 
 clean:
 	$(RM) -rf $(BUILD)
 
-.PHONY: default all clean libpb fwp test-lib test-scene test-web tests examples
+.PHONY: program libpb clean
