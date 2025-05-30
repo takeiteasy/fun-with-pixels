@@ -1,19 +1,19 @@
-/* pb_emscripten.c -- https://github.com/takeiteasy/fwp
- 
- fun-with-pixels is a hot-reloadable software-rendering library
- 
+/* pb_emscripten.c -- https://github.com/takeiteasy/fun-with-pixels
+
+ fun-with-pixels
+
  Copyright (C) 2024  George Watson
- 
+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 
@@ -97,11 +97,11 @@ int pbBeginNative(int w, int h, const char *title, pbFlags flags) {
         emscripten_set_window_title(title);
     pbInternal.windowWidth = w;
     pbInternal.windowHeight = h;
-    
+
     emscripten_set_keypress_callback(EMSCRIPTEN_EVENT_TARGET_WINDOW, 0, 1, key_callback);
     emscripten_set_keydown_callback(EMSCRIPTEN_EVENT_TARGET_WINDOW, 0, 1, key_callback);
     emscripten_set_keyup_callback(EMSCRIPTEN_EVENT_TARGET_WINDOW, 0, 1, key_callback);
-    
+
     emscripten_set_click_callback(canvas, 0, 1, mouse_callback);
     emscripten_set_mousedown_callback(canvas, 0, 1, mouse_callback);
     emscripten_set_mouseup_callback(canvas, 0, 1, mouse_callback);
@@ -111,17 +111,17 @@ int pbBeginNative(int w, int h, const char *title, pbFlags flags) {
     emscripten_set_mouseleave_callback(canvas, 0, 1, mouse_callback);
     emscripten_set_mouseover_callback(canvas, 0, 1, mouse_callback);
     emscripten_set_mouseout_callback(canvas, 0, 1, mouse_callback);
-    
+
     emscripten_set_wheel_callback(EMSCRIPTEN_EVENT_TARGET_WINDOW, 0, 1, wheel_callback);
 
     emscripten_set_resize_callback(EMSCRIPTEN_EVENT_TARGET_WINDOW, 0, 1, uievent_callback);
     emscripten_set_scroll_callback(EMSCRIPTEN_EVENT_TARGET_WINDOW, 0, 1, uievent_callback);
-    
+
     emscripten_set_blur_callback(EMSCRIPTEN_EVENT_TARGET_WINDOW, 0, 1, focusevent_callback);
     emscripten_set_focus_callback(EMSCRIPTEN_EVENT_TARGET_WINDOW, 0, 1, focusevent_callback);
     emscripten_set_focusin_callback(EMSCRIPTEN_EVENT_TARGET_WINDOW, 0, 1, focusevent_callback);
     emscripten_set_focusout_callback(EMSCRIPTEN_EVENT_TARGET_WINDOW, 0, 1, focusevent_callback);
-    
+
     return 1;
 }
 
@@ -142,7 +142,7 @@ void pbFlushNative(pbImage *buffer) {
         var ctx = canvas.getContext("2d");
         var img = ctx.createImageData(w, h);
         var data = img.data;
-        
+
         var i = 0;
         var j = data.length;
         while (i < j) {
@@ -154,7 +154,7 @@ void pbFlushNative(pbImage *buffer) {
             src++;
             i += 4;
         }
-        
+
         ctx.putImageData(img, 0, 0);
     }, buffer->width, buffer->height, buffer->buffer);
 }

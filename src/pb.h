@@ -1,19 +1,19 @@
-/* pb.h -- https://github.com/takeiteasy/fwp
- 
- fun-with-pixels is a hot-reloadable software-rendering library
- 
+/* pb.h -- https://github.com/takeiteasy/fun-with-pixels
+
+ fun-with-pixels
+
  Copyright (C) 2024  George Watson
- 
+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 
@@ -375,40 +375,40 @@ void pbImageFill(pbImage *img, int col) {
 static inline void flood_fn(pbImage *img, int x, int y, int new, int old) {
     if (new == old || pbImagePGet(img, x, y) != old)
         return;
-    
+
     int x1 = x;
     while (x1 < img->width && pbImagePGet(img, x1, y) == old) {
         pbImagePSet(img, x1, y, new);
         x1++;
     }
-    
+
     x1 = x - 1;
     while (x1 >= 0 && pbImagePGet(img, x1, y) == old) {
         pbImagePSet(img, x1, y, new);
         x1--;
     }
-    
+
     x1 = x;
     while (x1 < img->width && pbImagePGet(img, x1, y) == new) {
         if(y > 0 && pbImagePGet(img, x1, y - 1) == old)
             flood_fn(img, x1, y - 1, new, old);
         x1++;
     }
-    
+
     x1 = x - 1;
     while(x1 >= 0 && pbImagePGet(img, x1, y) == new) {
         if(y > 0 && pbImagePGet(img, x1, y - 1) == old)
             flood_fn(img, x1, y - 1, new, old);
         x1--;
     }
-    
+
     x1 = x;
     while(x1 < img->width && pbImagePGet(img, x1, y) == new) {
         if(y < img->height - 1 && pbImagePGet(img, x1, y + 1) == old)
             flood_fn(img, x1, y + 1, new, old);
         x1++;
     }
-    
+
     x1 = x - 1;
     while(x1 >= 0 && pbImagePGet(img, x1, y) == new) {
         if(y < img->height - 1 && pbImagePGet(img, x1, y + 1) == old)
@@ -507,7 +507,7 @@ pbImage* pbImageRotated(pbImage *src, float angle) {
         {  src->width * c - src->height * s, src->height * c + src->width * s },
         {  src->width * c, src->width * s }
     };
-    
+
     float mm[2][2] = {{
         __MIN(0, __MIN(r[0][0], __MIN(r[1][0], r[2][0]))),
         __MIN(0, __MIN(r[0][1], __MIN(r[1][1], r[2][1])))
@@ -515,11 +515,11 @@ pbImage* pbImageRotated(pbImage *src, float angle) {
         (theta > 1.5708  && theta < 3.14159 ? 0.f : __MAX(r[0][0], __MAX(r[1][0], r[2][0]))),
         (theta > 3.14159 && theta < 4.71239 ? 0.f : __MAX(r[0][1], __MAX(r[1][1], r[2][1])))
     }};
-    
+
     int dw = (int)ceil(fabsf(mm[1][0]) - mm[0][0]);
     int dh = (int)ceil(fabsf(mm[1][1]) - mm[0][1]);
     pbImage *result = pbImageNew(dw, dh);
-    
+
     int x, y, sx, sy;
     for (x = 0; x < dw; ++x)
         for (y = 0; y < dh; ++y) {
@@ -561,15 +561,15 @@ static inline void vline(pbImage *img, int x, int y0, int y1, int col) {
         y1  = y0 - y1;
         y0 -= y1;
     }
-    
+
     if (x < 0 || x >= img->width || y0 >= img->height)
         return;
-    
+
     if (y0 < 0)
         y0 = 0;
     if (y1 >= img->height)
         y1 = img->height - 1;
-    
+
     for(int y = y0; y <= y1; y++)
         pbImagePSet(img, x, y, col);
 }
@@ -580,15 +580,15 @@ static inline void hline(pbImage *img, int y, int x0, int x1, int col) {
         x1  = x0 - x1;
         x0 -= x1;
     }
-    
+
     if (y < 0 || y >= img->height || x0 >= img->width)
         return;
-    
+
     if (x0 < 0)
         x0 = 0;
     if (x1 >= img->width)
         x1 = img->width - 1;
-    
+
     for(int x = x0; x <= x1; x++)
         pbImagePSet(img, x, y, col);
 }
@@ -618,12 +618,12 @@ void pbImageDrawCircle(pbImage *img, int xc, int yc, int r, int col, int fill) {
         pbImagePSet(img, xc - y, yc - x, col);    /*  II. Quadrant */
         pbImagePSet(img, xc + x, yc - y, col);    /* III. Quadrant */
         pbImagePSet(img, xc + y, yc + x, col);    /*  IV. Quadrant */
-        
+
         if (fill) {
             hline(img, yc - y, xc - x, xc + x, col);
             hline(img, yc + y, xc - x, xc + x, col);
         }
-        
+
         r = err;
         if (r <= y)
             err += ++y * 2 + 1; /* e_xy+e_y < 0 */
@@ -641,17 +641,17 @@ void pbImageDrawRectangle(pbImage *img, int x, int y, int w, int h, int col, int
         h += y;
         y  = 0;
     }
-    
+
     w += x;
     h += y;
     if (w < 0 || h < 0 || x > img->width || y > img->height)
         return;
-    
+
     if (w > img->width)
         w = img->width;
     if (h > img->height)
         h = img->height;
-    
+
     if (fill) {
         for (; y < h; ++y)
             hline(img, y, x, w, col);
@@ -687,7 +687,7 @@ void pbImageDrawTriangle(pbImage *img, int x0, int y0, int x1, int y1, int x2, i
             __SWAP(x1, x2);
             __SWAP(y1, y2);
         }
-        
+
         int total_height = y2 - y0, i, j;
         for (i = 0; i < total_height; ++i) {
             int second_half = i > y1 - y0 || y1 == y0;

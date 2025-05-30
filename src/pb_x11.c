@@ -1,19 +1,19 @@
-/* pb_x11.c -- https://github.com/takeiteasy/fwp
- 
- fun-with-pixels is a hot-reloadable software-rendering library
- 
+/* pb_x11.c -- https://github.com/takeiteasy/fun-with-pixels
+
+ fun-with-pixels
+
  Copyright (C) 2024  George Watson
- 
+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 
@@ -56,13 +56,13 @@ int pbBeginNative(int w, int h, const char *title, pbFlags flags) {
     pbLinuxInternal.screen = DefaultScreen(pbLinuxInternal.display);
     pbLinuxInternal.scaler = NULL;
     pbLinuxInternal.buffer = NULL;
-    
+
     int screen_w = DisplayWidth(pbLinuxInternal.display, pbLinuxInternal.screen);
     int screen_h = DisplayHeight(pbLinuxInternal.display, pbLinuxInternal.screen);
-    
+
     if (flags & pbFullscreen)
         flags = pbFullscreen | pbBorderless;
-    
+
     int x = 0, y = 0;
     if (flags & pbFullscreen || flags & pbFullscreenDesktop) {
         w = screen_w;
@@ -71,7 +71,7 @@ int pbBeginNative(int w, int h, const char *title, pbFlags flags) {
         x = screen_w / 2 - w / 2;
         y = screen_h / 2 - h / 2;
     }
-    
+
     Visual *visual = DefaultVisual(pbLinuxInternal.display, pbLinuxInternal.screen);
     int format_c = 0;
     XPixmapFormatValues* formats = XListPixmapFormats(pbLinuxInternal.display, &format_c);
@@ -85,7 +85,7 @@ int pbBeginNative(int w, int h, const char *title, pbFlags flags) {
     XFree(formats);
     if (depth_c != 32)
         return 0;
-    
+
     XSetWindowAttributes swa;
     swa.override_redirect = True;
     swa.border_pixel = BlackPixel(pbLinuxInternal.display, pbLinuxInternal.screen);
@@ -95,13 +95,13 @@ int pbBeginNative(int w, int h, const char *title, pbFlags flags) {
         return 0;
     pbInternal.windowWidth = w;
     pbInternal.windowHeight = h;
-    
+
     pbLinuxInternal.delete = XInternAtom(pbLinuxInternal.display, "WM_DELETE_WINDOW", False);
     XSetWMProtocols(pbLinuxInternal.display, pbLinuxInternal.window, &pbLinuxInternal.delete, 1);
-    
+
     XSelectInput(pbLinuxInternal.display, pbLinuxInternal.window, StructureNotifyMask | KeyPressMask | KeyReleaseMask | PointerMotionMask | ButtonPressMask | ButtonReleaseMask | ExposureMask | FocusChangeMask | EnterWindowMask | LeaveWindowMask);
     XStoreName(pbLinuxInternal.display, pbLinuxInternal.window, title);
-    
+
     if (flags & pbFullscreen) {
         Atom p = XInternAtom(pbLinuxInternal.display, "_NET_WM_STATE_FULLSCREEN", True);
         XChangeProperty(pbLinuxInternal.display, pbLinuxInternal.window, XInternAtom(pbLinuxInternal.display, "_NET_WM_STATE", True), XA_ATOM, 32, PropModeReplace, (unsigned char*)&p, 1);
@@ -113,12 +113,12 @@ int pbBeginNative(int w, int h, const char *title, pbFlags flags) {
         Atom p = XInternAtom(pbLinuxInternal.display, "_MOTIF_WM_HINTS", True);
         XChangeProperty(pbLinuxInternal.display, pbLinuxInternal.window, p, p, 32, PropModeReplace, (unsigned char*)&hints, 5);
     }
-    
+
     if (flags & pbAlwaysOnTop) {
         Atom p = XInternAtom(pbLinuxInternal.display, "_NET_WM_STATE_ABOVE", False);
         XChangeProperty(pbLinuxInternal.display, pbLinuxInternal.window, XInternAtom(pbLinuxInternal.display, "_NET_WM_STATE", False), XA_ATOM, 32, PropModeReplace, (unsigned char *)&p, 1);
     }
-    
+
     XSizeHints hints;
     hints.flags = PPosition | PMinSize | PMaxSize;
     hints.x = 0;
@@ -140,7 +140,7 @@ int pbBeginNative(int w, int h, const char *title, pbFlags flags) {
     XFlush(pbLinuxInternal.display);
     pbLinuxInternal.gc = DefaultGC(pbLinuxInternal.display, pbLinuxInternal.screen);
     pbLinuxInternal.img = XCreateImage(pbLinuxInternal.display, CopyFromParent, pbLinuxInternal.depth, ZPixmap, 0, NULL, w, h, 32, w * 4);
-    
+
     return 1;
 }
 
@@ -149,7 +149,7 @@ static uint8_t ConvertX11Key(KeySym sym) {
         return (uint8_t)sym - ('a' - 'A');
     if (sym >= '0' && sym <= '9')
         return (uint8_t)sym;
-    
+
     switch (sym) {
         case XK_KP_0:
             return KEY_PAD0;
@@ -171,7 +171,7 @@ static uint8_t ConvertX11Key(KeySym sym) {
             return KEY_PAD8;
         case XK_KP_9:
             return KEY_PAD9;
-            
+
         case XK_KP_Multiply:
             return KEY_PADMUL;
         case XK_KP_Divide:
@@ -184,7 +184,7 @@ static uint8_t ConvertX11Key(KeySym sym) {
             return KEY_PADDOT;
         case XK_KP_Enter:
             return KEY_PADENTER;
-            
+
         case XK_F1:
             return KEY_F1;
         case XK_F2:
@@ -209,7 +209,7 @@ static uint8_t ConvertX11Key(KeySym sym) {
             return KEY_F11;
         case XK_F12:
             return KEY_F12;
-            
+
         case XK_BackSpace:
             return KEY_BACKSPACE;
         case XK_Tab:
@@ -224,7 +224,7 @@ static uint8_t ConvertX11Key(KeySym sym) {
             return KEY_ESCAPE;
         case XK_space:
             return KEY_SPACE;
-            
+
         case XK_Page_Up:
             return KEY_PAGEUP;
         case XK_Page_Down:
@@ -245,7 +245,7 @@ static uint8_t ConvertX11Key(KeySym sym) {
             return KEY_INSERT;
         case XK_Delete:
             return KEY_DELETE;
-            
+
         case XK_Meta_L:
             return KEY_LWIN;
         case XK_Meta_R:
@@ -266,7 +266,7 @@ static uint8_t ConvertX11Key(KeySym sym) {
             return KEY_LALT;
         case XK_Alt_R:
             return KEY_RALT;
-            
+
         case XK_semicolon:
             return KEY_SEMICOLON;
         case XK_equal:
@@ -402,7 +402,7 @@ int pbPollNative(void) {
                 pbCallCallback(Resized, w, h);
                 pbInternal.windowWidth = w;
                 pbInternal.windowHeight = h;
-                
+
                 if (pbLinuxInternal.scaler) {
                     pbLinuxInternal.scaler->data = NULL;
                     XDestroyImage(pbLinuxInternal.scaler);
@@ -452,7 +452,7 @@ void pbFlushNative(pbImage *buffer) {
             pbLinuxInternal.scaler = NULL;
         }
         pbLinuxInternal.scaler = XCreateImage(pbLinuxInternal.display, CopyFromParent, pbLinuxInternal.depth, ZPixmap, 0, NULL, pbInternal.windowWidth, pbInternal.windowHeight, 32, pbInternal.windowWidth * 4);
-        
+
         if (pbLinuxInternal.buffer)
             free(pbLinuxInternal.buffer);
         pbLinuxInternal.buffer = scale(buffer->data, buffer->width, buffer->height, pbInternal.windowWidth, pbInternal.windowHeight);
